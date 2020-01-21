@@ -1,4 +1,5 @@
 {
+  "alias": ["kpffl.com"],
   "routes": [{ "src": "/.*", "dest": "/index.py" }],
   "builds": [{ "src": "*.py", "use": "@now/python" }]
 }
