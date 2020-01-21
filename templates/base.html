@@ -1,14 +1,36 @@
 <!DOCTYPE html>
 <html>
   <head>
-    {% block head %}
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+
     <link rel="stylesheet" href="https://kpffl.redreceipt.now.sh/static/style.css" />
     <title>{% block title %}{% endblock %} - KPFFL</title>
-
-    {% endblock %}
   </head>
   <body>
+    <nav class="navbar navbar-default navbar-static-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-navbar" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="{{ url_for("home") }}">KPFFL</a>
+        </div>
+        <div id="main-navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="{{ url_for("rules") }}">Rules</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    {#
     <div class="topnav">
       <div class="page-links">
         <div class="nav-logo nav-link">
@@ -17,7 +39,7 @@
         <div class="nav-link">
           <a href="{{ url_for("rules") }}">Rules</a>
         </div>
-        {# <div class="nav-link">
+        <div class="nav-link">
           <a href="#teams">Teams</a>
         </div>
         <div class="nav-link">
@@ -27,9 +49,10 @@
       <div class="social-links">
         <div class="nav-link">
           <a href="#signin">Sign In</a>
-        </div> #}
+        </div>
       </div>
     </div>
+    #}
 
     <!-- Content -->
     <div class="container">{% block content %}{% endblock %}</div>
@@ -47,5 +70,9 @@
     </footer>
     <!-- Footer -->
 
-  </body>
+    <!-- Bootstrap -->
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
 </html>
