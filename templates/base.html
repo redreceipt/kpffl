@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    {% block head %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://kpffl.redreceipt.now.sh/static/style.css" />
+    <title>{% block title %}{% endblock %} - KPFFL</title>
+
+    {% endblock %}
+  </head>
+  <body>
+    <div class="topnav">
+      <div class="page-links">
+        <div class="nav-logo nav-link">
+          <a href="{{ url_for("home") }}">KPPFL</a>
+        </div>
+        <div class="nav-link">
+          <a href="{{ url_for("rules") }}">Rules</a>
+        </div>
+        {# <div class="nav-link">
+          <a href="#teams">Teams</a>
+        </div>
+        <div class="nav-link">
+          <a href="#rankings">Rankings</a>
+        </div>
+      </div>
+      <div class="social-links">
+        <div class="nav-link">
+          <a href="#signin">Sign In</a>
+        </div> #}
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="container">{% block content %}{% endblock %}</div>
+    <!-- Content -->
+
+    <!-- Footer -->
+    <footer class="page-footer font-small">
+
+      <!-- Copyright -->
+      <div class="footer-copyright text-center">© 2020 Copyright:
+        <a href="#">Michael Neeley</a>
+      </div>
+      <!-- Copyright -->
+
+    </footer>
+    <!-- Footer -->
+
+  </body>
+</html>

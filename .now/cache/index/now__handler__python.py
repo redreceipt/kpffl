@@ -4,8 +4,8 @@ import base64
 import json
 import inspect
 
-import api.index
-__now_variables = dir(api.index)
+import index
+__now_variables = dir(index)
 
 
 def format_headers(headers, decode=False):
@@ -21,7 +21,7 @@ def format_headers(headers, decode=False):
 
 
 if 'handler' in __now_variables or 'Handler' in __now_variables:
-    base = api.index.handler if ('handler' in __now_variables) else  api.index.Handler
+    base = index.handler if ('handler' in __now_variables) else  index.Handler
     if not issubclass(base, BaseHTTPRequestHandler):
         print('Handler must inherit from BaseHTTPRequestHandler')
         print('See the docs https://zeit.co/docs/v2/deployments/official-builders/python-now-python')
@@ -74,8 +74,8 @@ if 'handler' in __now_variables or 'Handler' in __now_variables:
 
 elif 'app' in __now_variables:
     if (
-        not inspect.iscoroutinefunction(api.index.app) and
-        not inspect.iscoroutinefunction(api.index.app.__call__)
+        not inspect.iscoroutinefunction(index.app) and
+        not inspect.iscoroutinefunction(index.app.__call__)
     ):
         print('using Web Server Gateway Interface (WSGI)')
         import sys
@@ -136,7 +136,7 @@ elif 'app' in __now_variables:
                 if key not in ('HTTP_CONTENT_TYPE', 'HTTP_CONTENT_LENGTH'):
                     environ[key] = value
 
-            response = Response.from_app(api.index.app, environ)
+            response = Response.from_app(index.app, environ)
 
             return_dict = {
                 'statusCode': response.status_code,
@@ -271,10 +271,10 @@ elif 'app' in __now_variables:
             }
 
             asgi_cycle = ASGICycle(scope)
-            response = asgi_cycle(api.index.app, body)
+            response = asgi_cycle(index.app, body)
             return response
 
 else:
-    print('Missing variable `handler` or `app` in file api.index.py')
+    print('Missing variable `handler` or `app` in file index.py')
     print('See the docs https://zeit.co/docs/v2/deployments/official-builders/python-now-python')
     exit(1)

@@ -1,4 +1,4 @@
-from flask import Flask, Response
+from flask import Flask, Response, render_template
 import markdown
 app = Flask(__name__)
 
@@ -12,4 +12,4 @@ def rules():
     with open("static/rules.md") as f:
         text = f.read()
         html = markdown.markdown(text)
-        return Response(html)
+        return render_template("rules.html", html=html)

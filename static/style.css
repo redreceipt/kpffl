@@ -6,7 +6,9 @@
   align-items: center;
 }
 
-.nav-link a {
+.nav-link a,
+.nav-link a:focus,
+.nav-link a:hover {
   text-decoration: none;
   color: #fff;
   font-size: 24px;
@@ -17,7 +19,9 @@
   letter-spacing: -0.2px;
 }
 
-.nav-logo a {
+.nav-logo a,
+.nav-logo a:focus,
+.nav-logo a:hover {
   font-size: 26px;
   letter-spacing: 5px;
 }
@@ -30,8 +34,4 @@
 .social-links {
   display: flex;
   margin-right: 20px;
-}
-
-.content {
-  margin: 0 auto;
 }
