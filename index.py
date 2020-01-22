@@ -1,5 +1,7 @@
-from flask import Flask, Response, render_template
 import markdown
+from flask import Flask, render_template
+
+from sleeper import getTeams
 
 app = Flask(__name__)
 
@@ -15,3 +17,8 @@ def rules():
         text = f.read()
         html = markdown.markdown(text)
         return render_template("rules.html", html=html)
+
+
+@app.route("/teams")
+def teams():
+    return render_template("teams.html", teams=getTeams())

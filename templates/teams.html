@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Teams{% endblock %}
+
+{% block content %}
+<div class="row">
+	{% for team in teams %}
+		<div class="col-md-3 col-sm-6">
+			<h4>{{team["name"]}}  <small>{{team["owner"]}}</small></h4>
+			<table class="table table-hover">
+				{% for player in team["players"] %}
+					<tr>
+						<td>{{player["pos"]}}</td>
+						<td>{{player["name"]}}</td>
+					</tr>
+				{% endfor %}
+			</table>
+		</div>
+	{% endfor %}
+</div>
+{% endblock %}

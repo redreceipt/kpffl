@@ -1,1 +1,4 @@
 jinjalint
+isort
+yapf
+flake8
