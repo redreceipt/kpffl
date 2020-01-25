@@ -2,6 +2,8 @@ import json
 
 import requests
 
+from database import getDB
+
 LEAGUE_ID = 515543543873765376
 
 
@@ -40,11 +42,11 @@ def getTeams():
         # starters have their own positions listed.
         starters = list(
             map(
-                lambda x: {
+                lambda id: {
                     "name":
-                    f"{players[x]['first_name']} {players[x]['last_name']}",
-                    "pos": players[x]["position"]
-                } if players[x]["player_id"] != "0" else {
+                    f"{players[id]['first_name']} {players[id]['last_name']}",
+                    "pos": players[id]["position"]
+                } if players[id]["player_id"] != "0" else {
                     "name": "(Empty)",
                     "pos": ""
                 }, roster["starters"]))
