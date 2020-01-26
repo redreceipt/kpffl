@@ -46,7 +46,6 @@ def getTeams():
     def _getSimplePlayerGroup(ids, positions):
 
         # pad positions with empty slots
-        print(ids, positions)
         ids.extend(['0'] * (len(positions) - len(ids)))
 
         return list(
