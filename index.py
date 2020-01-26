@@ -1,3 +1,5 @@
+import os
+
 import markdown
 from flask import Flask, redirect, render_template
 
@@ -24,6 +26,11 @@ def teams():
     return render_template("teams.html", teams=getTeams())
 
 
+@app.route('/meet')
+def meet():
+    return redirect(os.getenv("GOOGLE_MEET_URI"), code=301)
+
+
 @app.route('/chat')
 def chat():
-    return redirect("https://meet.google.com/igd-oqkc-thg", code=301)
+    return redirect(os.getenv("DISCORD_URI"), code=301)
