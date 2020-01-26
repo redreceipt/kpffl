@@ -1,8 +1,5 @@
 {
   "alias": ["kpffl.com"],
-  "routes": [
-    { "src": "/chat", "dest": "https://meet.google.com/igd-oqkc-thg" },
-    { "src": "/.*", "dest": "/index.py" }
-  ],
+  "routes": [{ "src": "/.*", "dest": "/index.py" }],
   "builds": [{ "src": "*.py", "use": "@now/python" }]
 }
