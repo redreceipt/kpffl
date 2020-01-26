@@ -1,5 +1,11 @@
 {
   "alias": ["kpffl.com"],
   "routes": [{ "src": "/.*", "dest": "/index.py" }],
-  "builds": [{ "src": "*.py", "use": "@now/python" }]
+  "builds": [{ "src": "*.py", "use": "@now/python" }],
+  "build": {
+    "env": {
+      "GOOGLE_MEET_URI": "@google-meet-uri",
+      "DISCORD_URI": "@discord-uri"
+    }
+  }
 }
