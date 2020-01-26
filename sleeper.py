@@ -36,20 +36,44 @@ def getTeams():
 
     # assemble teams
     teams = []
+
+    def _getPlayerName(player):
+        return f"{player['first_name']} {player['last_name']}"
+
+    # starters have their own positions listed.
+    # TODO: ternary only necessary because there's a bug
+    # in the sleeper API
+    def _getSimplePlayerGroup(ids, positions):
+
+        # pad positions with empty slots
+        print(ids, positions)
+        ids.extend(['0'] * (len(positions) - len(ids)))
+
+        return list(
+            map(
+                lambda playerId: {
+                    "name":
+                    _getPlayerName(players[playerId])
+                    if playerId != "0" else "(Empty)",
+                    "pos":
+                    positions.pop(0)
+                }, ids))
+
     for i, roster in enumerate(rosters):
         owner = owners[roster["owner_id"]]
 
-        # starters have their own positions listed.
-        starters = list(
-            map(
-                lambda id: {
-                    "name":
-                    f"{players[id]['first_name']} {players[id]['last_name']}",
-                    "pos": players[id]["position"]
-                } if players[id]["player_id"] != "0" else {
-                    "name": "(Empty)",
-                    "pos": ""
-                }, roster["starters"]))
+        # build player groups
+        starters = _getSimplePlayerGroup(
+            roster["starters"],
+            ["QB", "RB", "RB", "WR", "WR", "TE", "Flex", "DEF"])
+        reserve = _getSimplePlayerGroup(roster["reserve"] or [], ["IR"])
+        taxi = _getSimplePlayerGroup(roster["taxi"] or [], ["Taxi"] * 3)
+
+        # bench players are the ones remaining
+        others = set(roster["players"]) - set(roster["starters"] +
+                                              (roster["reserve"] or []) +
+                                              (roster["taxi"] or []))
+        bench = _getSimplePlayerGroup(list(others), ["Bench"] * 12)
 
         team = {
             "name":
@@ -58,36 +82,8 @@ def getTeams():
             "owner":
             owner["display_name"],
             "players":
-            starters
+            starters + bench + reserve + taxi
+            # + bench + reserve + taxi
         }
         teams.append(team)
     return teams
-
-    # return [
-    # {
-    # "name":
-    # "Team 1",
-    # "owner":
-    # "Michael Neeley",
-    # "players": [{
-    # "pos": "WR",
-    # "name": "OBJ"
-    # }, {
-    # "pos": "WR",
-    # "name": "AB84"
-    # }]
-    # },
-    # {
-    # "name":
-    # "Team 2",
-    # "owner":
-    # "Daniel Crowe",
-    # "players": [{
-    # "pos": "RB",
-    # "name": "Beast Mode"
-    # }, {
-    # "pos": "TE",
-    # "name": "Gronk"
-    # }]
-    # },
-    # ]

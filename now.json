@@ -1,11 +1,7 @@
 {
   "alias": ["kpffl.com"],
-  "scripts": {
-    "dev": "FLASK_APP=index.py FLASK_ENV=development flask run"
-  },
   "routes": [
     { "src": "/chat", "dest": "https://meet.google.com/igd-oqkc-thg" },
-    { "src": "/api/players", "dest": "/api/players.py" },
     { "src": "/.*", "dest": "/index.py" }
   ],
   "builds": [{ "src": "*.py", "use": "@now/python" }]
