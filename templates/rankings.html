@@ -17,7 +17,7 @@ content %}
       <tr>
         <td>{{team["rank"]}}</td>
         <td>{{team["name"]}}</td>
-        <td>{{team["record"] + " (" + team["points"] + ")"}}</td>
+        <td>{{team["record"] ~ " (" ~ team["points"] ~ ")"}}</td>
       </tr>
       {% endfor %}
     </table>
