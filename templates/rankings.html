@@ -1,0 +1,26 @@
+{% extends "base.html" %} {% block title %}Rankings{% endblock %} {% block
+content %}
+<div class="row">
+  <div class="col-md-4">
+    <h4>
+      Standings {% if league["status"] != "in_season" %}
+      <small>(Last Season)</small>
+      {% endif %}
+    </h4>
+    <table class="table table-hover">
+      <tr>
+        <th>Rank</th>
+        <th>Team</th>
+        <th>Record</th>
+      </tr>
+      {% for team in rankings["standings"] %}
+      <tr>
+        <td>{{team["rank"]}}</td>
+        <td>{{team["name"]}}</td>
+        <td>{{team["record"] + " (" + team["points"] + ")"}}</td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+</div>
+{% endblock %}

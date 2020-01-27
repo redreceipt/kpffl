@@ -7,6 +7,12 @@ from database import getDB
 LEAGUE_ID = 515543543873765376
 
 
+def getLeague():
+    """Gets league info."""
+    r = requests.get(f"https://api.sleeper.app/v1/league/{LEAGUE_ID}")
+    return json.loads(r.text)
+
+
 def getPlayers():
     """Gets players from Sleepers database."""
     r = requests.get("https://api.sleeper.app/v1/players/nfl")
@@ -86,3 +92,8 @@ def getTeams():
         }
         teams.append(team)
     return teams
+
+
+def getStandings():
+    """Gets standings from a given league ID."""
+    return [{"rank": 1, "name": "team 1", "record": "8-4", "points": 953}]
