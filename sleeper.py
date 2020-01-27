@@ -29,6 +29,11 @@ def getOwners():
     return ownerDict
 
 
+def _getRosters():
+    r = requests.get(f"https://api.sleeper.app/v1/league/{LEAGUE_ID}/rosters")
+    return json.loads(r.text)
+
+
 def getTeams():
     """Gets the current teams in the league."""
     # get all the player info, should be used sparingly
@@ -37,8 +42,7 @@ def getTeams():
     owners = getOwners()
 
     # get rosters
-    r = requests.get(f"https://api.sleeper.app/v1/league/{LEAGUE_ID}/rosters")
-    rosters = json.loads(r.text)
+    rosters = _getRosters()
 
     # assemble teams
     teams = []
@@ -96,4 +100,18 @@ def getTeams():
 
 def getStandings():
     """Gets standings from a given league ID."""
+
+    # get rosters
+    rosters = _getRosters()
+    rostersById = {}
+    for roster in rosters:
+        rostersById[roster["roster_id"]]: roster
+
+    # first six positions are from the playoffs
+    r = requests.get(
+        f"https://api.sleeper.app/v1/league/{LEAGUE_ID}/winners_bracket")
+    bracket = json.loads(r.text)
+    for matchup in bracket:
+        pass
+    # TODO: need to sort by playoff bracket then by wins and losses
     return [{"rank": 1, "name": "team 1", "record": "8-4", "points": 953}]
