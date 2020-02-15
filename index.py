@@ -1,11 +1,96 @@
 import os
+from functools import wraps
 
 import markdown
-from flask import Flask, redirect, render_template
+from authlib.integrations.flask_client import OAuth
+from flask import Flask, redirect, render_template, session, url_for
+from six.moves.urllib.parse import urlencode
 
 from sleeper import getTeams
 
 app = Flask(__name__)
+
+app.secret_key = os.getenv("SECRET_KEY")
+
+oauth = OAuth(app)
+
+auth0 = oauth.register(
+    'auth0',
+    client_id='x1wWsLZAZlLgrSeboClluZcNwbSbeK2Z',
+    client_secret=os.getenv("AUTH0_SECRET"),
+    api_base_url='https://dev-xydv0aul.auth0.com',
+    access_token_url='https://dev-xydv0aul.auth0.com/oauth/token',
+    authorize_url='https://dev-xydv0aul.auth0.com/authorize',
+    client_kwargs={
+        'scope': 'openid profile email',
+    },
+)
+
+# use this to wrap methods that need authentication like this:
+'''
+@app.route('/dashboard')
+@requires_auth
+def dashboard():
+    return render_template('dashboard.html',
+                           userinfo=session['profile'],
+                           userinfo_pretty=json.dumps(session['jwt_payload'], indent=4))
+
+Dashboard template
+------------------
+<div class="logged-in-box auth0-box logged-in">
+    <h1 id="logo"><img src="//cdn.auth0.com/samples/auth0_logo_final_blue_RGB.png" /></h1>
+    <img class="avatar" src="{{userinfo['picture']}}"/>
+    <h2>Welcome {{userinfo['name']}}</h2>
+    <pre>{{userinfo_pretty}}</pre>
+    <a class="btn btn-primary btn-lg btn-logout btn-block" href="/logout">Logout</a>
+</div>
+'''
+
+
+def requires_auth(f):
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        if 'profile' not in session:
+            # Redirect to Login page here
+            return redirect('/')
+        return f(*args, **kwargs)
+
+    return decorated
+
+
+@app.route('/callback')
+def callback():
+    # Handles response from token endpoint
+    auth0.authorize_access_token()
+    resp = auth0.get('userinfo')
+    userinfo = resp.json()
+
+    # Store the user information in flask session.
+    session['jwt_payload'] = userinfo
+    session['profile'] = {
+        'user_id': userinfo['sub'],
+        'name': userinfo['name'],
+        'picture': userinfo['picture']
+    }
+    return redirect(url_for("home", _external=True))
+
+
+@app.route('/login')
+def login():
+    return auth0.authorize_redirect(
+        redirect_uri=url_for("callback", _external=True))
+
+
+@app.route('/logout')
+def logout():
+    # Clear session stored data
+    session.clear()
+    # Redirect user to logout endpoint
+    params = {
+        'returnTo': url_for('home', _external=True),
+        'client_id': 'x1wWsLZAZlLgrSeboClluZcNwbSbeK2Z'
+    }
+    return redirect(auth0.api_base_url + '/v2/logout?' + urlencode(params))
 
 
 @app.route("/")
