@@ -31,7 +31,11 @@
             <li><a href="{{ url_for("teams") }}">Teams</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="{{ url_for("login") }}">Login</a></li>
+            {% if user == None %}
+              <li><a href="{{ url_for("login") }}">Login</a></li>
+            {% else %}
+              <li><a href="{{ url_for("logout") }}">Logout</a></li>
+            {% endif %}
           </ul>
         </div>
       </div>
