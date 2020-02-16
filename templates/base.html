@@ -9,8 +9,8 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
     <!-- Bootstrap -->
 
-    <link rel="stylesheet" href="https://kpffl.com/static/style.css" />
-    <link rel="shortcut icon" href="https://kpffl.now.sh/static/favicon.ico">
+    <link rel="stylesheet" href="{{ url_for("static", filename="style.css", _external=True) }}" />
+    <link rel="shortcut icon" href="{{ url_for("static", filename="favicon.ico", _external=True) }}">
     <title>{% block title %}{% endblock %} - KPFFL</title>
   </head>
   <body>

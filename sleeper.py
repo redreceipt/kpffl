@@ -110,7 +110,7 @@ def getStandings():
     # first six positions are from the playoffs
     r = requests.get(
         f"https://api.sleeper.app/v1/league/{LEAGUE_ID}/winners_bracket")
-    bracket = json.loads(r.text)
+    bracket = json.loads(r.text) or []
     for matchup in bracket:
         pass
     # TODO: need to sort by playoff bracket then by wins and losses
