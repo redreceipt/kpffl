@@ -31,32 +31,22 @@
             <li><a href="{{ url_for("teams") }}">Teams</a></li>
             <li><a href="{{ url_for("rankings") }}">Rankings</a></li>
           </ul>
+          <ul class="nav navbar-nav navbar-right">
+            {% if user == None %}
+              <li><a href="{{ url_for("login") }}">Login</a></li>
+            {% else %}
+              <li><a href="{{ url_for("chat") }}">
+                <span class="glyphicon glyphicon-comment"></span>
+              </a></li>
+              <li><a href="{{ url_for("meet") }}">
+                <span class="glyphicon glyphicon-facetime-video"></span>
+              </a></li>
+              <li><a href="{{ url_for("logout") }}">Logout</a></li>
+            {% endif %}
+          </ul>
         </div>
       </div>
     </nav>
-    {#
-    <div class="topnav">
-      <div class="page-links">
-        <div class="nav-logo nav-link">
-          <a href="{{ url_for("home") }}">KPPFL</a>
-        </div>
-        <div class="nav-link">
-          <a href="{{ url_for("rules") }}">Rules</a>
-        </div>
-        <div class="nav-link">
-          <a href="#teams">Teams</a>
-        </div>
-        <div class="nav-link">
-          <a href="#rankings">Rankings</a>
-        </div>
-      </div>
-      <div class="social-links">
-        <div class="nav-link">
-          <a href="#signin">Sign In</a>
-        </div>
-      </div>
-    </div>
-    #}
 
     <!-- Content -->
     <div class="container">{% block content %}{% endblock %}</div>
