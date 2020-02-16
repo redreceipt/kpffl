@@ -118,8 +118,7 @@ dmypy.json
 # venv
 venv/
 
-# Zeit Now
-.now/
+.now
 
 # env variables
 .env
