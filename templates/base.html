@@ -34,6 +34,12 @@
             {% if user == None %}
               <li><a href="{{ url_for("login") }}">Login</a></li>
             {% else %}
+              <li><a href="{{ url_for("chat") }}">
+                <span class="glyphicon glyphicon-comment"></span>
+              </a></li>
+              <li><a href="{{ url_for("meet") }}">
+                <span class="glyphicon glyphicon-facetime-video"></span>
+              </a></li>
               <li><a href="{{ url_for("logout") }}">Logout</a></li>
             {% endif %}
           </ul>
