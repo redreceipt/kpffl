@@ -69,6 +69,8 @@ Roster totals 19 players adding one bench slot per season until 30 total players
 - IR - 1
 - Taxi - 3
 
+On any given week, if there are four blank spots _or_ if there are _any_ blank spots three different weeks, the team will forfeit their next available pick at draft time of the next or any following season.
+
 ### Section 3 - Scoring
 
 Passing
