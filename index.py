@@ -111,6 +111,13 @@ def rules():
     with open("docs/rules.md") as f:
         text = f.read()
         html = markdown.markdown(text)
+        # add link to edit
+        if session.get("profile"):
+            firstLine = html.split("\n")[0]
+            html = html.replace(
+                firstLine, firstLine +
+                f"<a href=\"{r'https://github.com/redreceipt/kpffl/edit/master/docs/rules.md'}\">(Edit)</a>"
+            )
         return render_template("rules.html", html=html)
 
 
