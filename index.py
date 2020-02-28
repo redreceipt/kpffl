@@ -76,9 +76,9 @@ def callback():
 
     # add user to DB
     db = getDB()
-    user = db.owners.find({"userID": userinfo["sub"]})
-    print(user)
-    # db.owners.replaceOne({'userID': userinfo['sub']})
+    user = db.owners.find_one({"userID": userinfo["sub"]})
+    if not user:
+        db.owners.insert_one({'userID': userinfo['sub']})
 
     return redirect(url_for("home", _external=True))
 

@@ -21,6 +21,24 @@ FLASK_APP=index.py FLASK_ENV=development flask run
 
 `now`
 
+## Manage Database
+
+Connect to the database:
+
+`mongo "<MONGO_URI>"`
+
+List the collections:
+
+`db.getCollectionNames()`
+
+Show all items:
+
+`db.collection.find()`
+
+Find an item:
+
+`db.collection.find( {_id: <ID>} )`
+
 ## Credits
 
 ### Tech Stack
