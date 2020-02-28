@@ -6,7 +6,7 @@ from authlib.integrations.flask_client import OAuth
 from flask import Flask, redirect, render_template, session, url_for
 from six.moves.urllib.parse import urlencode
 
-from sleeper import getTeams
+from sleeper import getStandings, getTeams
 
 app = Flask(__name__)
 
@@ -95,7 +95,7 @@ def logout():
 
 @app.route("/")
 def home():
-    return render_template("home.html", user=session.get("profile"))
+    return render_template("home.html")
 
 
 @app.route("/rules")
@@ -103,16 +103,18 @@ def rules():
     with open("docs/rules.md") as f:
         text = f.read()
         html = markdown.markdown(text)
-        return render_template("rules.html",
-                               user=session.get("profile"),
-                               html=html)
+        return render_template("rules.html", html=html)
 
 
 @app.route("/teams")
 def teams():
-    return render_template("teams.html",
-                           user=session.get("profile"),
-                           teams=getTeams())
+    return render_template("teams.html", teams=getTeams())
+
+
+@app.route("/rankings")
+def rankings():
+    return render_template("rankings.html",
+                           rankings={"standings": getStandings()})
 
 
 @app.route('/meet')

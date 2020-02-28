@@ -9,8 +9,12 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
     <!-- Bootstrap -->
 
-    <link rel="stylesheet" href="https://kpffl.com/static/style.css" />
-    <link rel="shortcut icon" href="https://kpffl.now.sh/static/favicon.ico">
+    <!-- FontAwesome -->
+    <script src="https://kit.fontawesome.com/14885fa0c3.js" crossorigin="anonymous"></script>
+    <!-- FontAwesome -->
+
+    <link rel="stylesheet" href="{{ url_for("static", filename="style.css", _external=True) }}" />
+    <link rel="shortcut icon" href="{{ url_for("static", filename="favicon.ico", _external=True) }}">
     <title>{% block title %}{% endblock %} - KPFFL</title>
   </head>
   <body>
@@ -29,16 +33,19 @@
           <ul class="nav navbar-nav">
             <li><a href="{{ url_for("rules") }}">Rules</a></li>
             <li><a href="{{ url_for("teams") }}">Teams</a></li>
+            <li><a href="{{ url_for("rankings") }}">Rankings</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            {% if user == None %}
+            {% if session.get("profile") == None %}
               <li><a href="{{ url_for("login") }}">Login</a></li>
             {% else %}
               <li><a href="{{ url_for("chat") }}">
-                <span class="glyphicon glyphicon-comment"></span>
+                <!--<span class="glyphicon glyphicon-comment"></span>-->
+                <i class="fab fa-discord"></i>
               </a></li>
               <li><a href="{{ url_for("meet") }}">
-                <span class="glyphicon glyphicon-facetime-video"></span>
+                <!--<span class="glyphicon glyphicon-facetime-video"></span>-->
+                <i class="fas fa-video"></i>
               </a></li>
               <li><a href="{{ url_for("logout") }}">Logout</a></li>
             {% endif %}
