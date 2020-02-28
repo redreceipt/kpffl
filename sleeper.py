@@ -145,7 +145,7 @@ def getStandings(leagueID=None):
         if teamID in playoffTeams:
             return "football-ball"
 
-    teamsByRank = [{
+    teamsByRecord = [{
         "postSeasonIcon":
         getPostSeasonStatus(team["id"]),
         "name":
@@ -172,5 +172,7 @@ def getStandings(leagueID=None):
         "league":
         league,
         "teams":
-        sorted(teamsByRank, key=lambda team: team["stats"]["w"], reverse=True)
+        sorted(teamsByRecord,
+               key=lambda team: team["stats"]["w"],
+               reverse=True)
     }
