@@ -111,7 +111,7 @@ def rules():
     with open("docs/rules.md") as f:
         text = f.read()
         html = markdown.markdown(text)
-        # add link to edit
+        # add link to edit if logged in
         if session.get("profile"):
             firstLine = html.split("\n")[0]
             html = html.replace(
