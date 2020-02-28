@@ -95,7 +95,7 @@ def logout():
 
 @app.route("/")
 def home():
-    return render_template("home.html", user=session.get("profile"))
+    return render_template("home.html")
 
 
 @app.route("/rules")
@@ -103,16 +103,12 @@ def rules():
     with open("docs/rules.md") as f:
         text = f.read()
         html = markdown.markdown(text)
-        return render_template("rules.html",
-                               user=session.get("profile"),
-                               html=html)
+        return render_template("rules.html", html=html)
 
 
 @app.route("/teams")
 def teams():
-    return render_template("teams.html",
-                           user=session.get("profile"),
-                           teams=getTeams())
+    return render_template("teams.html", teams=getTeams())
 
 
 @app.route("/rankings")

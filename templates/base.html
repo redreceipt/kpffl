@@ -36,7 +36,7 @@
             <li><a href="{{ url_for("rankings") }}">Rankings</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            {% if user == None %}
+            {% if session.get("profile") == None %}
               <li><a href="{{ url_for("login") }}">Login</a></li>
             {% else %}
               <li><a href="{{ url_for("chat") }}">
