@@ -3,21 +3,26 @@ content %}
 <div class="row">
   <div class="col-md-4">
     <h4>
-      Standings {% if league["status"] != "in_season" %}
+      Standings {% if rankings["standings"]["league"]["status"] != "in_season"
+      %}
       <small>(Last Season)</small>
       {% endif %}
     </h4>
     <table class="table table-hover">
       <tr>
-        <th>Rank</th>
+        <th></th>
         <th>Team</th>
         <th>Record</th>
       </tr>
-      {% for team in rankings["standings"] %}
+      {% for team in rankings["standings"]["teams"] %}
       <tr>
-        <td>{{team["rank"]}}</td>
+        <td>
+          {% if team["postSeasonIcon"] %}
+            <i class="fas fa-{{team["postSeasonIcon"]}}"></i>
+          {% endif %}
+        </td>
         <td>{{team["name"]}}</td>
-        <td>{{team["record"] ~ " (" ~ team["points"] ~ ")"}}</td>
+        <td>{{team["record"]}}</td>
       </tr>
       {% endfor %}
     </table>

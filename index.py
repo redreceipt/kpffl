@@ -6,7 +6,7 @@ from authlib.integrations.flask_client import OAuth
 from flask import Flask, redirect, render_template, session, url_for
 from six.moves.urllib.parse import urlencode
 
-from sleeper import getLeague, getStandings, getTeams
+from sleeper import getStandings, getTeams
 
 app = Flask(__name__)
 
@@ -118,7 +118,6 @@ def teams():
 @app.route("/rankings")
 def rankings():
     return render_template("rankings.html",
-                           league=getLeague(),
                            rankings={"standings": getStandings()})
 
 
