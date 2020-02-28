@@ -6,6 +6,7 @@ from authlib.integrations.flask_client import OAuth
 from flask import Flask, redirect, render_template, session, url_for
 from six.moves.urllib.parse import urlencode
 
+from database import getDB
 from sleeper import getStandings, getTeams
 
 app = Flask(__name__)
@@ -72,6 +73,13 @@ def callback():
         'name': userinfo['name'],
         'picture': userinfo['picture']
     }
+
+    # add user to DB
+    db = getDB()
+    user = db.owners.find_one({"userID": userinfo["sub"]})
+    if not user:
+        db.owners.insert_one({'userID': userinfo['sub']})
+
     return redirect(url_for("home", _external=True))
 
 
