@@ -20,3 +20,14 @@ FLASK_APP=index.py FLASK_ENV=development flask run
 ## Deployment
 
 `now`
+
+## Credits
+
+### Tech Stack
+
+[Flask](https://palletsprojects.com/p/flask/)
+[Zeit Now](https://zeit.co/)
+[Auth0](https://auth0.com/)
+[MongoDB](https://www.mongodb.com/)
+[FontAwesome](https://fontawesome.com/)
+[Bootstrap 3](https://getbootstrap.com/docs/3.3/)
