@@ -38,22 +38,29 @@ content %}
         {% endif %}
       </small>
     </h4>
-    <table class="table table-hover">
-      <tr>
-        <th>Rank</th>
-        <th>Team</th>
-      </tr>
-      {% for team in rankings["cp"]["teams"] %}
-      <tr>
-        <td>{{team["rank"]}}</td>
-        <td>{{team["name"]}}
-          {% if team["topVotes"] > 1 %}
-            ({{team['topVotes']}})
-          {% endif %}
-        </td>
-      </tr>
-      {% endfor %}
-    </table>
+    {% if rankings["cp"]["numVotes"] < 6 %}
+      <h1 class="text-center"><strong>
+          {{6 - rankings["cp"]["numVotes"]}}
+      </strong></h1>
+      <h2 class="text-center">votes needed</h2>
+    {% else %}
+      <table class="table table-hover">
+        <tr>
+          <th>Rank</th>
+          <th>Team</th>
+        </tr>
+        {% for team in rankings["cp"]["teams"] %}
+        <tr>
+          <td>{{team["rank"]}}</td>
+          <td>{{team["name"]}}
+            {% if team["topVotes"] > 1 %}
+              ({{team['topVotes']}})
+            {% endif %}
+          </td>
+        </tr>
+        {% endfor %}
+      </table>
+    {% endif %}
   </div>
 </div>
 {% endblock %}

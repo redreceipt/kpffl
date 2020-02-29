@@ -1,3 +1,6 @@
+from math import floor
+from statistics import mean
+
 from database import getDB
 from sleeper import getTeams
 from sportsdata import getCurrentWeek
@@ -12,24 +15,20 @@ def getCoachesPoll():
 
     db = getDB()
     votes = db.coaches_polls.find({"week": week})
-    print(votes)
     for vote in votes:
-        print(vote["rankings"])
-        for rank, team in enumerate(vote["rankings"]):
-            print(ranks[team["id"]])
-            ranks[team["id"]].append(rank)
-
-    print(ranks)
+        for i, team in enumerate(vote["rankings"]):
+            # convert kpffl ID to sleeper ID
+            teamID = int(team)
+            ranks[teamID].append(i + 1)
 
     teamsByRank = [{
         "name": team["name"],
-        "rank": 0,
-        "topVotes": 1
+        "rank": floor(mean(ranks[team["id"]])),
+        "topVotes": ranks[team["id"]].count(1)
     } for team in teams]
 
     return {
         "week": week,
-        "teams": sorted(teamsByRank,
-                        key=lambda team: team["rank"],
-                        reverse=True)
+        "numVotes": votes.count(),
+        "teams": sorted(teamsByRank, key=lambda team: team["rank"])
     }
