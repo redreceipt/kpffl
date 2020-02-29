@@ -30,7 +30,6 @@ def getPlayers():
     """Gets players from Sleepers database."""
     # NOTE: should be used sparingly
     # TODO: players should be cached in a seperate call
-    print("hello")
     r = requests.get("https://api.sleeper.app/v1/players/nfl")
     return json.loads(r.text)
 
