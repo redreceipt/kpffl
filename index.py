@@ -3,7 +3,7 @@ from functools import wraps
 
 import markdown
 from authlib.integrations.flask_client import OAuth
-from flask import Flask, redirect, render_template, session, url_for
+from flask import Flask, redirect, render_template, request, session, url_for
 from six.moves.urllib.parse import urlencode
 
 from database import getDB
@@ -127,13 +127,20 @@ def teams():
     return render_template("teams.html", teams=getTeams())
 
 
-@app.route("/rankings")
-def rankings():
+@app.route("/rankings", methods=['POST', 'GET'])
+@app.route("/rankings/<path>")
+def rankings(path=None):
+    if path and path != "vote":
+        return redirect(url_for("rankings"))
+    if request.method == "POST":
+        print(request.form)
+    voting = path and session.get("profile")
     return render_template("rankings.html",
                            rankings={
                                "standings": getStandings(),
                                "cp": getCoachesPoll()
-                           })
+                           },
+                           voting=voting)
 
 
 @app.route('/meet')

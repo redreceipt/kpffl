@@ -36,30 +36,57 @@ content %}
         {% else %}
           (Week {{rankings["cp"]["week"]}})
         {% endif %}
+        {% if session.get("profile") and not voting %}
+          <a href="{{ url_for("rankings", path="vote") }}">Vote</a>
+        {% endif %}
       </small>
     </h4>
-    {% if rankings["cp"]["numVotes"] < 6 %}
+    {# if there's not enough votes, don't show anything #}
+    {% if rankings["cp"]["numVotes"] < 6 and not voting %}
       <h1 class="text-center"><strong>
           {{6 - rankings["cp"]["numVotes"]}}
       </strong></h1>
       <h2 class="text-center">votes needed</h2>
     {% else %}
-      <table class="table table-hover">
-        <tr>
-          <th>Rank</th>
-          <th>Team</th>
-        </tr>
-        {% for team in rankings["cp"]["teams"] %}
-        <tr>
-          <td>{{team["rank"]}}</td>
-          <td>{{team["name"]}}
-            {% if team["topVotes"] > 1 %}
-              ({{team['topVotes']}})
-            {% endif %}
-          </td>
-        </tr>
-        {% endfor %}
-      </table>
+      {% if voting %}
+      <form class="form-horizontal" action="{{ url_for("rankings") }}" method="post">
+      {% else %}
+        <table class="table table-hover">
+          <tr><th>Rank</th><th>Team</th></tr>
+          <tr>
+            <td>
+      {% endif %}
+      {% for team in rankings["cp"]["teams"] %}
+        {% if voting %}
+          <div class="form-group">
+            <div class="col-xs-3 col-sm-3">
+              <select class="form-control input-sm" name="{{ team["id"] }}">
+                {% for i in range(12) %}
+                  <option>{{ i + 1 }}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <label class="control-label" for="{{ team["id"] }}">
+              {{ team["name"] }}
+            </label>
+          </div>
+        {% else %}
+            {{team["rank"]}}
+            </td>
+            <td>{{ team["name"] }}
+              {% if team["topVotes"] > 1 %}
+              ({{ team['topVotes'] }})
+              {% endif %}
+            </td>
+          </tr>
+        {% endif %}
+      {% endfor %}
+      {% if voting %}
+          <button type="submit" class="btn btn-default">Submit</button>
+        </form>
+      {% else %}
+        </table>
+      {% endif %}
     {% endif %}
   </div>
 </div>
