@@ -117,7 +117,7 @@ def getStandings(leagueID=None):
 
     teams = getTeams(league["league_id"], True)
 
-    # get post-season results
+    # get brackets 
     r = requests.get(
         f"https://api.sleeper.app/v1/league/{league['league_id']}/winners_bracket"
     )
