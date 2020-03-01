@@ -47,6 +47,9 @@
                 <!--<span class="glyphicon glyphicon-facetime-video"></span>-->
                 <i class="fas fa-video"></i>
               </a></li>
+              {% if not session.get("isOwner", False) %}
+                <li><a href="{{ url_for("sync") }}">Verify</a></li>
+              {% endif %}
               <li><a href="{{ url_for("logout") }}">Logout</a></li>
             {% endif %}
           </ul>

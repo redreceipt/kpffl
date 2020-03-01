@@ -36,7 +36,7 @@ content %}
         {% else %}
           (Week {{rankings["cp"]["week"]}})
         {% endif %}
-        {% if session.get("profile") and not voting %}
+        {% if session.get("isOwner", False) and not voting %}
           <a href="{{ url_for("rankings", voting="true") }}">Vote</a>
         {% endif %}
       </small>

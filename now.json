@@ -7,6 +7,7 @@
     "DISCORD_URI": "@discord-uri",
     "SECRET_KEY": "@secret-key",
     "AUTH0_SECRET": "@auth0-secret",
-    "SPORTSDATA_KEY": "@sportsdata-key"
+    "SPORTSDATA_KEY": "@sportsdata-key",
+    "LEAGUE_ID": "@league-id"
   }
 }
