@@ -52,7 +52,7 @@ content %}
       {% if error %}
       <h2 class="text-danger">{{ error }}</h2>
       {% endif %}
-      <form class="form-horizontal" action="{{ url_for("rankings") }}" method="post">
+      <form class="form-horizontal" action="{{ url_for("rankings", vote=("true" if error else None)) }}" method="post">
       {% else %}
         <table class="table table-hover">
           <tr><th>Rank</th><th>Team</th></tr>
