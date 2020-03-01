@@ -37,7 +37,7 @@ content %}
           (Week {{rankings["cp"]["week"]}})
         {% endif %}
         {% if session.get("profile") and not voting %}
-          <a href="{{ url_for("rankings", path="vote") }}">Vote</a>
+          <a href="{{ url_for("rankings", voting="true") }}">Vote</a>
         {% endif %}
       </small>
     </h4>
@@ -49,6 +49,9 @@ content %}
       <h2 class="text-center">votes needed</h2>
     {% else %}
       {% if voting %}
+      {% if error %}
+      <h2 class="text-danger">{{ error }}</h2>
+      {% endif %}
       <form class="form-horizontal" action="{{ url_for("rankings") }}" method="post">
       {% else %}
         <table class="table table-hover">
@@ -60,13 +63,13 @@ content %}
         {% if voting %}
           <div class="form-group">
             <div class="col-xs-3 col-sm-3">
-              <select class="form-control input-sm" name="{{ team["id"] }}">
+              <select class="form-control input-sm" name="team|{{ team['id'] }}">
                 {% for i in range(12) %}
                   <option>{{ i + 1 }}</option>
                 {% endfor %}
               </select>
             </div>
-            <label class="control-label" for="{{ team["id"] }}">
+            <label class="control-label" for="team|{{ team["id"] }}">
               {{ team["name"] }}
             </label>
           </div>
@@ -82,7 +85,7 @@ content %}
         {% endif %}
       {% endfor %}
       {% if voting %}
-          <button type="submit" class="btn btn-default">Submit</button>
+      <p><button type="submit" class="btn btn-default">Submit</button></p>
         </form>
       {% else %}
         </table>

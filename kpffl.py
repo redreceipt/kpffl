@@ -18,7 +18,7 @@ def getCoachesPoll():
     for vote in votes:
         for i, team in enumerate(vote["rankings"]):
             # convert kpffl ID to sleeper ID
-            teamID = int(team)
+            teamID = int(team.split("|")[1])
             ranks[teamID].append(i + 1)
 
     teamsByRank = [{
@@ -33,3 +33,25 @@ def getCoachesPoll():
         "numVotes": votes.count(),
         "teams": sorted(teamsByRank, key=lambda team: team["rank"])
     }
+
+
+def addCoachesPollVote(vote, userID):
+    """Adds one vote to the database."""
+
+    rankings = []
+
+    # swap vote hash
+    voteDict = {value: key for key, value in vote.items()}
+    for i in range(12):
+        rankings.append(voteDict[str(i + 1)])
+
+    db = getDB()
+    db.coaches_polls.update({
+        "user_id": userID,
+        "week": getCurrentWeek()
+    }, {
+        "user_id": userID,
+        "week": getCurrentWeek(),
+        "rankings": rankings
+    },
+                            upsert=True)
