@@ -9,5 +9,6 @@
     "AUTH0_SECRET": "@auth0-secret",
     "SPORTSDATA_KEY": "@sportsdata-key",
     "LEAGUE_ID": "@league-id"
-  }
+  },
+  "regions": ["iad", "cle"]
 }
