@@ -131,7 +131,7 @@ def teams():
 def rankings():
 
     rankings = {"standings": getStandings(), "cp": getCoachesPoll()}
-    if request.method == "POST":
+    if request.method == "POST" and session.get("profile"):
         # validate form
         if set([int(teamID)
                 for teamID in request.form.values()]) != set(range(1, 13)):
