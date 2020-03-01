@@ -3,10 +3,11 @@ from functools import wraps
 
 import markdown
 from authlib.integrations.flask_client import OAuth
-from flask import Flask, redirect, render_template, session, url_for
+from flask import Flask, redirect, render_template, request, session, url_for
 from six.moves.urllib.parse import urlencode
 
 from database import getDB
+from kpffl import addCoachesPollVote, getCoachesPoll
 from sleeper import getStandings, getTeams
 
 app = Flask(__name__)
@@ -74,12 +75,6 @@ def callback():
         'picture': userinfo['picture']
     }
 
-    # add user to DB
-    db = getDB()
-    user = db.owners.find_one({"userID": userinfo["sub"]})
-    if not user:
-        db.owners.insert_one({'userID': userinfo['sub']})
-
     return redirect(url_for("home", _external=True))
 
 
@@ -126,10 +121,25 @@ def teams():
     return render_template("teams.html", teams=getTeams())
 
 
-@app.route("/rankings")
+@app.route("/rankings", methods=['POST', 'GET'])
 def rankings():
-    return render_template("rankings.html",
-                           rankings={"standings": getStandings()})
+
+    rankings = {"standings": getStandings(), "cp": getCoachesPoll()}
+    if request.method == "POST" and session.get("profile"):
+        # validate form
+        if set([int(teamID)
+                for teamID in request.form.values()]) != set(range(1, 13)):
+            error = "Number teams 1-12"
+            return render_template("rankings.html",
+                                   rankings=rankings,
+                                   voting=True,
+                                   error=error)
+        else:
+            # submit votes
+            addCoachesPollVote(request.form, session["profile"]["user_id"])
+
+    voting = request.args.get("voting") == "true" and session.get("profile")
+    return render_template("rankings.html", rankings=rankings, voting=voting)
 
 
 @app.route('/meet')

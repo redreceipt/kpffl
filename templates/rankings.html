@@ -27,5 +27,70 @@ content %}
       {% endfor %}
     </table>
   </div>
+  <div class="col-md-4">
+    <h4>
+      Coaches Poll
+      <small> 
+        {% if rankings["cp"]["week"] == 0 %}
+          (Preseason)
+        {% else %}
+          (Week {{rankings["cp"]["week"]}})
+        {% endif %}
+        {% if session.get("profile") and not voting %}
+          <a href="{{ url_for("rankings", voting="true") }}">Vote</a>
+        {% endif %}
+      </small>
+    </h4>
+    {# if there's not enough votes, don't show anything #}
+    {% if rankings["cp"]["numVotes"] < 6 and not voting %}
+      <h1 class="text-center"><strong>
+          {{6 - rankings["cp"]["numVotes"]}}
+      </strong></h1>
+      <h2 class="text-center">votes needed</h2>
+    {% else %}
+      {% if voting %}
+      {% if error %}
+      <h2 class="text-danger">{{ error }}</h2>
+      {% endif %}
+      <form class="form-horizontal" action="{{ url_for("rankings", vote=("true" if error else None)) }}" method="post">
+      {% else %}
+        <table class="table table-hover">
+          <tr><th>Rank</th><th>Team</th></tr>
+          <tr>
+            <td>
+      {% endif %}
+      {% for team in rankings["cp"]["teams"] %}
+        {% if voting %}
+          <div class="form-group">
+            <div class="col-xs-3 col-sm-3">
+              <select class="form-control input-sm" name="team|{{ team['id'] }}">
+                {% for i in range(12) %}
+                  <option>{{ i + 1 }}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <label class="control-label" for="team|{{ team["id"] }}">
+              {{ team["name"] }}
+            </label>
+          </div>
+        {% else %}
+            {{team["rank"]}}
+            </td>
+            <td>{{ team["name"] }}
+              {% if team["topVotes"] > 1 %}
+              ({{ team['topVotes'] }})
+              {% endif %}
+            </td>
+          </tr>
+        {% endif %}
+      {% endfor %}
+      {% if voting %}
+      <p><button type="submit" class="btn btn-default">Submit</button></p>
+        </form>
+      {% else %}
+        </table>
+      {% endif %}
+    {% endif %}
+  </div>
 </div>
 {% endblock %}

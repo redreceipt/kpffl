@@ -30,7 +30,6 @@ def getPlayers():
     """Gets players from Sleepers database."""
     # NOTE: should be used sparingly
     # TODO: players should be cached in a seperate call
-    print("hello")
     r = requests.get("https://api.sleeper.app/v1/players/nfl")
     return json.loads(r.text)
 
@@ -145,7 +144,7 @@ def getStandings(leagueID=None):
         if teamID in playoffTeams:
             return "football-ball"
 
-    teamsByRank = [{
+    teamsByRecord = [{
         "postSeasonIcon":
         getPostSeasonStatus(team["id"]),
         "name":
@@ -172,5 +171,7 @@ def getStandings(leagueID=None):
         "league":
         league,
         "teams":
-        sorted(teamsByRank, key=lambda team: team["stats"]["w"], reverse=True)
+        sorted(teamsByRecord,
+               key=lambda team: team["stats"]["w"],
+               reverse=True)
     }
