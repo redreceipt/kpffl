@@ -75,12 +75,6 @@ def callback():
         'picture': userinfo['picture']
     }
 
-    # add user to DB
-    db = getDB()
-    db.owners.update({"user_id": userinfo["sub"]},
-                     {"user_id": userinfo["sub"]},
-                     upsert=True)
-
     return redirect(url_for("home", _external=True))
 
 
