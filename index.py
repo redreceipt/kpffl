@@ -8,7 +8,7 @@ from six.moves.urllib.parse import urlencode
 
 from database import getDB
 from kpffl import addCoachesPollVote, getCoachesPoll
-from sleeper import getStandings, getTeams
+from sleeper import getStandings, getTeams, verifyOwner
 
 app = Flask(__name__)
 
@@ -53,8 +53,7 @@ def requires_auth(f):
     @wraps(f)
     def decorated(*args, **kwargs):
         if 'profile' not in session:
-            # Redirect to Login page here
-            return redirect('/')
+            return redirect(url_for("home"))
         return f(*args, **kwargs)
 
     return decorated
@@ -75,13 +74,12 @@ def callback():
         'picture': userinfo['picture']
     }
 
-    return redirect(url_for("home", _external=True))
+    return redirect(url_for("home"))
 
 
 @app.route('/login')
 def login():
-    return auth0.authorize_redirect(
-        redirect_uri=url_for("callback", _external=True))
+    return auth0.authorize_redirect(redirect_uri=url_for("callback"))
 
 
 @app.route('/logout')
@@ -90,7 +88,7 @@ def logout():
     session.clear()
     # Redirect user to logout endpoint
     params = {
-        'returnTo': url_for('home', _external=True),
+        'returnTo': url_for('home'),
         'client_id': 'x1wWsLZAZlLgrSeboClluZcNwbSbeK2Z'
     }
     return redirect(auth0.api_base_url + '/v2/logout?' + urlencode(params))
@@ -140,6 +138,17 @@ def rankings():
 
     voting = request.args.get("voting") == "true" and session.get("profile")
     return render_template("rankings.html", rankings=rankings, voting=voting)
+
+
+@app.route("/sync", methods=["POST", "GET"])
+@requires_auth
+def sync():
+
+    if request.method == "POST":
+        verified = verifyOwner(request.form["email"], request.form["password"])
+        session["isOwner"] = verified
+        return redirect(url_for("home"))
+    return render_template("sync.html")
 
 
 @app.route('/meet')

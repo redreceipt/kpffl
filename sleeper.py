@@ -25,6 +25,21 @@ def _getRosters(leagueID):
     return json.loads(r.text)
 
 
+def verifyOwner(username, pw):
+    """Verifies user is an owner in the league."""
+    loginQuery = f" {{ login( email_or_phone_or_username: \"{username}\" password: \"{pw}\") {{ user_id }} }} "
+    r = requests.post("https://sleeper.app/graphql",
+                      json={"query": loginQuery})
+    userID = json.loads(r.text)["data"]["login"]["user_id"]
+    r = requests.get(
+        f"https://api.sleeper.app/v1/user/{userID}/leagues/nfl/2020")
+    leagues = json.loads(r.text)
+    leagueIDs = [league["league_id"] for league in leagues]
+    if os.getenv("LEAGUE_ID") in leagueIDs:
+        return True
+    return False
+
+
 def getPlayers():
     """Gets players from Sleepers database."""
     # NOTE: should be used sparingly
