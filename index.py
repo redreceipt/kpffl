@@ -6,7 +6,6 @@ from authlib.integrations.flask_client import OAuth
 from flask import Flask, redirect, render_template, request, session, url_for
 from six.moves.urllib.parse import urlencode
 
-from database import getDB
 from kpffl import addCoachesPollVote, getCoachesPoll
 from sleeper import getStandings, getTeams, verifyOwner
 
