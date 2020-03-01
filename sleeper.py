@@ -1,14 +1,13 @@
 import json
+import os
 
 import requests
-
-# TODO come from the session and linked to the user
-LEAGUE_ID = 515543543873765376
 
 
 def _getLeague(leagueID):
     r = requests.get(
-        f"https://api.sleeper.app/v1/league/{leagueID or LEAGUE_ID}")
+        f"https://api.sleeper.app/v1/league/{leagueID or os.getenv('LEAGUE_ID')}"
+    )
     return json.loads(r.text)
 
 
@@ -36,8 +35,8 @@ def getPlayers():
 
 def getTeams(leagueID=None, skipPlayers=False):
     """Gets the current teams in the league."""
-    owners = _getOwners(leagueID or LEAGUE_ID)
-    rosters = _getRosters(leagueID or LEAGUE_ID)
+    owners = _getOwners(leagueID or os.getenv("LEAGUE_ID"))
+    rosters = _getRosters(leagueID or os.getenv("LEAGUE_ID"))
 
     # assemble teams
     teams = []
@@ -108,7 +107,7 @@ def getTeams(leagueID=None, skipPlayers=False):
 def getStandings(leagueID=None):
     """Gets standings of the most recent active league."""
 
-    league = _getLeague(leagueID or LEAGUE_ID)
+    league = _getLeague(leagueID or os.getenv("LEAGUE_ID"))
     winnerID = None
     loserID = None
     if league["status"] != "in_season":
@@ -116,7 +115,7 @@ def getStandings(leagueID=None):
 
     teams = getTeams(league["league_id"], True)
 
-    # get brackets 
+    # get brackets
     r = requests.get(
         f"https://api.sleeper.app/v1/league/{league['league_id']}/winners_bracket"
     )
@@ -154,18 +153,6 @@ def getStandings(leagueID=None):
         "record":
         f"{team['stats']['w']}-{team['stats']['l']} ({team['stats']['pf']})"
     } for team in teams]
-
-    # TODO: need to sort by playoff bracket then by wins and losses
-    # rostersById = {}
-    # for roster in rosters:
-    # rostersById[roster["roster_id"]]: roster
-
-    # first six positions are from the playoffs
-    # r = requests.get(
-    # f"https://api.sleeper.app/v1/league/{LEAGUE_ID}/winners_bracket")
-    # bracket = json.loads(r.text) or []
-    # for matchup in bracket:
-    # pass
 
     return {
         "league":
