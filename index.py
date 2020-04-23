@@ -78,7 +78,8 @@ def callback():
 
 @app.route('/login')
 def login():
-    return auth0.authorize_redirect(redirect_uri=url_for("callback"))
+    return auth0.authorize_redirect(
+        redirect_uri=url_for("callback", _external=True))
 
 
 @app.route('/logout')
