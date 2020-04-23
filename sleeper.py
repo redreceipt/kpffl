@@ -72,7 +72,7 @@ def getTeams(leagueID=None, skipPlayers=False):
                     getPlayerName(allPlayers[playerId])
                     if playerId != "0" else "(Empty)",
                     "pos":
-                    positions.pop(0),
+                    positions.pop(0) if len(positions) else "",
                 },
                 ids,
             ))
