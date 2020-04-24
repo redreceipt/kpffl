@@ -73,7 +73,7 @@ def callback():
         'picture': userinfo['picture']
     }
 
-    return redirect(url_for("home"))
+    return redirect(url_for("home", _external=True))
 
 
 @app.route('/login')
@@ -153,9 +153,9 @@ def sync():
 
 @app.route('/meet')
 def meet():
-    return redirect(os.getenv("GOOGLE_MEET_URI"), code=301)
+    return redirect(os.getenv("JITSI_URI"), code=301)
 
 
 @app.route('/chat')
 def chat():
-    return redirect(os.getenv("DISCORD_URI"), code=301)
+    return redirect(os.getenv("GROUPME_URI"), code=301)

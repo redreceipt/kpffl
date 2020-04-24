@@ -3,8 +3,8 @@
   "routes": [{ "src": "/.*", "dest": "/index.py" }],
   "builds": [{ "src": "*.py", "use": "@now/python" }],
   "env": {
-    "GOOGLE_MEET_URI": "@google-meet-uri",
-    "DISCORD_URI": "@discord-uri",
+    "GROUPME_URI": "@groupme-uri",
+    "JITSI_URI": "@jitsi-uri",
     "SECRET_KEY": "@secret-key",
     "AUTH0_SECRET": "@auth0-secret",
     "SPORTSDATA_KEY": "@sportsdata-key",
