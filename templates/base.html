@@ -40,11 +40,9 @@
               <li><a href="{{ url_for("login") }}">Login</a></li>
             {% else %}
               <li><a href="{{ url_for("chat") }}">
-                <!--<span class="glyphicon glyphicon-comment"></span>-->
                 <i class="fas fa-comments"></i>
               </a></li>
               <li><a href="{{ url_for("meet") }}">
-                <!--<span class="glyphicon glyphicon-facetime-video"></span>-->
                 <i class="fas fa-video"></i>
               </a></li>
               {% if not session.get("isOwner", False) %}
