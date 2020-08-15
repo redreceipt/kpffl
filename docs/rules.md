@@ -31,7 +31,7 @@ In the case of a tie, the commissioner’s vote will not count.
 
 ### Section 3 - Buy In
 
-Buy in will be \$25 per team. 90% of the pot will go to 1st place and 10% will go to 2nd place. All money will be paid prior to the draft.
+Buy in will be $25 per team. 90% of the pot will go to 1st place and 10% will go to 2nd place. All money will be paid prior to the draft.
 
 ### Section 4 - Loser’s Penalty
 
@@ -133,10 +133,10 @@ Draft order:
 4. Regular Season 9th place
 5. Regular Season 8th place
 6. Regular Season 7th place
-7. Final Season 5th place
-8. Final Season 6th place
-9. Final Season 3rd place
-10. Final Season 4th place
+7. Postseason 5th place
+8. Postseason 6th place
+9. Postseason 3rd place
+10. Postseason 4th place
 11. Championship Loser
 12. Championship Winner
 
@@ -160,7 +160,7 @@ There is no limit to the amount of players traded. The deadline will be the last
 
 ### Section 5 - COVID Rule
 
-If the NFL season is cancelled for any reason before week 10 is played, draft order will be determined on the normal basis and the money will be distributed back to the owners. If the season is cancelled after week 10 but before the championship, draft order will be determined on the normal basis and the pot will be distributed evently among the current teams qualified for the playoffs.
+If the NFL season is cancelled for any reason before week 10 is played, draft order will be determined on the normal basis and the money will be distributed back to the owners. If the season is cancelled after week 10 but before the championship, draft order will be determined on the normal basis and the pot will be distributed evenly among the current teams qualified for the playoffs.
 
 ## Amendments
 
