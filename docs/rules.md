@@ -57,7 +57,7 @@ Regular season standings priority (in the following order):
 
 ### Section 2 - Rosters
 
-Roster totals 19 players adding one bench slot per season until 30 total players is reached.
+Roster totals 23 players adding one bench slot per season until 30 total players is reached.
 
 - QB - 1
 - RB - 2
@@ -69,7 +69,7 @@ Roster totals 19 players adding one bench slot per season until 30 total players
 - IR - 1
 - Taxi - 3
 
-On any given week, if there are four blank spots _or_ if there are _any_ blank spots three different weeks, the team will forfeit their next available pick at draft time of the next or any following season.
+On any given week, if there are four blank starting spots _or_ if there are _any_ blank spots three different weeks, the team will forfeit their next available pick at draft time of the next or any following season.
 
 ### Section 3 - Scoring
 
@@ -157,6 +157,10 @@ Owners may keep as many players as they wish. Rosters must be cut down prior to 
 ### Section 4 - Trades
 
 There is no limit to the amount of players traded. The deadline will be the last Wednesday in the regular season at noon, after which no trades will be allowed. There is no trade review period. Trades may be vetoed by the commissioner, which may then be overruled by a majority vote. Off-season draft pick trading is allowed.
+
+### Section 5 - COVID Rule
+
+If the NFL season is cancelled for any reason before week 10 is played, draft order will be determined on the normal basis and the money will be distributed back to the owners. If the season is cancelled after week 10 but before the championship, draft order will be determined on the normal basis and the pot will be distributed evently among the current teams qualified for the playoffs.
 
 ## Amendments
 
