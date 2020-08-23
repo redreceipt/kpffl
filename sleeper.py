@@ -36,8 +36,8 @@ def verifyOwner(username, pw):
     leagues = json.loads(r.text)
     leagueIDs = [league["league_id"] for league in leagues]
     if os.getenv("LEAGUE_ID") in leagueIDs:
-        return True
-    return False
+        return userID
+    return None
 
 
 def getPlayers():

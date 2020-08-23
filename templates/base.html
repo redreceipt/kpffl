@@ -36,18 +36,18 @@
             <!--<li><a href="{{ url_for("rankings") }}">Rankings</a></li>-->
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            {% if session.get("profile") == None %}
+            {% if session.get("user_id") == None %}
               <li><a href="{{ url_for("login") }}">Login</a></li>
             {% else %}
-              <li><a href="{{ url_for("chat") }}">
-                <i class="fas fa-comments"></i>
+              <li><a href="https://kpffl.com/chat">
+                Chat <i class="fas fa-external-link-alt"></i>
               </a></li>
-              <li><a href="{{ url_for("meet") }}">
-                <i class="fas fa-video"></i>
+              <li><a href="https://kpffl.com/meet">
+                Meet <i class="fas fa-external-link-alt"></i>
               </a></li>
-              {% if not session.get("isOwner", False) %}
-                <li><a href="{{ url_for("sync") }}">Verify</a></li>
-              {% endif %}
+              <li><a href="https://kpffl.com/sleeper">
+                Sleeper <i class="fas fa-external-link-alt"></i>
+              </a></li>
               <li><a href="{{ url_for("logout") }}">Logout</a></li>
             {% endif %}
           </ul>

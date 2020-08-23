@@ -122,3 +122,5 @@ venv/
 
 # env variables
 .env
+
+.vercel

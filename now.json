@@ -1,13 +1,13 @@
 {
   "alias": ["kpffl.com"],
-  "routes": [{ "src": "/.*", "dest": "/index.py" }],
-  "builds": [{ "src": "*.py", "use": "@now/python" }],
-  "env": {
-    "GROUPME_URI": "@groupme-uri",
-    "JITSI_URI": "@jitsi-uri",
-    "SECRET_KEY": "@secret-key",
-    "AUTH0_SECRET": "@auth0-secret",
-    "SPORTSDATA_KEY": "@sportsdata-key",
-    "LEAGUE_ID": "@league-id"
-  }
+  "routes": [
+    { "src": "/chat", "dest": "https://web.groupme.com/chats" },
+    { "src": "/meet", "dest": "https://meet.jit.si/kpffl" },
+    {
+      "src": "/sleeper",
+      "dest": "https://sleeper.app/leagues/515543543873765376"
+    },
+    { "src": "/.*", "dest": "/index.py" }
+  ],
+  "builds": [{ "src": "*.py", "use": "@now/python" }]
 }
