@@ -51,7 +51,7 @@
           <tr><td>
             {{ team["rank"] }}
             {% if team["topVotes"] > 1 %}
-              {{ " (" + str(team["topVotes"]) + ")" }}
+              ({{ team["topVotes"] }})
             {% endif %}
           </td><td>
             {{ team["name"] }}<small> ({{ team["owner"] }})</small>
