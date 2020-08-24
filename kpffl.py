@@ -27,6 +27,7 @@ def getCoachesPoll():
     teamsByRank = [{
         "id": team["id"],
         "name": team["name"],
+        "owner": team["owner"],
         "rank": floor(mean(ranks[team["id"]] or [1])),
         "topVotes": ranks[team["id"]].count(1)
     } for team in teams]
