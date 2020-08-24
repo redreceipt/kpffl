@@ -1,0 +1,43 @@
+{% extends "base.html" %} {% block title %}Proposal{% endblock %} {% block
+styles %}
+<style>
+  .input {
+    margin-bottom: 10px;
+  }
+</style>
+{% endblock %} {% block content %}
+<h2>Rule Change Proposal</h2>
+<form method="post">
+  <div class="form-group">
+    <label for="name">Your name</label>
+    <div class="input-group input">
+      <input type="text" class="form-control" id="name" name="name" required />
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="title">Proposal title</label>
+    <div class="input-group input">
+      <input type="text" class="form-control" id="title" name="title" />
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="why">Why?</label>
+    <div class="input">
+      <textarea class="form-control" id="why" name="why"></textarea>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="what">What changes?</label>
+    <div class="input">
+      <textarea class="form-control" id="what" name="what"></textarea>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="how">How does it work?</label>
+    <div class="input">
+      <textarea class="form-control" id="how" name="how"></textarea>
+    </div>
+  </div>
+  <button type="submit" class="btn btn-default">Submit</button>
+</form>
+{% endblock %}

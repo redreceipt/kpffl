@@ -1,6 +1,10 @@
 from math import floor
 from statistics import mean
 
+import os
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail
+
 from database import getDB
 from sleeper import getTeams
 from sportsdata import getCurrentWeek
@@ -53,3 +57,21 @@ def addCoachesPollVote(votes, userID):
         "rankings": votes
     },
                             upsert=True)
+
+def sendProposal(proposal):
+    """This will assemble a proposal from the submission form and email commisioners."""
+    print(proposal)
+
+    message = Mail(
+        from_email='michael@neeley.dev',
+        to_emails='micneeley14@gmail.com',
+        subject='KPFFL Rule Change Proposal',
+        html_content=str(proposal))
+    try:
+        sg = SendGridAPIClient(os.environ.get('SENDGRID_KEY'))
+        response = sg.send(message)
+        print(response.status_code)
+        print(response.body)
+        print(response.headers)
+    except Exception as e:
+        print(e.message)
