@@ -1,5 +1,4 @@
 import os
-from functools import wraps
 
 import markdown
 from flask import Flask, redirect, render_template, request, session, url_for
