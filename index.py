@@ -4,7 +4,7 @@ from functools import wraps
 import markdown
 from flask import Flask, redirect, render_template, request, session, url_for
 
-from kpffl import addCoachesPollVote, getCoachesPoll
+from kpffl import addCoachesPollVote, getCoachesPoll, sendProposal
 from sleeper import getTeams, verifyOwner
 
 app = Flask(__name__)
@@ -47,13 +47,16 @@ def rules():
             firstLine = html.split("\n")[0]
             html = html.replace(
                 firstLine, firstLine +
-                f"<a href=\"{url_for("proposal")}\">(Submit Proposal)</a> " +
-                f"<a href=\"{r'https://github.com/redreceipt/kpffl/edit/master/docs/rules.md'}\">(Edit)</a>"
+                f"<a class=\"btn btn-default\" href=\"{url_for('proposal')}\" role=\"button\">Submit Proposal</a>" 
+                # f"<small><a href=\"{r'https://github.com/redreceipt/kpffl/edit/master/docs/rules.md'}\">(Edit)</a></small>"
             )
         return render_template("rules.html", html=html)
 
-@app.route.("/proposal", methods=["GET", "POST"])
+@app.route("/proposal", methods=["GET", "POST"])
 def proposal():
+    if request.method == "POST":
+        sendProposal(request.form)
+        return redirect(url_for("rules"))
     return render_template("proposal.html")
 
 
