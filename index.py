@@ -18,12 +18,12 @@ def login():
         session["user_id"] = verifyOwner(request.form["email"], request.form["password"])
         if not session["user_id"]:
             print("hello")
-            return render_template("sync.html", error=True)
+            return render_template("login.html", error=True)
         if session["voting"]:
             session["voting"] = False
             return redirect(url_for("rankings", subpath="vote"))
         return redirect(url_for("home"))
-    return render_template("sync.html")
+    return render_template("login.html")
 
 
 @app.route('/logout')
@@ -47,9 +47,14 @@ def rules():
             firstLine = html.split("\n")[0]
             html = html.replace(
                 firstLine, firstLine +
+                f"<a href=\"{url_for("proposal")}\">(Submit Proposal)</a> " +
                 f"<a href=\"{r'https://github.com/redreceipt/kpffl/edit/master/docs/rules.md'}\">(Edit)</a>"
             )
         return render_template("rules.html", html=html)
+
+@app.route.("/proposal", methods=["GET", "POST"])
+def proposal():
+    return render_template("proposal.html")
 
 
 @app.route("/teams")
