@@ -1,96 +1,103 @@
-{% extends "base.html" %} {% block title %}Rankings{% endblock %} {% block
-content %}
+{% extends "base.html" %} {% block title %}Rankings{% endblock %}
+
+{% block styles %}
+<style>
+  .team {
+    margin: 10px 0;
+  }
+
+  .teamInput {
+    margin-right: 20px;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
 <div class="row">
   <div class="col-md-4">
     <h4>
-      Standings {% if rankings["standings"]["league"]["status"] != "in_season"
-      %}
-      <small>(Last Season)</small>
-      {% endif %}
-    </h4>
-    <table class="table table-hover">
-      <tr>
-        <th></th>
-        <th>Team</th>
-        <th>Record</th>
-      </tr>
-      {% for team in rankings["standings"]["teams"] %}
-      <tr>
-        <td>
-          {% if team["postSeasonIcon"] %}
-            <i class="fas fa-{{team["postSeasonIcon"]}}"></i>
-          {% endif %}
-        </td>
-        <td>{{team["name"]}}</td>
-        <td>{{team["record"]}}</td>
-      </tr>
-      {% endfor %}
-    </table>
-  </div>
-  <div class="col-md-4">
-    <h4>
       Coaches Poll
-      <small> 
-        {% if rankings["cp"]["week"] == 0 %}
-          (Preseason)
-        {% else %}
-          (Week {{rankings["cp"]["week"]}})
-        {% endif %}
-        {% if session.get("isOwner", False) and not voting %}
-          <a href="{{ url_for("rankings", voting="true") }}">Vote</a>
-        {% endif %}
+      {% if not voting %}
+      <small>
+        (<a href="{{ url_for("rankings", subpath="vote") }}">Vote</a>)
       </small>
+      {% endif %}
     </h4>
-    {# if there's not enough votes, don't show anything #}
-    {% if rankings["cp"]["numVotes"] < 6 and not voting %}
-      <h1 class="text-center"><strong>
-          {{6 - rankings["cp"]["numVotes"]}}
-      </strong></h1>
-      <h2 class="text-center">votes needed</h2>
+    {% if voting %}
+    <form method="post">
+      <div id="teams">
+        {% for team in rankings["cp"]["teams"] %}
+        <div class="team">
+          <input
+            class="teamInput"
+            name="{{ team["id"] }}"
+            type="number"
+            min="1"
+            max="12"
+            required
+            />
+          {{ team["name"] }}
+        </div>
+        {% endfor %}
+      </div>
+      <button type="submit" class="btn btn-default">Submit</button>
+    </form>
     {% else %}
-      {% if voting %}
-      {% if error %}
-      <h2 class="text-danger">{{ error }}</h2>
-      {% endif %}
-      <form class="form-horizontal" action="{{ url_for("rankings", vote=("true" if error else None)) }}" method="post">
+      {% if rankings["cp"]["numVotes"] < 0 %}
+        <p>Need {{ 6 - rankings["numVotes"] }} more votes to show the rankings<p>
       {% else %}
-        <table class="table table-hover">
-          <tr><th>Rank</th><th>Team</th></tr>
-          <tr>
-            <td>
-      {% endif %}
-      {% for team in rankings["cp"]["teams"] %}
-        {% if voting %}
-          <div class="form-group">
-            <div class="col-xs-3 col-sm-3">
-              <select class="form-control input-sm" name="team|{{ team['id'] }}">
-                {% for i in range(12) %}
-                  <option>{{ i + 1 }}</option>
-                {% endfor %}
-              </select>
-            </div>
-            <label class="control-label" for="team|{{ team["id"] }}">
-              {{ team["name"] }}
-            </label>
-          </div>
-        {% else %}
-            {{team["rank"]}}
-            </td>
-            <td>{{ team["name"] }}
-              {% if team["topVotes"] > 1 %}
-              ({{ team['topVotes'] }})
-              {% endif %}
-            </td>
-          </tr>
-        {% endif %}
-      {% endfor %}
-      {% if voting %}
-      <p><button type="submit" class="btn btn-default">Submit</button></p>
-        </form>
-      {% else %}
+        <table class="table">
+        {% for team in rankings["cp"]["teams"] %}
+          <tr><td>
+            {{ team["rank"] }}
+          </td><td>
+            {{ team["name"] }}
+            {% if team["topVotes"] > 0 %}
+              {{ " (" + team["topVotes"] + ")" }}
+            {% endif %}
+          </td><tr>
+        {% endfor %}
         </table>
       {% endif %}
     {% endif %}
   </div>
 </div>
+{% endblock %}
+
+{% block javascript %}
+ <script>
+
+   function sortInputs(e) {
+     // make sure input is valid
+     if (e.target.value < 1 || e.target.value > 12) {
+       e.target.value = ""
+       return
+     }
+
+     // check for duplicates
+     const inputs = document.querySelectorAll(".teamInput")
+     const values = [...inputs]
+       .map((input) => input.value)
+       .filter((value) => value === e.target.value)
+     if (values.length > 1) {
+       e.target.value = ""
+       return
+     }
+
+     // swap rankings
+     const teams = document.querySelectorAll(".team")
+     const currentNdx = [...teams].findIndex((team) => team.querySelector(".teamInput").name === e.target.name)
+     const swapNdx = e.target.value - 1
+
+     const temp = document.createElement("div")
+     teams[currentNdx].replaceWith(temp)
+     teams[swapNdx].replaceWith(teams[currentNdx])
+     temp.replaceWith(teams[swapNdx])
+   }
+
+   // add event listeners to the inputs to check for validity
+   const inputs = document.querySelectorAll(".teamInput")
+   inputs.forEach((input) => input.addEventListener("blur", sortInputs))
+
+ </script>
 {% endblock %}

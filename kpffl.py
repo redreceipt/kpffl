@@ -9,17 +9,20 @@ from sportsdata import getCurrentWeek
 def getCoachesPoll():
     """Gets coaches poll rankings."""
 
-    teams = getTeams(None, True)
+    # get team information, skipping players
+    teams = getTeams(True)
+
+    # get current week from Sportsdata API
     week = getCurrentWeek()
+
+    # initialize dict of team rankings
     ranks = {team["id"]: [] for team in teams}
 
     db = getDB()
     votes = db.coaches_polls.find({"week": week})
     for vote in votes:
         for i, team in enumerate(vote["rankings"]):
-            # convert kpffl ID to sleeper ID
-            teamID = int(team.split("|")[1])
-            ranks[teamID].append(i + 1)
+            ranks[int(team)].append(i + 1)
 
     teamsByRank = [{
         "id": team["id"],
@@ -35,16 +38,10 @@ def getCoachesPoll():
     }
 
 
-def addCoachesPollVote(vote, userID):
+def addCoachesPollVote(votes, userID):
     """Adds one vote to the database."""
 
-    rankings = []
-
-    # swap vote hash
-    voteDict = {value: key for key, value in vote.items()}
-    for i in range(12):
-        rankings.append(voteDict[str(i + 1)])
-
+    # votes should be in the form [team3, team4, team1, etc...]
     db = getDB()
     db.coaches_polls.update({
         "user_id": userID,
@@ -52,6 +49,6 @@ def addCoachesPollVote(vote, userID):
     }, {
         "user_id": userID,
         "week": getCurrentWeek(),
-        "rankings": rankings
+        "rankings": votes
     },
                             upsert=True)

@@ -5,7 +5,7 @@ import markdown
 from flask import Flask, redirect, render_template, request, session, url_for
 
 from kpffl import addCoachesPollVote, getCoachesPoll
-from sleeper import getStandings, getTeams, verifyOwner
+from sleeper import getTeams, verifyOwner
 
 app = Flask(__name__)
 
@@ -50,24 +50,21 @@ def teams():
     return render_template("teams.html", teams=getTeams())
 
 
-@app.route("/rankings", methods=['POST', 'GET'])
-def rankings():
+@app.route("/rankings")
+@app.route("/rankings/<path:subpath>", methods=["GET", "POST"])
+def rankings(subpath=None):
 
-    rankings = {"standings": getStandings(), "cp": getCoachesPoll()}
-    if request.method == "POST" and session.get("profile"):
-        # validate form
-        if set([int(teamID)
-                for teamID in request.form.values()]) != set(range(1, 13)):
-            error = "Number teams 1-12"
-            return render_template("rankings.html",
-                                   rankings=rankings,
-                                   voting=True,
-                                   error=error)
-        else:
-            # submit votes
-            addCoachesPollVote(request.form, session["user_id"])
+    voting = subpath == "vote"
 
-    voting = request.args.get("voting") == "true" and session.get("profile")
-    return render_template("rankings.html", rankings=rankings, voting=voting)
+    # submit votes and refresh the page
+    if request.method == "POST":
+        # convert vote form into an array
+        votes = [field for field in request.form]
+        addCoachesPollVote(votes, session["user_id"])
+        return redirect(url_for("rankings"))
 
+    # redirect to login if they want to vote
+    if voting and not session.get("user_id"):
+        return redirect(url_for("login"))
 
+    return render_template("rankings.html", rankings={"cp": getCoachesPoll()}, voting=voting)

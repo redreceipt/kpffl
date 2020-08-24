@@ -4,14 +4,16 @@ import os
 import requests
 
 
-def _getLeague(leagueID):
+def _getLeague():
+    leagueID = os.getenv("LEAGUE_ID")
     r = requests.get(
         f"https://api.sleeper.app/v1/league/{leagueID or os.getenv('LEAGUE_ID')}"
     )
     return json.loads(r.text)
 
 
-def _getOwners(leagueID):
+def _getOwners():
+    leagueID = os.getenv("LEAGUE_ID")
     r = requests.get(f"https://api.sleeper.app/v1/league/{leagueID}/users")
     owners = json.loads(r.text)
     ownerDict = {}
@@ -20,7 +22,8 @@ def _getOwners(leagueID):
     return ownerDict
 
 
-def _getRosters(leagueID):
+def _getRosters():
+    leagueID = os.getenv("LEAGUE_ID")
     r = requests.get(f"https://api.sleeper.app/v1/league/{leagueID}/rosters")
     return json.loads(r.text)
 
@@ -48,10 +51,10 @@ def getPlayers():
     return json.loads(r.text)
 
 
-def getTeams(leagueID=None, skipPlayers=False):
+def getTeams(skipPlayers=False):
     """Gets the current teams in the league."""
-    owners = _getOwners(leagueID or os.getenv("LEAGUE_ID"))
-    rosters = _getRosters(leagueID or os.getenv("LEAGUE_ID"))
+    owners = _getOwners()
+    rosters = _getRosters()
 
     # assemble teams
     teams = []
@@ -117,63 +120,3 @@ def getTeams(leagueID=None, skipPlayers=False):
         }
         teams.append(team)
     return teams
-
-
-def getStandings(leagueID=None):
-    """Gets standings of the most recent active league."""
-
-    league = _getLeague(leagueID or os.getenv("LEAGUE_ID"))
-    winnerID = None
-    loserID = None
-    if league["status"] != "in_season":
-        league = _getLeague(league["previous_league_id"])
-
-    teams = getTeams(league["league_id"], True)
-
-    # get brackets
-    r = requests.get(
-        f"https://api.sleeper.app/v1/league/{league['league_id']}/winners_bracket"
-    )
-    winners = json.loads(r.text)
-    winnerID = list(
-        filter(lambda round: "p" in round.keys() and round["p"] == 1,
-               winners))[0]["w"]
-    r = requests.get(
-        f"https://api.sleeper.app/v1/league/{league['league_id']}/losers_bracket"
-    )
-    losers = json.loads(r.text)
-    loserID = list(
-        filter(lambda round: "p" in round.keys() and round["p"] == 1,
-               losers))[0]["w"]
-    playoffTeams = set()
-    for round in winners:
-        playoffTeams.add(round["t1"])
-        playoffTeams.add(round["t2"])
-
-    def getPostSeasonStatus(teamID):
-        if teamID == winnerID:
-            return "trophy"
-        if teamID == loserID:
-            return "toilet"
-        if teamID in playoffTeams:
-            return "football-ball"
-
-    teamsByRecord = [{
-        "postSeasonIcon":
-        getPostSeasonStatus(team["id"]),
-        "name":
-        team["name"],
-        "stats":
-        team['stats'],
-        "record":
-        f"{team['stats']['w']}-{team['stats']['l']} ({team['stats']['pf']})"
-    } for team in teams]
-
-    return {
-        "league":
-        league,
-        "teams":
-        sorted(teamsByRecord,
-               key=lambda team: team["stats"]["w"],
-               reverse=True)
-    }
