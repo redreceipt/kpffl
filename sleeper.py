@@ -33,7 +33,10 @@ def verifyOwner(username, pw):
     loginQuery = f" {{ login( email_or_phone_or_username: \"{username}\" password: \"{pw}\") {{ user_id }} }} "
     r = requests.post("https://sleeper.app/graphql",
                       json={"query": loginQuery})
-    userID = json.loads(r.text)["data"]["login"]["user_id"]
+    login = json.loads(r.text)["data"]["login"]
+    if not login:
+        return None
+    userID = login["user_id"]
     r = requests.get(
         f"https://api.sleeper.app/v1/user/{userID}/leagues/nfl/2020")
     leagues = json.loads(r.text)
@@ -108,7 +111,8 @@ def getTeams(skipPlayers=False):
         teamName = owner["metadata"]["team_name"] if "team_name" in owner[
             "metadata"].keys() else f"Team {i+1}"
         team = {
-            "id": roster["roster_id"],
+            # convert sleeper ID to KPFFL ID
+            "id": "team|" + str(roster["roster_id"]),
             "name": teamName,
             "owner": owner["display_name"],
             "players": players,

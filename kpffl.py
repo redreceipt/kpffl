@@ -22,7 +22,7 @@ def getCoachesPoll():
     votes = db.coaches_polls.find({"week": week})
     for vote in votes:
         for i, team in enumerate(vote["rankings"]):
-            ranks[int(team)].append(i + 1)
+            ranks[team].append(i + 1)
 
     teamsByRank = [{
         "id": team["id"],
@@ -41,7 +41,7 @@ def getCoachesPoll():
 def addCoachesPollVote(votes, userID):
     """Adds one vote to the database."""
 
-    # votes should be in the form [team3, team4, team1, etc...]
+    # votes should be in the form ["team|3", "team|4", "team|1", etc...]
     db = getDB()
     db.coaches_polls.update({
         "user_id": userID,

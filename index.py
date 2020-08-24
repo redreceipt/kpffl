@@ -16,13 +16,20 @@ def login():
 
     if request.method == "POST":
         session["user_id"] = verifyOwner(request.form["email"], request.form["password"])
+        if not session["user_id"]:
+            print("hello")
+            return render_template("sync.html", error=True)
+        if session["voting"]:
+            session["voting"] = False
+            return redirect(url_for("rankings", subpath="vote"))
         return redirect(url_for("home"))
     return render_template("sync.html")
+
 
 @app.route('/logout')
 def logout():
     session.clear()
-    return redirect(url_for("home.html"))
+    return redirect(url_for("home"))
 
 
 @app.route("/")
@@ -65,6 +72,7 @@ def rankings(subpath=None):
 
     # redirect to login if they want to vote
     if voting and not session.get("user_id"):
+        session["voting"] = True
         return redirect(url_for("login"))
 
     return render_template("rankings.html", rankings={"cp": getCoachesPoll()}, voting=voting)

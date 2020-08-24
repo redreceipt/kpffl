@@ -43,8 +43,8 @@
       <button type="submit" class="btn btn-default">Submit</button>
     </form>
     {% else %}
-      {% if rankings["cp"]["numVotes"] < 0 %}
-        <p>Need {{ 6 - rankings["numVotes"] }} more votes to show the rankings<p>
+      {% if rankings["cp"]["numVotes"] < 6 %}
+        <p>Need {{ 6 - rankings["cp"]["numVotes"] }} more votes to show the rankings<p>
       {% else %}
         <table class="table">
         {% for team in rankings["cp"]["teams"] %}
@@ -52,8 +52,8 @@
             {{ team["rank"] }}
           </td><td>
             {{ team["name"] }}
-            {% if team["topVotes"] > 0 %}
-              {{ " (" + team["topVotes"] + ")" }}
+            {% if team["topVotes"] > 1 %}
+              {{ " (" + str(team["topVotes"]) + ")" }}
             {% endif %}
           </td><tr>
         {% endfor %}
