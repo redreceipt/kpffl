@@ -76,3 +76,15 @@ def rankings(subpath=None):
         return redirect(url_for("login"))
 
     return render_template("rankings.html", rankings={"cp": getCoachesPoll()}, voting=voting)
+
+@app.route('/chat')
+def chat():
+    return redirect(os.getenv("CHAT_URL"), code=301)
+
+@app.route('/video')
+def video():
+    return redirect(os.getenv("VIDEO_URL"), code=301)
+
+@app.route('/league')
+def league():
+    return redirect(os.getenv("LEAGUE_URL"), code=301)

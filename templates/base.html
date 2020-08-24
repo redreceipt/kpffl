@@ -38,18 +38,18 @@
           </ul>
           <ul class="nav navbar-nav navbar-right">
             {% if session.get("user_id") == None %}
-              <li><a href="{{ url_for("login") }}">Login</a></li>
+            <li><a href="{{ url_for("login") }}">Login</a></li>
             {% else %}
-              <li><a href="https://kpffl.com/chat">
-                Chat <i class="fas fa-external-link-alt"></i>
-              </a></li>
-              <li><a href="https://kpffl.com/meet">
-                Meet <i class="fas fa-external-link-alt"></i>
-              </a></li>
-              <li><a href="https://kpffl.com/sleeper">
-                Sleeper <i class="fas fa-external-link-alt"></i>
-              </a></li>
-              <li><a href="{{ url_for("logout") }}">Logout</a></li>
+            <li><a href="{{ url_for("chat") }}" target="_blank">
+              Chat <i class="fas fa-external-link-alt"></i>
+            </a></li>
+            <li><a href="{{ url_for("video") }}" target="_blank">
+              Video <i class="fas fa-external-link-alt"></i>
+            </a></li>
+            <li><a href="{{ url_for("league") }}" target="_blank">
+              League <i class="fas fa-external-link-alt"></i>
+            </a></li>
+            <li><a href="{{ url_for("logout") }}">Logout</a></li>
             {% endif %}
           </ul>
         </div>

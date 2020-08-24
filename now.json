@@ -1,13 +1,5 @@
 {
   "alias": ["kpffl.com"],
-  "routes": [
-    { "src": "/chat", "dest": "https://web.groupme.com/chats" },
-    { "src": "/meet", "dest": "https://meet.jit.si/kpffl" },
-    {
-      "src": "/sleeper",
-      "dest": "https://sleeper.app/leagues/515543543873765376"
-    },
-    { "src": "/.*", "dest": "/index.py" }
-  ],
+  "routes": [{ "src": "/.*", "dest": "/index.py" }],
   "builds": [{ "src": "*.py", "use": "@now/python" }]
 }
