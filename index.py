@@ -18,7 +18,7 @@ def login():
         if not session["user_id"]:
             print("hello")
             return render_template("login.html", error=True)
-        if session["voting"]:
+        if session.get("voting"):
             session["voting"] = False
             return redirect(url_for("rankings", subpath="vote"))
         return redirect(url_for("home"))

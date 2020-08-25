@@ -1,16 +1,19 @@
-{% extends "base.html" %} {% block title %}Teams{% endblock %} {% block content
-%}
-<div class="checkbox">
-  <label>
-    <input type="checkbox" id="show-bench">
+{% extends "base.html" %}
+
+{% block title %}Teams{% endblock %}
+
+{% block content %}
+<div class="form-check mb-4">
+  <input class="form-check-input" type="checkbox" id="show-bench">
+  <label class="form-check-label">
     Show bench players
   </label>
 </div>
 <div class="row">
   {% for team in teams %}
-  <div class="col-md-4 col-sm-6">
-    <h4>{{team["name"]}} <small>{{team["owner"]}}</small></h4>
-    <table class="table table-hover">
+  <div class="col-lg-4 col-md-6">
+    <h5>{{team["name"]}} <small>{{team["owner"]}}</small></h5>
+    <table class="table">
       {% for player in team["players"]["starters"] %}
       <tr>
         <td>{{player["pos"]}}</td>
@@ -18,19 +21,19 @@
       </tr>
       {% endfor %}
       {% for player in team["players"]["bench"] %}
-      <tr class="bench hidden">
+      <tr class="bench d-none">
         <td>{{player["pos"]}}</td>
         <td>{{player["name"]}}</td>
       </tr>
       {% endfor %}
       {% for player in team["players"]["reserve"] %}
-      <tr class="bench hidden">
+      <tr class="bench d-none">
         <td>{{player["pos"]}}</td>
         <td>{{player["name"]}}</td>
       </tr>
       {% endfor %}
       {% for player in team["players"]["taxi"] %}
-      <tr class="bench hidden">
+      <tr class="bench d-none">
         <td>{{player["pos"]}}</td>
         <td>{{player["name"]}}</td>
       </tr>
@@ -47,14 +50,13 @@
      const benchPlayers = document.querySelectorAll("tr.bench")
      benchPlayers.forEach((player) => {
        if (e.target.checked)
-         player.classList.remove("hidden")
+         player.classList.remove("d-none")
        else
-         player.classList.add("hidden")
+         player.classList.add("d-none")
      })
    }
 
    const checkbox = document.querySelector("#show-bench")
    checkbox.addEventListener("change", toggleBenchPlayers)
-   checkbox.checked = false
  </script>
 {% endblock %}

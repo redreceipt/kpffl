@@ -1,46 +1,27 @@
 {% extends "base.html" %} {% block title %}Rankings{% endblock %}
 
-{% block styles %}
-<style>
-  .team {
-    margin: 10px 0;
-  }
-
-  .teamInput {
-    margin-right: 20px;
-  }
-</style>
-{% endblock %}
-
 {% block content %}
 <div class="row">
-  <div class="col-md-4">
-    <h4>
+  <div class="col">
+    <h5>
       Coaches Poll
       {% if not voting %}
       <small>
         (<a href="{{ url_for("rankings", subpath="vote") }}">Vote</a>)
       </small>
       {% endif %}
-    </h4>
+    </h5>
     {% if voting %}
     <form method="post">
       <div id="teams">
         {% for team in rankings["cp"]["teams"] %}
-        <div class="team">
-          <input
-            class="teamInput"
-            name="{{ team["id"] }}"
-            type="number"
-            min="1"
-            max="12"
-            required
-            />
+        <div class="form-group form-inline mt-2 mb-2">
+          <input class="form-control mr-4 col-2" name="{{ team["id"] }}" type="number" min="1" max="12" required />
           {{ team["name"] }}<small> ({{ team["owner"] }})</small>
         </div>
         {% endfor %}
       </div>
-      <button type="submit" class="btn btn-default">Submit</button>
+      <button type="submit" class="btn btn-secondary">Submit</button>
     </form>
     {% else %}
       {% if rankings["cp"]["numVotes"] < 6 %}

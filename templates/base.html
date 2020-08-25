@@ -17,40 +17,34 @@
     {% block styles %}{% endblock %}
   </head>
   <body>
-    <nav class="navbar navbar-default navbar-static-top">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-navbar" aria-expanded="false">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="{{ url_for("home") }}">KPFFL</a>
-        </div>
-        <div id="main-navbar" class="collapse navbar-collapse">
-          <ul class="nav navbar-nav">
-            <li><a href="{{ url_for("rules") }}">Rules</a></li>
-            <li><a href="{{ url_for("teams") }}">Teams</a></li>
-            <li><a href="{{ url_for("rankings") }}">Rankings</a></li>
-          </ul>
-          <ul class="nav navbar-nav navbar-right">
-            {% if session.get("user_id") == None %}
-            <li><a href="{{ url_for("login") }}">Login</a></li>
-            {% else %}
-            <li><a href="{{ url_for("chat") }}" target="_blank">
-              Chat <i class="fas fa-external-link-alt"></i>
-            </a></li>
-            <li><a href="{{ url_for("video") }}" target="_blank">
-              Video <i class="fas fa-external-link-alt"></i>
-            </a></li>
-            <li><a href="{{ url_for("league") }}" target="_blank">
-              League <i class="fas fa-external-link-alt"></i>
-            </a></li>
-            <li><a href="{{ url_for("logout") }}">Logout</a></li>
-            {% endif %}
-          </ul>
-        </div>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
+      <a class="navbar-brand" href="{{ url_for("home") }}">KPFFL</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item"><a class="nav-link" href="{{ url_for("rules") }}">Rules</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ url_for("teams") }}">Teams</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ url_for("rankings") }}">Rankings</a></li>
+        </ul>
+        <ul class="navbar-nav">
+          {% if session.get("user_id") == None %}
+          <li class="nav-item"><a class="nav-link" href="{{ url_for("login") }}">Login</a></li>
+          {% else %}
+          <li class="nav-item"><a class="nav-link" href="{{ url_for("chat") }}" target="_blank">
+            Chat <i class="fas fa-external-link-alt"></i>
+          </a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ url_for("video") }}" target="_blank">
+            Video <i class="fas fa-external-link-alt"></i>
+          </a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ url_for("league") }}" target="_blank">
+            League <i class="fas fa-external-link-alt"></i>
+          </a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ url_for("logout") }}">Logout</a></li>
+          {% endif %}
+        </ul>
       </div>
     </nav>
 
@@ -64,7 +58,7 @@
 
         <!-- Copyright -->
         <p class="text-muted text-center">
-          © 2020 Copyright: <a href="https://github.com/redreceipt">Michael Neeley</a>
+          © 2020 Copyright: <a href="https://neeley.dev">Michael Neeley</a>
         </p>
         <!-- Copyright -->
 
