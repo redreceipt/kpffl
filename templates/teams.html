@@ -1,12 +1,36 @@
 {% extends "base.html" %} {% block title %}Teams{% endblock %} {% block content
 %}
+<div class="checkbox">
+  <label>
+    <input type="checkbox" id="show-bench">
+    Show bench players
+  </label>
+</div>
 <div class="row">
   {% for team in teams %}
   <div class="col-md-3 col-sm-6">
     <h4>{{team["name"]}} <small>{{team["owner"]}}</small></h4>
     <table class="table table-hover">
-      {% for player in team["players"] %}
+      {% for player in team["players"]["starters"] %}
       <tr>
+        <td>{{player["pos"]}}</td>
+        <td>{{player["name"]}}</td>
+      </tr>
+      {% endfor %}
+      {% for player in team["players"]["bench"] %}
+      <tr class="bench hidden">
+        <td>{{player["pos"]}}</td>
+        <td>{{player["name"]}}</td>
+      </tr>
+      {% endfor %}
+      {% for player in team["players"]["reserve"] %}
+      <tr class="bench hidden">
+        <td>{{player["pos"]}}</td>
+        <td>{{player["name"]}}</td>
+      </tr>
+      {% endfor %}
+      {% for player in team["players"]["taxi"] %}
+      <tr class="bench hidden">
         <td>{{player["pos"]}}</td>
         <td>{{player["name"]}}</td>
       </tr>
@@ -15,4 +39,22 @@
   </div>
   {% endfor %}
 </div>
+{% endblock %}
+
+{% block javascript %}
+ <script>
+   function toggleBenchPlayers(e) {
+     const benchPlayers = document.querySelectorAll("tr.bench")
+     benchPlayers.forEach((player) => {
+       if (e.target.checked)
+         player.classList.remove("hidden")
+       else
+         player.classList.add("hidden")
+     })
+   }
+
+   const checkbox = document.querySelector("#show-bench")
+   checkbox.addEventListener("change", toggleBenchPlayers)
+   checkbox.checked = false
+ </script>
 {% endblock %}

@@ -105,7 +105,12 @@ def getTeams(skipPlayers=False):
                                                   (roster["reserve"] or []) +
                                                   (roster["taxi"] or []))
             bench = getPlayerGroup(list(others), ["Bench"] * 12, allPlayers)
-            players = starters + bench + reserve + taxi
+            players = {
+                "starters": starters, 
+                "bench": bench, 
+                "reserve": reserve, 
+                "taxi": taxi
+            }
 
         owner = owners[roster["owner_id"]]
         teamName = owner["metadata"]["team_name"] if "team_name" in owner[
