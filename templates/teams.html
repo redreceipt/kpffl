@@ -8,7 +8,7 @@
 </div>
 <div class="row">
   {% for team in teams %}
-  <div class="col-md-3 col-sm-6">
+  <div class="col-md-4 col-sm-6">
     <h4>{{team["name"]}} <small>{{team["owner"]}}</small></h4>
     <table class="table table-hover">
       {% for player in team["players"]["starters"] %}
