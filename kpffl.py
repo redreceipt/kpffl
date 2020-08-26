@@ -7,7 +7,7 @@ from sendgrid.helpers.mail import Mail
 
 from database import getDB
 from sleeper import getTeams
-from sportsdata import getCurrentWeek
+from sportsdata import getTimeframe
 
 
 def getCoachesPoll():
@@ -17,13 +17,13 @@ def getCoachesPoll():
     teams = getTeams(True)
 
     # get current week from Sportsdata API
-    week = getCurrentWeek()
+    time = getTimeframe()
 
     # initialize dict of team rankings
     ranks = {team["id"]: [] for team in teams}
 
     db = getDB()
-    votes = db.coaches_polls.find({"week": week})
+    votes = db.coaches_polls.find({"week": time["week"], "season": time["season"]})
     for vote in votes:
         for i, team in enumerate(vote["rankings"]):
             ranks[team].append(i + 1)
@@ -37,7 +37,8 @@ def getCoachesPoll():
     } for team in teams]
 
     return {
-        "week": week,
+        "week": time["week"],
+        "season": time["season"],
         "numVotes": votes.count(),
         "teams": sorted(teamsByRank, key=lambda team: team["rank"])
     }
@@ -48,12 +49,15 @@ def addCoachesPollVote(votes, userID):
 
     # votes should be in the form ["team|3", "team|4", "team|1", etc...]
     db = getDB()
+    time = getTimeframe()
     db.coaches_polls.update({
         "user_id": userID,
-        "week": getCurrentWeek()
+        "week": time["week"],
+        "season": time["season"]
     }, {
         "user_id": userID,
-        "week": getCurrentWeek(),
+        "week": time["week"],
+        "season": time["season"],
         "rankings": votes
     },
                             upsert=True)
