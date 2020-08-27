@@ -1,5 +1,0 @@
-jinjalint
-isort
-yapf
-flake8
-python-dotenv
