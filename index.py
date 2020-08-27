@@ -8,7 +8,7 @@ from sleeper import getTeams, verifyOwner
 
 app = Flask(__name__)
 
-app.secret_key = os.getenv("SECRET_KEY") or b"\xc2\xb2\xe1\x9d\xafM\xe4\xf7\rn\xfej\xb1\xc5'\xbf"
+app.secret_key = os.getenv("SECRET_KEY")
 
 @app.route("/login", methods=["POST", "GET"])
 def login():
@@ -18,7 +18,7 @@ def login():
         if not session["user_id"]:
             print("hello")
             return render_template("login.html", error=True)
-        if session["voting"]:
+        if session.get("voting"):
             session["voting"] = False
             return redirect(url_for("rankings", subpath="vote"))
         return redirect(url_for("home"))

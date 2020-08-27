@@ -1,17 +1,11 @@
-{% extends "base.html" %} {% block title %}Sync{% endblock %}
+{% extends "base.html" %}
 
-{% block styles %}
-<style>
-  .input {
-    margin-bottom: 10px;
-  }
-</style>
-{% endblock %}
+{% block title %}Login{% endblock %}
 
 {% block content %}
 <h2>Sign in with Sleeper credentials</h2>
 <form method="post">
-  <div class="input-group input">
+  <div class="mb-2">
     <input
       type="email"
       class="form-control"
@@ -19,7 +13,7 @@
       placeholder="Email"
     />
   </div>
-  <div class="input-group input">
+  <div class="mb-2">
     <input
       type="password"
       class="form-control"
@@ -27,7 +21,7 @@
       placeholder="Password"
     />
   </div>
-  <button type="submit" class="btn btn-default input">Submit</button>
+  <button type="submit" class="btn btn-secondary mb-2">Submit</button>
 </form>
 {% if error %}
 <p class="text-danger">There was a problem with your login, try again.</p>

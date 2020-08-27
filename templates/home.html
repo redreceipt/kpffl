@@ -1,5 +1,8 @@
-{% extends "base.html" %} {% block title %}Home{% endblock %} {% block content
-%}
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
 <div class="text-center">
   <h1>Check back soon!</h1>
   <img src="{{ url_for("static", filename="img/logo.svg", _external=True) }}"
