@@ -52,7 +52,7 @@ Find an item:
 ### Tech Stack
 
 - [Flask](https://palletsprojects.com/p/flask/)
-- [Zeit Now](https://zeit.co/)
+- [Vercel](https://vercel.com/)
 - [MongoDB](https://www.mongodb.com/)
 - [FontAwesome](https://fontawesome.com/)
 - [Bootstrap](https://getbootstrap.com/)
