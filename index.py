@@ -8,7 +8,7 @@ from sleeper import getTeams, verifyOwner
 
 app = Flask(__name__)
 
-app.secret_key = os.getenv("SECRET_KEY") or b"\xc2\xb2\xe1\x9d\xafM\xe4\xf7\rn\xfej\xb1\xc5'\xbf"
+app.secret_key = os.getenv("SECRET_KEY")
 
 @app.route("/login", methods=["POST", "GET"])
 def login():
