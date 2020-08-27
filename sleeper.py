@@ -30,15 +30,13 @@ def _getRosters():
 
 def verifyOwner(username, pw):
     """Verifies user is an owner in the league."""
-    loginQuery = f" {{ login( email_or_phone_or_username: \"{username}\" password: \"{pw}\") {{ user_id }} }} "
-    r = requests.post("https://sleeper.app/graphql",
-                      json={"query": loginQuery})
+    loginQuery = f' {{ login( email_or_phone_or_username: "{username}" password: "{pw}") {{ user_id }} }} '
+    r = requests.post("https://sleeper.app/graphql", json={"query": loginQuery})
     login = json.loads(r.text)["data"]["login"]
     if not login:
         return None
     userID = login["user_id"]
-    r = requests.get(
-        f"https://api.sleeper.app/v1/user/{userID}/leagues/nfl/2020")
+    r = requests.get(f"https://api.sleeper.app/v1/user/{userID}/leagues/nfl/2020")
     leagues = json.loads(r.text)
     leagueIDs = [league["league_id"] for league in leagues]
     if os.getenv("LEAGUE_ID") in leagueIDs:
@@ -74,14 +72,14 @@ def getTeams(skipPlayers=False):
                 lambda playerId: {
                     # TODO: ternary only necessary because there's a bug
                     # in the sleeper API
-                    "name":
-                    getPlayerName(allPlayers[playerId])
-                    if playerId != "0" else "(Empty)",
-                    "pos":
-                    positions.pop(0) if len(positions) else "",
+                    "name": getPlayerName(allPlayers[playerId])
+                    if playerId != "0"
+                    else "(Empty)",
+                    "pos": positions.pop(0) if len(positions) else "",
                 },
                 ids,
-            ))
+            )
+        )
 
     for i, roster in enumerate(rosters):
 
@@ -95,26 +93,27 @@ def getTeams(skipPlayers=False):
                 ["QB", "RB", "RB", "WR", "WR", "TE", "Flex", "DEF"],
                 allPlayers,
             )
-            reserve = getPlayerGroup(roster["reserve"] or [], ["IR"],
-                                     allPlayers)
-            taxi = getPlayerGroup(roster["taxi"] or [], ["Taxi"] * 3,
-                                  allPlayers)
+            reserve = getPlayerGroup(roster["reserve"] or [], ["IR"], allPlayers)
+            taxi = getPlayerGroup(roster["taxi"] or [], ["Taxi"] * 3, allPlayers)
 
             # bench players are the ones remaining
-            others = set(roster["players"]) - set(roster["starters"] +
-                                                  (roster["reserve"] or []) +
-                                                  (roster["taxi"] or []))
+            others = set(roster["players"]) - set(
+                roster["starters"] + (roster["reserve"] or []) + (roster["taxi"] or [])
+            )
             bench = getPlayerGroup(list(others), ["Bench"] * 12, allPlayers)
             players = {
-                "starters": starters, 
-                "bench": bench, 
-                "reserve": reserve, 
-                "taxi": taxi
+                "starters": starters,
+                "bench": bench,
+                "reserve": reserve,
+                "taxi": taxi,
             }
 
         owner = owners[roster["owner_id"]]
-        teamName = owner["metadata"]["team_name"] if "team_name" in owner[
-            "metadata"].keys() else f"Team {i+1}"
+        teamName = (
+            owner["metadata"]["team_name"]
+            if "team_name" in owner["metadata"].keys()
+            else f"Team {i+1}"
+        )
         team = {
             # convert sleeper ID to KPFFL ID
             "id": "team|" + str(roster["roster_id"]),
