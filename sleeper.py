@@ -10,7 +10,7 @@ from gql import AIOHTTPTransport, Client, gql
 
 class SleeperGraphQLClient:
     def __init__(self):
-        # TODO remove once PR 153 makes it into gql
+        # TODO remove once PR 135 makes it into gql
         asyncio.set_event_loop(asyncio.new_event_loop())
         transport = AIOHTTPTransport(url="https://sleeper.app/graphql")
         self.client = Client(transport=transport, fetch_schema_from_transport=False)
