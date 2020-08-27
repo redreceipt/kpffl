@@ -10,11 +10,14 @@ app = Flask(__name__)
 
 app.secret_key = os.getenv("SECRET_KEY")
 
+
 @app.route("/login", methods=["POST", "GET"])
 def login():
 
     if request.method == "POST":
-        session["user_id"] = verifyOwner(request.form["email"], request.form["password"])
+        session["user_id"] = verifyOwner(
+            request.form["email"], request.form["password"]
+        )
         if not session["user_id"]:
             print("hello")
             return render_template("login.html", error=True)
@@ -25,7 +28,7 @@ def login():
     return render_template("login.html")
 
 
-@app.route('/logout')
+@app.route("/logout")
 def logout():
     session.clear()
     return redirect(url_for("home"))
@@ -45,11 +48,13 @@ def rules():
         if session.get("user_id"):
             firstLine = html.split("\n")[0]
             html = html.replace(
-                firstLine, firstLine +
-                f"<a class=\"btn btn-default\" href=\"{url_for('proposal')}\" role=\"button\">Submit Proposal</a>" 
+                firstLine,
+                firstLine
+                + f"<a class=\"btn btn-default\" href=\"{url_for('proposal')}\" role=\"button\">Submit Proposal</a>"
                 # f"<small><a href=\"{r'https://github.com/redreceipt/kpffl/edit/master/docs/rules.md'}\">(Edit)</a></small>"
             )
         return render_template("rules.html", html=html)
+
 
 @app.route("/proposal", methods=["GET", "POST"])
 def proposal():
@@ -82,16 +87,21 @@ def rankings(subpath=None):
         session["voting"] = True
         return redirect(url_for("login"))
 
-    return render_template("rankings.html", rankings={"cp": getCoachesPoll()}, voting=voting)
+    return render_template(
+        "rankings.html", rankings={"cp": getCoachesPoll()}, voting=voting
+    )
 
-@app.route('/chat')
+
+@app.route("/chat")
 def chat():
     return redirect(os.getenv("CHAT_URL"), code=301)
 
-@app.route('/video')
+
+@app.route("/video")
 def video():
     return redirect(os.getenv("VIDEO_URL"), code=301)
 
-@app.route('/league')
+
+@app.route("/league")
 def league():
     return redirect(os.getenv("LEAGUE_URL"), code=301)
