@@ -2,10 +2,10 @@
 
 ## Development
 
-Quick method, Zeit Now development server:
+Quick method, Vercel development server:
 
 ```
-now dev
+vercel dev
 ```
 
 Flask server w/ Auto-reload and browser debug mode:
@@ -17,9 +17,17 @@ pip install -r requirements.txt
 FLASK_APP=index.py FLASK_ENV=development flask run
 ```
 
-## Deployment
+## Preview Deployment
 
-`now`
+`vercel`
+
+or push a branch to github, preview site will be located at `kpffl-git-<branch>.<github-user>.vercel.app`
+
+## Production Deployment
+
+`vercel --prod`
+
+or push to `master` on Github
 
 ## Manage Database
 
@@ -44,8 +52,7 @@ Find an item:
 ### Tech Stack
 
 - [Flask](https://palletsprojects.com/p/flask/)
-- [Zeit Now](https://zeit.co/)
-- [Auth0](https://auth0.com/)
+- [Vercel](https://vercel.com/)
 - [MongoDB](https://www.mongodb.com/)
 - [FontAwesome](https://fontawesome.com/)
-- [Bootstrap 3](https://getbootstrap.com/docs/3.3/)
+- [Bootstrap](https://getbootstrap.com/)
