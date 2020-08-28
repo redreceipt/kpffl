@@ -1,14 +1,27 @@
+import asyncio
 import json
 import os
 
 import requests
+from gql import AIOHTTPTransport, Client, gql
+
+# from flask import session
+
+
+class SleeperGraphQLClient:
+    def __init__(self):
+        # TODO remove once PR 135 makes it into gql
+        asyncio.set_event_loop(asyncio.new_event_loop())
+        transport = AIOHTTPTransport(url="https://sleeper.app/graphql")
+        self.client = Client(transport=transport, fetch_schema_from_transport=False)
+
+    def request(self, body, variables=None):
+        return self.client.execute(body, variable_values=variables)
 
 
 def _getLeague():
     leagueID = os.getenv("LEAGUE_ID")
-    r = requests.get(
-        f"https://api.sleeper.app/v1/league/{leagueID or os.getenv('LEAGUE_ID')}"
-    )
+    r = requests.get(f"https://api.sleeper.app/v1/league/{leagueID}")
     return json.loads(r.text)
 
 
@@ -28,14 +41,20 @@ def _getRosters():
     return json.loads(r.text)
 
 
-def verifyOwner(username, pw):
+def verifyOwner(user, pw):
     """Verifies user is an owner in the league."""
-    loginQuery = f' {{ login( email_or_phone_or_username: "{username}" password: "{pw}") {{ user_id }} }} '
-    r = requests.post("https://sleeper.app/graphql", json={"query": loginQuery})
-    login = json.loads(r.text)["data"]["login"]
-    if not login:
-        return None
-    userID = login["user_id"]
+    client = SleeperGraphQLClient()
+    query = gql(
+        """
+        query getUserID ($user: String! $pw: String!) {
+            login(email_or_phone_or_username: $user password: $pw) {
+                user_id
+            }
+        }
+        """
+    )
+    data = client.request(query, {"user": user, "pw": pw})
+    userID = data["login"]["user_id"]
     r = requests.get(f"https://api.sleeper.app/v1/user/{userID}/leagues/nfl/2020")
     leagues = json.loads(r.text)
     leagueIDs = [league["league_id"] for league in leagues]
