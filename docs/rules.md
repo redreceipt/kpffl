@@ -162,290 +162,16 @@ There is no limit to the amount of players traded. The deadline will be the last
 
 If the NFL season is cancelled for any reason before week 10 is played, draft order will be determined on the normal basis and the money will be distributed back to the owners. If the season is cancelled after week 10 but before the championship, draft order will be determined on the normal basis and the pot will be distributed evenly among the current teams qualified for the playoffs.
 
-## Amendments
+### Section 6 - Anti-Tanking
 
-### E.O.001 - No Charity
+In order to make tanking a little more difficult, players must start active rosters. If either of the following occurs, the owner will face a penalty.
 
-#### Update to Article I Section 3
+1. Four starting spots without an active player on any given week.
+2. Any starting spots without an active player on three different weeks.
 
-**Original**
+Empty slots will not be backfilled for unforseen circumstances. This is the purpose of the three week clause above. 
 
-Buy in will be \$50 per team. The league will send one high school student to Dabo Swinney’s Football Camp. 90% of the remaining pot will go to 1st place and 10% will go to 2nd place.
-
-**New**
-
-Buy in will be \$25 per team. 90% of the pot will go to 1st place and 10% will go to 2nd place.
-
-### E.O.002 - One Week Playoffs
-
-#### Update to Article III Section 2
-
-**Original**
-
-Regular season matchups will be weeks 1 through 13 in the NFL regular season. The tie breaker for each matchup will be most bench points. Playoffs will consist of 4 teams, each matchup is two weeks long. Playoff seeding tiebreaker is most points for during the regular season.
-
-**New**
-
-Regular season matchups will be weeks 1 through 13 in the NFL regular season. The tie breaker for each matchup will be most bench points. Playoffs will consist of 6 teams, each matchup is one week long. Week 16 is the championship week. Week 17 is not played. Playoff seeding tiebreaker is most points for during the regular season.
-
-### E.O.004 - Dynasty
-
-#### Update to Article II Section 4
-
-**Original**
-
-The draft will operate via Pro-style draft (order will not change).
-
-**New**
-
-The draft will operate via Pro-style draft (order will not change). There will be a three round rookie draft. Before week one, rosters will be cut down according to season rosters.
-
-#### Update to Article III Section 3
-
-**Original**
-
-You may keep up to 15 players which you must mark and will be locked one hour before the draft. Each player you keep will replace your draft picks in sequential order. So keep one and you lose your 1st round pick, keep two and you lose your 1st and 2nd round picks. And so on.
-
-**New**
-
-You may keep up to 15 players which you must mark and will be locked one hour before the draft.
-
-### R.C.002 - No More Kickers
-
-Update to Article III Section 1
-
-**Original**
-
-Roster is as follows:
-
-QB - 1 starting, max of 4
-RB - 2 starting, max of 8
-WR - 2 starting, max of 8
-TE - 1 starting, max of 3
-Flex (RB/WR/TE) - 1 starting
-(D/ST) - 1 starting, max of 3
-K - 1 starting, max of 3
-Bench - 7 players
-IR - 1 injured player reserved
-
-**New**
-
-Roster is as follows:
-
-QB - 1 starting, max of 4
-RB - 2 starting, max of 8
-WR - 2 starting, max of 8
-TE - 1 starting, max of 3
-Flex (RB/WR/TE) - 1 starting
-(D/ST) - 1 starting, max of 3
-Bench - 7 players
-IR - 1 injured player reserved
-
-**Proposal**
-
-No More Kickers!
-
-Why:
-
-Why are they a part of Fantasy Football? Kickers are random. Their performances are unpredictable. They aren’t fun.
-
-This doesn’t need to be complicated. We’ve all been ousted by some bullshit with our kickers. They aren’t fun to draft and aside from Hunter and Travis we all do it with our final picks. It’s silly to keep a slot that’s based solely on luck outside of Gostkowski.
-
-On top of everything else Hunter would have to change his team name and if it’s one thing we can all agree on, it’s inconveniencing Hunter!
-
-How it works:
-
-We give kickers the boot!
-
-They are then replaced by an extra slot of the league’s choosing. I’m open to suggestions.
-
-What's Different:
-
-Kickers are abolished!
-
-Now you’re asking, “Well, what do we do without kickers?” First, celebrate your freedom! Second, you add another flex spot or even a third WR slot (but certainly not IDP slot). That leaves some solid options on the waiver wire each week for streaming.
-
-### R.C.003 - 24 Hour Trade Period
-
-#### Update to Article III Section 4
-
-**Original**
-
-There is no limit to the amount of players traded, a deadline will be determined yearly after which no trades will be allowed. A trade review period of 2 days will allow for a ½ majority veto to overrule each trade. Off-season draft pick trading is allowed.
-
-**New**
-
-There is no limit to the amount of players traded, a deadline will be determined yearly after which no trades will be allowed. A trade review period of 24 hours will allow for a ½ majority veto to overrule each trade. Off-season draft pick trading is allowed.
-
-**Proposal**
-
-24 Hour Trade Period
-
-Why:
-
-The point of the pending trade time limit is to allow us enough time to veto trades that we see as devious or silly.
-
-Our league is pretty savvy. The fact is everyone can make their own decisions regarding their team. Because of that fact, no one vetoes trades. So unless there is foul play nothing is going to get vetoed.
-
-The other big issue is, by the time you’ve figured out that you’ve missed on who you were looking for on waivers, you have no time to make moves for guys that play on Thursday.
-
-It’s a buffer that isn’t necessary in our league and is more of a hindrance than anything.
-
-How it Works:
-
-After a trade is accepted it takes 24 hours to process and rosters to take effect.
-
-What’s different:
-
-I propose we change the pending trade time limit from 48 hours to 24 hours.
-
-### R.C.004 - Death to Keepers
-
-#### Update to Article II Section 4
-
-**Original**
-
-You may keep up to three players which you must mark and will be locked one hour before the draft. Each player you keep will replace your top three draft picks. So keep one and you lose your 1st round pick, keep two and you lose your 1st and 2nd round picks.
-
-**New**
-
-No Keepers.
-
-**Proposal**
-
-Death to Keepers
-
-Why:
-
-Keepers aren't fun. It forces you to live with bad decisions and unfortunate circumstances year after year as opposed to having a fresh start at the beginning of each season. We all pay the same amount of money at the start of each season, so everyone should be going in with the same advantages and circumstances.
-
-How it works:
-
-We don't select Keepers before the draft.
-
-What's different:
-
-We won't have keepers and fantasy will be fun again.
-
-### R.C.006 - Fantasy Football and Future First Rounders
-
-#### Update to Article I Section 3
-
-**Original**
-
-Buy in will be \$20 per player. Winner’s compensation will be the entire pot less the 2nd place entry fee. 2nd place will receive his or her entry fee back as consolation.
-
-**New**
-
-Buy in will be \$50 per team. The pot will pay for one high school student to attend Dabo Swinney’s Football Camp. 90% of the remaining will go to 1st place and the other 10% will go to 2nd place.
-
-**Proposal**
-
-Fantasy Football and Future First Rounders
-
-Why?
-
-You don't get the league you want, you get the league you build. And we can build something great. Four years in and it's just the beginning. We have an opportunity to build a league than means more than petty arguments and selfish gain. Every 20 something adult male plays in fantasy football league, but how many are proud to talk about theirs. We could be.
-
-Yes, we're talking more money, but it's an investment in the future of a young man that may not have a great one otherwise. I'm imagining a couple years down the road when we can watch our boys play on Saturday and know that we had a hand in it.
-
-Either we can argue about trades, shame our friends, and likely lose our money or we can argue about trades, shame our friends, lose our money, and make a difference.
-
-How does it work and what's different?
-
-$50 per person gives us the ability to send an underprivileged high school kid to Dabo Swinney's Football Camp over the summer. It's $325 per camper for three days with Dabo and the coaching staff. We'll talk to Fuse Pastors to find the best candidates. Plus, 1st place will get $250 and 2nd will get $25 as consolation.
-
-A 'YES' vote gets you a league you can be proud of.
-
-### R.C.007 - Dynasty
-
-#### Update to Article II Section 2
-
-**Original**
-
-The draft will operate via snake draft after given number of keeper rounds.
-
-**New**
-
-The draft will operate via Pro-style draft. Each player will pick every round with the same order according to Article II Section 3 (with 2017 season as exception).
-
-#### Update to Article II Section 4
-
-**Original**
-
-No Keepers.
-
-**New**
-
-You may keep up to 15 players which you must mark and will be locked one hour before the draft. Each player you keep will replace your draft picks in sequential order. So keep one and you lose your 1st round pick, keep two and you lose your 1st and 2nd round picks. And so on.
-
-**Proposal**
-
-Dynasty
-
-Why:
-
-There are so many fun things about having the opportunity to keep players from year to year. Deeper strategy, off-season trades, emotional attachments (and jerseys), just to name a few. After talking with proponents for killing Keepers the first time, it mainly was due to players being much more experienced at this point in the league and simply wanting a fresh start. Dynasty will give us that fresh start by dropping everyone the first year and then everything else we loved about it for years to come.
-
-How it works:
-
-You can keep as many players as you want. The number of players you keep will replace your draft rounds of the same number. So keep three players, you lose your first, second, and third round picks. Or you can drop all of your players and pick up some rookies and others' dropped players. You can trade players in the off-season for draft picks.
-
-What's Different:
-
-Draft order will be pro-style instead of snake to give an advantage to the losing teams and will be determined by previous season standings. The first year (2017) draft will be completely reset and order will be set prior to draft with a method TBD.
-
-Let's make the league GREAT AGAIN!!
-
-### R.C. 10 - Punishments
-
-#### Update to Article I Section 4
-
-**Original**
-
-Loser’s penalty will be decided prior to the draft by unanimous decision.
-
-Failure to comply with punishment (as determined each year) will result in the loss of a player's first round draft pick the following year. Loser may choose to opt out of the punishment willingly with the same consequence..
-
-**New**
-
-There will be no penalty for finishing the season in last place.
-
-**Proposal**
-
-Punishments
-
-Punishments are lame. Out of the four years we’ve had punishments, we’ve only done 1 ½ of them. Let’s get rid of them.
-
-How it works:
-
-No punishment for finishing in last place.
-
-What's Different:
-
-Punishments are no longer a part of the league.
-
-### R.C. 011 - More bench spots need to be added to our rosters
-
-#### Update to Article II Section 2
-
-**Original**
-
-8 bench spots.
-
-**New**
-
-11 bench spots.
-
-**Proposal**
-
-More bench spots need to be added to our rosters.
-
-Why: In order to have a true dynasty, you need to have the means and ability to invest in players that may not be quite ready to enter the starting lineup. The way our current rosters are set up, we don't have room for backup players AND young players that we are investing in with hopes that they'll eventually break out on their respective teams. If we don't add spots to our bench, we'll potentially be forced into cutting our depth short just to hang on to players coming out of the rookie draft, who may or may not work out in a few years.
-
-How it Works: The rookie draft will be 3 rounds. Let's have the ability to add all 3 players to our roster without having to jeopardize the depth on our roster. Let's be real, we're drafting 36 rookies. Do any of us actually think 36 rookies will be playing week 1 of the NFL? Some of them might not even play significant time until 2019, but should that keep us from investing early in players we see potential in? I think the best format would be to cap the number of veteran players on your roster (15) and the remaining spots (3) can only be taken up by rookies. This prevents people from just stacking their roster full of players that may be getting more opportunity than rookies that haven't quite earned their playing time yet. Moving into next season, we'll have to decide which veterans (including 2018 rookies) are worth keeping, and drop 3 that we don't want in preparation of the 2019 rookie draft.
-
-If we're going to be a dynasty league, let's be a damn dynasty league
+The penalty is losing the next available draft pick at draft time. So if the 1st round pick is traded away, the 2nd round pick will be lost. If there are no picks left, the 1st round pick the following year will be lost.
 
 ## Appendix A - Reference
 
@@ -480,25 +206,11 @@ New rules can be created by anyone if no other rule will be affected. They will 
 
 #### Executive Orders
 
-Executive Orders are rules changed by the commissioner without voting. They may be overturned (see Article 1 Section 1). All Executive Orders will be logged in Appendix B - Executive Orders. If it is upheld, it will be logged in Appendix B - Constitutional Edits and the Executive Order will be added to Amendments in the following manner:
+Executive Orders are rules changed by the commissioner without voting. They may be overturned (see Article 1 Section 1). All Executive Orders will be logged in Appendix B - Executive Orders.
 
-**Update to Article XXX Section XXX**
-**Original**
-Original section text
-**New**
-New section text
+#### Rule Change Proposals
 
-#### Rule Changes
-
-These are proposals by league members put up to a vote (see Article 1 Section 2). Submissions will be logged in Appendix B - Rule Change Proposals. If it passes, it will also be added to Amendments in the following manner:
-
-**Update to Article XXX Section XXX**
-**Original**
-Original section text
-**New**
-New section text
-**Proposal**
-Proposal submission verbatim.
+These are proposals by league members put up to a vote (see Article 1 Section 2). Submissions will be logged in Appendix B - Rule Change Proposals.
 
 ## Appendix B - Archives
 
@@ -513,21 +225,22 @@ Proposal submission verbatim.
 
 - E.O.001 - New Buy In [Michael Neeley] - 7.18.17
 - E.O.002 - Extended Playoffs [Michael Neeley] - 7.18.17
-- E.O.003 - Trading Punishments [Michael Neeley](Overturned)
+- E.O.003 - Trading Punishments [Michael Neeley] (Overruled)
 - E.O.004 - Dynasty Draft [Michael Neeley] - 11.26.17
 
-### Proposals
+### Rule Change Proposals
 
-- R.C. 001 - IDP [Michael Neeley](Rejected)
-- R.C. 002 - No More Kickers! [Daniel Crowe](Passed) - 6.30.16
-- R.C. 003 - 24 Trade Period [Daniel Crowe](Passed) - 10.4.16
-- R.C. 004 - Death to Keepers [Hunter Reid](Passed) - 10.23.16
-- R.C. 005 - FAAB [Daniel Crowe](Rejected)
-- R.C. 006 - Fantasy Football and Future First Rounders [Michael Neeley](Passed) - 11.22.16
-- R.C. 007 - Dynasty [Michael Neeley](Passed) - 11.28.16
-- R.C. 008 - Extend the Deadline [Chris Shaw](Vetoed) (Rejected)
-- R.C. 009 - Determining Draft Order with March Madness [Ryan Chavis, 2017](Rejected)
-- R.C. 010 - Punishments Are Lame [Travis Lynes, 2018](Passed)
+- R.C. 001 - IDP [Michael Neeley] (Rejected)
+- R.C. 002 - No More Kickers! [Daniel Crowe] (Passed) - 6.30.16
+- R.C. 003 - 24 Trade Period [Daniel Crowe] (Passed) - 10.4.16
+- R.C. 004 - Death to Keepers [Hunter Reid] (Passed) - 10.23.16
+- R.C. 005 - FAAB [Daniel Crowe] (Rejected)
+- R.C. 006 - Fantasy Football and Future First Rounders [Michael Neeley] (Passed) - 11.22.16
+- R.C. 007 - Dynasty [Michael Neeley] (Passed) - 11.28.16
+- R.C. 008 - Extend the Deadline [Chris Shaw] (Vetoed) (Upheld)
+- R.C. 009 - Determining Draft Order with March Madness [Ryan Chavis, 2017] (Rejected)
+- R.C. 010 - Punishments Are Lame [Travis Lynes, 2018] (Passed)
+- R.C. 011 - Anti-tanking [Hunter Reid, 2019] (Passed)
 
 ### Commissioners
 
