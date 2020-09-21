@@ -166,10 +166,8 @@ If the NFL season is cancelled for any reason before week 10 is played, draft or
 
 In order to make tanking a little more difficult, players must start active rosters. If either of the following occurs, the owner will face a penalty.
 
-1. Four starting spots without an active player on any given week.
-2. Any starting spots without an active player on three different weeks.
-
-Empty slots will not be backfilled for unforseen circumstances. This is the purpose of the three week clause above. 
+1. Four blank starting spots, regardless of active status.
+2. Any blank spots on three different weeks.
 
 The penalty is losing the next available draft pick at draft time. So if the 1st round pick is traded away, the 2nd round pick will be lost. If there are no picks left, the 1st round pick the following year will be lost.
 
