@@ -304,16 +304,16 @@ Scott Freedman - 187.5 - Week 12, 2015
 
 #### Lowest Full Roster Score
 
-Ryan Leatham - 47.5 - Week 6, 2017
+Michael Neeley - 42.5 - Week 3, 2020
 
-- Aaron Rodgers 0.7
-- Ameer Abdullah 5.4
-- Lagarette Blount 8.7
-- Amari Cooper 5.3
-- Danny Amendola 5.5
-- Evan Engram 16.7
-- Andre Ellington 0
-- Jacksonville D/ST 5
+- Gardner Minshew 10.20
+- Devin Singletary 14.10
+- Jamaal Williams 2.20
+- DeVantte Parker 9.40
+- Larry Fitzgerald 0.50
+- Jared Cook 3.10
+- Marquez Valdes-Scantling 1.00
+- Vikings D/ST 2.00
 
 ### League Manager Notes
 
