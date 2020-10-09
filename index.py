@@ -92,6 +92,23 @@ def rankings(subpath=None):
     )
 
 
+@app.route("/rc12")
+def rule_change_proposal():
+    with open("docs/rc12.md") as f:
+        text = f.read()
+        html = markdown.markdown(text)
+        # allow voting
+        # TODO: votet
+        # if session.get("user_id"):
+        # firstLine = html.split("\n")[0]
+        # html = html.replace(
+        # firstLine,
+        # firstLine
+        # + f"<a class=\"btn btn-default\" href=\"{url_for('proposal')}\" role=\"button\">Submit Proposal</a>"
+        # )
+        return render_template("rules.html", html=html)
+
+
 @app.route("/chat")
 def chat():
     return redirect(os.getenv("CHAT_URL"), code=301)
