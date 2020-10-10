@@ -21,6 +21,8 @@ def login():
         if not session["user_id"]:
             print("hello")
             return render_template("login.html", error=True)
+
+        session["email"] = request.form["email"]
         if session.get("voting"):
             session["voting"] = False
             return redirect(url_for("rankings", subpath="vote"))
@@ -51,9 +53,12 @@ def rules():
                 firstLine,
                 firstLine
                 + f"<a class=\"btn btn-default\" href=\"{url_for('proposal')}\" role=\"button\">Submit Proposal</a>"
-                # f"<small><a href=\"{r'https://github.com/redreceipt/kpffl/edit/master/docs/rules.md'}\">(Edit)</a></small>"
+                # f"<small><a href=\"{r'https://github.com/redreceipt/kpffl/edit/master/docs/rules.md'}\">(Commish Edit)</a></small>"
             )
-        return render_template("rules.html", html=html)
+        return render_template(
+            "rules.html",
+            html=html,
+        )
 
 
 @app.route("/proposal", methods=["GET", "POST"])
@@ -92,9 +97,9 @@ def rankings(subpath=None):
     )
 
 
-@app.route("/rc12")
-def rule_change_proposal():
-    with open("docs/rc12.md") as f:
+@app.route("/rc/<int:id>")
+def rule_change_proposal(id):
+    with open(f"docs/rc/rc{id}.md") as f:
         text = f.read()
         html = markdown.markdown(text)
         # allow voting
@@ -106,7 +111,12 @@ def rule_change_proposal():
         # firstLine
         # + f"<a class=\"btn btn-default\" href=\"{url_for('proposal')}\" role=\"button\">Submit Proposal</a>"
         # )
-        return render_template("rules.html", html=html)
+        return render_template("rc.html", html=html)
+
+
+@app.route("/rc12")
+def rc12():
+    return redirect(url_for("rule_change_proposal", id=12))
 
 
 @app.route("/chat")
