@@ -41,7 +41,7 @@ def _getRosters():
     return json.loads(r.text)
 
 
-def verifyOwner(user, pw):
+def getOwner(user, pw):
     """Verifies user is an owner in the league."""
     client = SleeperGraphQLClient()
     query = gql(

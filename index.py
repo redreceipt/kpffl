@@ -1,10 +1,11 @@
 import os
 
 import markdown
-from flask import Flask, redirect, render_template, request, session, url_for
+from flask import (Flask, abort, redirect, render_template, request, session,
+                   url_for)
 
 from kpffl import addCoachesPollVote, getCoachesPoll, sendProposal
-from sleeper import getTeams, verifyOwner
+from sleeper import getOwner, getTeams
 
 app = Flask(__name__)
 
@@ -15,11 +16,8 @@ app.secret_key = os.getenv("SECRET_KEY")
 def login():
 
     if request.method == "POST":
-        session["user_id"] = verifyOwner(
-            request.form["email"], request.form["password"]
-        )
+        session["user_id"] = getOwner(request.form["email"], request.form["password"])
         if not session["user_id"]:
-            print("hello")
             return render_template("login.html", error=True)
 
         session["email"] = request.form["email"]
@@ -46,19 +44,15 @@ def rules():
     with open("docs/rules.md") as f:
         text = f.read()
         html = markdown.markdown(text)
-        # add link to edit if logged in
-        if session.get("user_id"):
-            firstLine = html.split("\n")[0]
-            html = html.replace(
-                firstLine,
-                firstLine
-                + f"<a class=\"btn btn-default\" href=\"{url_for('proposal')}\" role=\"button\">Submit Proposal</a>"
-                # f"<small><a href=\"{r'https://github.com/redreceipt/kpffl/edit/master/docs/rules.md'}\">(Commish Edit)</a></small>"
-            )
         return render_template(
             "rules.html",
             html=html,
         )
+
+
+@app.route("/rules/edit")
+def edit_rules():
+    return redirect("https://github.com/redreceipt/kpffl/edit/master/docs/rules.md")
 
 
 @app.route("/proposal", methods=["GET", "POST"])
@@ -99,19 +93,22 @@ def rankings(subpath=None):
 
 @app.route("/rc/<int:id>")
 def rule_change_proposal(id):
-    with open(f"docs/rc/rc{id}.md") as f:
-        text = f.read()
-        html = markdown.markdown(text)
-        # allow voting
-        # TODO: votet
-        # if session.get("user_id"):
-        # firstLine = html.split("\n")[0]
-        # html = html.replace(
-        # firstLine,
-        # firstLine
-        # + f"<a class=\"btn btn-default\" href=\"{url_for('proposal')}\" role=\"button\">Submit Proposal</a>"
-        # )
-        return render_template("rc.html", html=html)
+    try:
+        with open(f"docs/rc/rc{id}.md") as f:
+            text = f.read()
+            html = markdown.markdown(text)
+            # allow voting
+            # TODO: votet
+            # if session.get("user_id"):
+            # firstLine = html.split("\n")[0]
+            # html = html.replace(
+            # firstLine,
+            # firstLine
+            # + f"<a class=\"btn btn-default\" href=\"{url_for('proposal')}\" role=\"button\">Submit Proposal</a>"
+            # )
+            return render_template("rc.html", html=html)
+    except FileNotFoundError:
+        abort(404)
 
 
 @app.route("/rc12")
@@ -121,14 +118,14 @@ def rc12():
 
 @app.route("/chat")
 def chat():
-    return redirect(os.getenv("CHAT_URL"), code=301)
+    return redirect(os.getenv("CHAT_URL"))
 
 
 @app.route("/video")
 def video():
-    return redirect(os.getenv("VIDEO_URL"), code=301)
+    return redirect(os.getenv("VIDEO_URL"))
 
 
 @app.route("/league")
 def league():
-    return redirect(os.getenv("LEAGUE_URL"), code=301)
+    return redirect(os.getenv("LEAGUE_URL"))
