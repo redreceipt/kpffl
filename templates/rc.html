@@ -2,4 +2,32 @@
 
 {% block title %}R.C.012{% endblock %}
 
-{% block content %}{{ html|safe }}{% endblock %}
+{% block content %}
+{{ html|safe }}
+
+{% if logged_in and not votes["closed"] %}
+	<form method="post">
+		<div class="form-group">
+			<div class="form-check form-check-inline">
+				<input class="form-check-input" type="radio" id="yes" name="vote" value="yes">
+				<label class="form-check-label" for="yes">Yes ({{ votes["yes"] }})</label>
+			</div>
+			<div class="form-check form-check-inline">
+				<input class="form-check-input" type="radio" id="no" name="vote" value="no">
+				<label class="form-check-label" for="no">No ({{ votes["no"] }})</label>
+			</div>
+		</div>
+		<button type="submit" class="btn btn-secondary">Submit</button>
+	</form>
+{% else %}
+	<p>Yes ({{ votes["yes"] }})</p>
+	<p>No ({{ votes["no"] }})</p>
+	{% if not votes["closed"] %}
+		<p><a href="{{ url_for("login") }}">
+			Login to Vote
+		</a></p>
+	{% endif %}
+{% endif %}
+
+
+{% endblock %}

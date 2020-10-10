@@ -31,7 +31,7 @@ In the case of a tie, the commissioner’s vote will not count.
 
 ### Section 3 - Buy In
 
-Buy in will be $25 per team. 90% of the pot will go to 1st place and 10% will go to 2nd place. All money will be paid prior to the draft.
+Buy in will be \$25 per team. 90% of the pot will go to 1st place and 10% will go to 2nd place. All money will be paid prior to the draft.
 
 ### Section 4 - Loser’s Penalty
 
@@ -221,24 +221,25 @@ These are proposals by league members put up to a vote (see Article 1 Section 2)
 
 ### Executive Orders
 
-- E.O.001 - New Buy In [Michael Neeley] - 7.18.17
-- E.O.002 - Extended Playoffs [Michael Neeley] - 7.18.17
-- E.O.003 - Trading Punishments [Michael Neeley] (Overruled)
-- E.O.004 - Dynasty Draft [Michael Neeley] - 11.26.17
+- E.O.001 - New Buy In (Michael Neeley) - 7.18.17
+- E.O.002 - Extended Playoffs (Michael Neeley) - 7.18.17
+- E.O.003 - Trading Punishments (Michael Neeley)(Overruled)
+- E.O.004 - Dynasty Draft (Michael Neeley) - 11.26.17
 
 ### Rule Change Proposals
 
-- R.C. 001 - IDP [Michael Neeley] (Rejected)
-- R.C. 002 - No More Kickers! [Daniel Crowe] (Passed) - 6.30.16
-- R.C. 003 - 24 Trade Period [Daniel Crowe] (Passed) - 10.4.16
-- R.C. 004 - Death to Keepers [Hunter Reid] (Passed) - 10.23.16
-- R.C. 005 - FAAB [Daniel Crowe] (Rejected)
-- R.C. 006 - Fantasy Football and Future First Rounders [Michael Neeley] (Passed) - 11.22.16
-- R.C. 007 - Dynasty [Michael Neeley] (Passed) - 11.28.16
-- R.C. 008 - Extend the Deadline [Chris Shaw] (Vetoed) (Upheld)
-- R.C. 009 - Determining Draft Order with March Madness [Ryan Chavis, 2017] (Rejected)
-- R.C. 010 - Punishments Are Lame [Travis Lynes, 2018] (Passed)
-- R.C. 011 - Anti-tanking [Hunter Reid, 2019] (Passed)
+- R.C. 001 - IDP (Michael Neeley)(Rejected)
+- R.C. 002 - No More Kickers! (Daniel Crowe)(Passed) - 6.30.16
+- R.C. 003 - 24 Trade Period (Daniel Crowe)(Passed) - 10.4.16
+- R.C. 004 - Death to Keepers (Hunter Reid)(Passed) - 10.23.16
+- R.C. 005 - FAAB (Daniel Crowe)(Rejected)
+- R.C. 006 - Fantasy Football and Future First Rounders (Michael Neeley)(Passed) - 11.22.16
+- R.C. 007 - Dynasty (Michael Neeley)(Passed) - 11.28.16
+- R.C. 008 - Extend the Deadline (Chris Shaw)(Vetoed) (Upheld)
+- R.C. 009 - Determining Draft Order with March Madness (Ryan Chavis, 2017)(Rejected)
+- R.C. 010 - Punishments Are Lame (Travis Lynes, 2018)(Passed)
+- R.C. 011 - Anti-tanking (Hunter Reid, 2019)(Passed)
+- R.C. 012 - [COVID Lineup Contingencies](https://kpffl.com/rc/12) (Ryan Leatham, 2020)
 
 ### Commissioners
 

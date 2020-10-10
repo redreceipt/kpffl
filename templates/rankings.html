@@ -7,7 +7,13 @@
       Coaches Poll
       {% if not voting %}
       <small>
+        {% if not user_id %}
+          (<a href="{{ url_for("login") }}">
+            Login to Vote
+          </a>)
+        {% else %}
         (<a href="{{ url_for("rankings", subpath="vote") }}">Vote</a>)
+        {% endif %}
       </small>
       {% endif %}
     </h5>
