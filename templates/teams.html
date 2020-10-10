@@ -12,13 +12,27 @@
 <div class="row">
   {% for team in teams %}
   <div class="col-lg-4 col-md-6">
-    <h5>{{team["name"]}} <small>{{team["owner"]}}</small></h5>
+    <h5>{{team["name"]}} <small>{{team["owner"]["name"]}}</small></h5>
     <table class="table">
       {% for player in team["players"]["starters"] %}
-      <tr>
-        <td>{{player["pos"]}}</td>
-        <td>{{player["name"]}}</td>
-      </tr>
+        <tr>
+          <td>{{ player["pos"] }}</td>
+          {# TODO: remove ids and classes and alt stuff for 2021 season #}
+          <td id="{{ team["owner"]["name"] }}-{{ loop.index0 }}-name">
+            {{ player["name"] }}
+          </td>
+          <td id="{{ team["owner"]["name"] }}-{{ loop.index0 }}-alt" class="d-none">
+            Alternate
+          </td>
+          <td>
+            <button
+              id="{{ team["owner"]["name"] }}-{{ loop.index0 }}-button"
+              class="alt-button"
+              onclick="toggleAltPlayer">
+            Alt
+            </button>
+          </td>
+        </tr>
       {% endfor %}
       {% for player in team["players"]["bench"] %}
       <tr class="bench d-none">
@@ -56,7 +70,13 @@
      })
    }
 
+   function toggleAltPlayer(e) {
+     console.log(e)
+   }
+
+   // add click handler to bench checkbox
    const checkbox = document.querySelector("#show-bench")
    checkbox.addEventListener("change", toggleBenchPlayers)
+
  </script>
 {% endblock %}

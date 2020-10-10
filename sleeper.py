@@ -137,7 +137,7 @@ def getTeams(skipPlayers=False):
             # convert sleeper ID to KPFFL ID
             "id": "team|" + str(roster["roster_id"]),
             "name": teamName,
-            "owner": owner["display_name"],
+            "owner": {"name": owner["display_name"], "user_id": owner["user_id"]},
             "players": players,
             "stats": {
                 "w": roster["settings"]["wins"],
