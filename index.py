@@ -4,7 +4,8 @@ import markdown
 from flask import (Flask, abort, redirect, render_template, request, session,
                    url_for)
 
-from kpffl import addCoachesPollVote, getCoachesPoll, sendProposal
+from kpffl import (addCoachesPollVote, addProposalVote, getCoachesPoll,
+                   getProposal, sendProposal)
 from sleeper import getOwner, getTeams
 
 app = Flask(__name__)
@@ -15,15 +16,12 @@ app.secret_key = os.getenv("SECRET_KEY")
 @app.route("/login", methods=["POST", "GET"])
 def login():
 
+    # if logging in
     if request.method == "POST":
         session["user_id"] = getOwner(request.form["email"], request.form["password"])
         if not session["user_id"]:
             return render_template("login.html", error=True)
-
         session["email"] = request.form["email"]
-        if session.get("voting"):
-            session["voting"] = False
-            return redirect(url_for("rankings", subpath="vote"))
         return redirect(url_for("home"))
     return render_template("login.html")
 
@@ -72,7 +70,11 @@ def teams():
 @app.route("/rankings/<path:subpath>", methods=["GET", "POST"])
 def rankings(subpath=None):
 
-    voting = subpath == "vote"
+    voting = False
+    if subpath:
+        if subpath != "vote":
+            return redirect(url_for("rankings"))
+        voting = True
 
     # submit votes and refresh the page
     if request.method == "POST":
@@ -81,39 +83,38 @@ def rankings(subpath=None):
         addCoachesPollVote(votes, session["user_id"])
         return redirect(url_for("rankings"))
 
-    # redirect to login if they want to vote
-    if voting and not session.get("user_id"):
-        session["voting"] = True
-        return redirect(url_for("login"))
-
     return render_template(
-        "rankings.html", rankings={"cp": getCoachesPoll()}, voting=voting
+        "rankings.html",
+        rankings={"cp": getCoachesPoll()},
+        user_id=session.get("user_id"),
+        voting=voting,
     )
 
 
-@app.route("/rc/<int:id>")
-def rule_change_proposal(id):
-    try:
-        with open(f"docs/rc/rc{id}.md") as f:
-            text = f.read()
-            html = markdown.markdown(text)
-            # allow voting
-            # TODO: votet
-            # if session.get("user_id"):
-            # firstLine = html.split("\n")[0]
-            # html = html.replace(
-            # firstLine,
-            # firstLine
-            # + f"<a class=\"btn btn-default\" href=\"{url_for('proposal')}\" role=\"button\">Submit Proposal</a>"
-            # )
-            return render_template("rc.html", html=html)
-    except FileNotFoundError:
+@app.route("/rc/<int:rc_id>", methods=["GET", "POST"])
+def rule_change_proposal(rc_id):
+    if request.method == "POST":
+        # add vote to DB
+        if session.get("user_id"):
+            addProposalVote(session.get("user_id"), rc_id, request.form["vote"])
+        return redirect(url_for("rule_change_proposal", rc_id=rc_id))
+
+    # get current votes
+    proposal = getProposal(rc_id)
+    if not proposal:
         abort(404)
+    return render_template(
+        "rc.html",
+        rc_id=rc_id,
+        proposal=proposal,
+        logged_in=session.get("user_id"),
+    )
 
 
+# TODO: remove after RC 12 is over
 @app.route("/rc12")
 def rc12():
-    return redirect(url_for("rule_change_proposal", id=12))
+    return redirect(url_for("rule_change_proposal", rc_id=12))
 
 
 @app.route("/chat")

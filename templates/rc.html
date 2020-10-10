@@ -1,5 +1,40 @@
 {% extends "base.html" %}
 
-{% block title %}R.C.012{% endblock %}
+{% block title %}R.C.{{ proposal["rc_id"] }}{% endblock %}
 
-{% block content %}{{ html|safe }}{% endblock %}
+{% block content %}
+<h1>R.C.{{ proposal["rc_id"] }}: {{ proposal["title"] }}</h1>
+<h4>Why is it important?</h4>
+<p>{{ proposal["why"] }}</p>
+<h4>What's different?</h4>
+<p>{{ proposal["what"] }}</p>
+<h4>How does it work?</h4>
+<p>{{ proposal["how"] }}</p>
+
+{% if logged_in and proposal["open"] %}
+	<form method="post">
+		<div class="form-group">
+			<div class="form-check form-check-inline">
+				<input class="form-check-input" type="radio" id="yes" name="vote" value="yes">
+				<label class="form-check-label" for="yes">Yes ({{ proposal["yes"] }})</label>
+			</div>
+			<div class="form-check form-check-inline">
+				<input class="form-check-input" type="radio" id="no" name="vote" value="no">
+				<label class="form-check-label" for="no">No ({{ proposal["no"] }})</label>
+			</div>
+		</div>
+		<button type="submit" class="btn btn-secondary">Submit</button>
+	</form>
+{% else %}
+	<h4>Votes</h4>
+	<p>Yes ({{ proposal["yes"] }})</p>
+	<p>No ({{ proposal["no"] }})</p>
+	{% if proposal["open"] %}
+		<p><a href="{{ url_for("login") }}">
+			Login to Vote
+		</a></p>
+	{% endif %}
+{% endif %}
+
+
+{% endblock %}
