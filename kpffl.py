@@ -91,11 +91,13 @@ def sendProposal(proposal):
         print(e.message)
 
 
-def getProposalVotes(rc_id):
+def getProposal(rc_id):
     """This gets yes and no votes for a given proposal from the DB."""
 
     db = getDB()
     proposal = db.proposals.find_one({"rc_id": rc_id})
+    if not proposal:
+        return None
     votes = db.proposal_votes.find({"proposal_id": proposal["_id"]})
     yes, no = 0, 0
     for vote in votes:
@@ -103,7 +105,9 @@ def getProposalVotes(rc_id):
             yes += 1
         else:
             no += 1
-    return {"yes": yes, "no": no, "open": proposal["open"]}
+    proposal["yes"] = yes
+    proposal["no"] = no
+    return proposal
 
 
 def addProposalVote(user_id, rc_id, vote):

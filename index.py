@@ -5,7 +5,7 @@ from flask import (Flask, abort, redirect, render_template, request, session,
                    url_for)
 
 from kpffl import (addCoachesPollVote, addProposalVote, getCoachesPoll,
-                   getProposalVotes, sendProposal)
+                   getProposal, sendProposal)
 from sleeper import getOwner, getTeams
 
 app = Flask(__name__)
@@ -98,23 +98,17 @@ def rule_change_proposal(rc_id):
         if session.get("user_id"):
             addProposalVote(session.get("user_id"), rc_id, request.form["vote"])
         return redirect(url_for("rule_change_proposal", rc_id=rc_id))
-    try:
-        with open(f"docs/rc/rc{rc_id}.md") as f:
 
-            text = f.read()
-            html = markdown.markdown(text)
-
-            # get current votes
-            votes = getProposalVotes(rc_id)
-            return render_template(
-                "rc.html",
-                html=html,
-                rc_id=rc_id,
-                votes=votes,
-                logged_in=session.get("user_id"),
-            )
-    except FileNotFoundError:
+    # get current votes
+    proposal = getProposal(rc_id)
+    if not proposal:
         abort(404)
+    return render_template(
+        "rc.html",
+        rc_id=rc_id,
+        proposal=proposal,
+        logged_in=session.get("user_id"),
+    )
 
 
 # TODO: remove after RC 12 is over
