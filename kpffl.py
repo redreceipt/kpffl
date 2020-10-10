@@ -69,6 +69,12 @@ def sendProposal(proposal):
     """This will assemble a proposal from the submission form and email commisioners."""
     print(proposal)
 
+    # TODO create a new proposal in the DB with rc_id = 0
+    # fill in author, title, why, what, how
+    # send email to commish with an embedded approve link in the form:
+    # https://kpffl.com/rc/approve/<ID>
+    # that link will set the rc_id to the next largest item and make the page live
+
     message = Mail(
         from_email="michael@neeley.dev",
         to_emails="micneeley14@gmail.com",
@@ -97,7 +103,7 @@ def getProposalVotes(rc_id):
             yes += 1
         else:
             no += 1
-    return {"yes": yes, "no": no, "closed": proposal["closed"]}
+    return {"yes": yes, "no": no, "open": proposal["open"]}
 
 
 def addProposalVote(user_id, rc_id, vote):

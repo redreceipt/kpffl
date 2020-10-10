@@ -5,7 +5,7 @@
 {% block content %}
 {{ html|safe }}
 
-{% if logged_in and not votes["closed"] %}
+{% if logged_in and votes["open"] %}
 	<form method="post">
 		<div class="form-group">
 			<div class="form-check form-check-inline">
@@ -22,7 +22,7 @@
 {% else %}
 	<p>Yes ({{ votes["yes"] }})</p>
 	<p>No ({{ votes["no"] }})</p>
-	{% if not votes["closed"] %}
+	{% if votes["open"] %}
 		<p><a href="{{ url_for("login") }}">
 			Login to Vote
 		</a></p>
