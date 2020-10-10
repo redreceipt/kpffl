@@ -198,10 +198,6 @@ Send the proposal to the commissioner to be put to a league vote in one of the f
 
 ### Editing the Constitution
 
-#### New Sections
-
-New rules can be created by anyone if no other rule will be affected. They will be logged in Constitutional Edits with the date included.
-
 #### Executive Orders
 
 Executive Orders are rules changed by the commissioner without voting. They may be overturned (see Article 1 Section 1). All Executive Orders will be logged in Appendix B - Executive Orders.
