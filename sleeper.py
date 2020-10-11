@@ -1,6 +1,7 @@
 import asyncio
 import json
 import os
+import time
 
 import requests
 from gql import AIOHTTPTransport, Client, gql
@@ -82,15 +83,20 @@ def getTeams(skipPlayers=False):
     owners = _getOwners()
     rosters = _getRosters()
 
-    # assemble teams
-    teams = []
+    # flat_list = [item for sublist in l for item in sublist]
+    simpleRosters = [roster["players"] for roster in rosters]
+    players = [player for roster in simpleRosters for player in roster]
+
+    # get players from DB
+    db = getDB()
+    data = db.players.find({"$or": [{"player_id": player_id} for player_id in players]})
+    leaguePlayers = {player["player_id"]: player for player in data}
 
     def getPlayerName(player):
         return f"{player['first_name']} {player['last_name']}"
 
     def getPlayerGroup(ids, positions):
 
-        db = getDB()
         # pad positions with empty slots
         ids.extend(["0"] * (len(positions) - len(ids)))
 
@@ -99,7 +105,7 @@ def getTeams(skipPlayers=False):
                 lambda playerId: {
                     # TODO: ternary only necessary because there's a bug
                     # in the sleeper API
-                    "name": getPlayerName(db.players.find_one({"player_id": playerId}))
+                    "name": getPlayerName(leaguePlayers[playerId])
                     if playerId != "0"
                     else "(Empty)",
                     "pos": positions.pop(0) if len(positions) else "",
@@ -108,14 +114,15 @@ def getTeams(skipPlayers=False):
             )
         )
 
+    teams = []
     for i, roster in enumerate(rosters):
 
-        players = []
         if not skipPlayers:
 
             # build player groups
             starters = getPlayerGroup(
-                roster["starters"], ["QB", "RB", "RB", "WR", "WR", "TE", "Flex", "DEF"]
+                roster["starters"],
+                ["QB", "RB", "RB", "WR", "WR", "TE", "Flex", "DEF"],
             )
             reserve = getPlayerGroup(roster["reserve"] or [], ["IR"])
             taxi = getPlayerGroup(roster["taxi"] or [], ["Taxi"] * 3)
