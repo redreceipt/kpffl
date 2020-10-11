@@ -5,7 +5,7 @@ from flask import (Flask, abort, redirect, render_template, request, session,
                    url_for)
 
 from kpffl import (addCoachesPollVote, addProposalVote, getCoachesPoll,
-                   getProposal, sendProposal)
+                   getProposal, sendEmail)
 from sleeper import getOwner, getTeams
 
 app = Flask(__name__)
@@ -56,9 +56,19 @@ def edit_rules():
 @app.route("/proposal", methods=["GET", "POST"])
 def proposal():
     if request.method == "POST":
-        sendProposal(request.form)
+        sendEmail(
+            str(request.form), "KPFFL Rule Change Proposal", request.form["email"]
+        )
         return redirect(url_for("rules"))
     return render_template("proposal.html")
+
+
+@app.route("/covid", methods=["GET", "POST"])
+def covid():
+    if request.method == "POST":
+        sendEmail(str(request.form), "COVID Backups", request.form["email"])
+        return redirect(url_for("home"))
+    return render_template("covid.html")
 
 
 @app.route("/teams")

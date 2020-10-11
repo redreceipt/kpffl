@@ -1,4 +1,5 @@
 import os
+import re
 from math import floor
 from statistics import mean
 
@@ -65,9 +66,12 @@ def addCoachesPollVote(votes, userID):
     )
 
 
-def sendProposal(proposal):
-    """This will assemble a proposal from the submission form and email commisioners."""
-    print(proposal)
+def sendEmail(body, subject, email=""):
+    """Sends email to commisioners."""
+    print(body)
+    dest = ["micneeley14@gmail.com", "hunterreid49@gmail.com"]
+    if re.match(r"\w+@\w+\.\w+", email):
+        dest.append(email)
 
     # TODO create a new proposal in the DB with rc_id = 0
     # fill in author, title, why, what, how
@@ -77,9 +81,9 @@ def sendProposal(proposal):
 
     message = Mail(
         from_email="michael@neeley.dev",
-        to_emails="micneeley14@gmail.com",
-        subject="KPFFL Rule Change Proposal",
-        html_content=str(proposal),
+        to_emails=dest,
+        subject=subject,
+        html_content=body,
     )
     try:
         sg = SendGridAPIClient(os.environ.get("SENDGRID_KEY"))
