@@ -1,9 +1,12 @@
 import asyncio
 import json
 import os
+import pprint
 
 import requests
 from gql import AIOHTTPTransport, Client, gql
+
+from database import getDB
 
 # from flask import session
 
@@ -63,11 +66,18 @@ def getOwner(user, pw):
     return None
 
 
-def getPlayers():
+def updatePlayers():
     """Gets players from Sleepers database."""
     # NOTE: should be used sparingly
     # TODO: players should be cached in a seperate call
     r = requests.get("https://api.sleeper.app/v1/players/nfl")
+    players = json.loads(r.text)
+
+    # update players in database
+    db = getDB()
+    db.drop_collection("players")
+    db.create_collection("players")
+    db.players.insert_many(players.values())
     return json.loads(r.text)
 
 
@@ -104,7 +114,7 @@ def getTeams(skipPlayers=False):
 
         players = []
         if not skipPlayers:
-            allPlayers = getPlayers()
+            allPlayers = updatePlayers()
 
             # build player groups
             starters = getPlayerGroup(
