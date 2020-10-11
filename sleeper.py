@@ -66,9 +66,7 @@ def getOwner(user, pw):
 
 
 def updatePlayers():
-    """Gets players from Sleepers database."""
-    # NOTE: should be used sparingly
-    # TODO: players should be cached in a seperate call
+    """Gets players from Sleepers database and uploads to Mongo."""
     r = requests.get("https://api.sleeper.app/v1/players/nfl")
     players = json.loads(r.text)
 
@@ -77,7 +75,6 @@ def updatePlayers():
     db.drop_collection("players")
     db.create_collection("players")
     db.players.insert_many(players.values())
-    return json.loads(r.text)
 
 
 def getTeams(skipPlayers=False):
@@ -91,7 +88,9 @@ def getTeams(skipPlayers=False):
     def getPlayerName(player):
         return f"{player['first_name']} {player['last_name']}"
 
-    def getPlayerGroup(ids, positions, allPlayers):
+    def getPlayerGroup(ids, positions):
+
+        db = getDB()
         # pad positions with empty slots
         ids.extend(["0"] * (len(positions) - len(ids)))
 
@@ -100,7 +99,7 @@ def getTeams(skipPlayers=False):
                 lambda playerId: {
                     # TODO: ternary only necessary because there's a bug
                     # in the sleeper API
-                    "name": getPlayerName(allPlayers[playerId])
+                    "name": getPlayerName(db.players.find_one({"player_id": playerId}))
                     if playerId != "0"
                     else "(Empty)",
                     "pos": positions.pop(0) if len(positions) else "",
@@ -113,22 +112,19 @@ def getTeams(skipPlayers=False):
 
         players = []
         if not skipPlayers:
-            allPlayers = updatePlayers()
 
             # build player groups
             starters = getPlayerGroup(
-                roster["starters"],
-                ["QB", "RB", "RB", "WR", "WR", "TE", "Flex", "DEF"],
-                allPlayers,
+                roster["starters"], ["QB", "RB", "RB", "WR", "WR", "TE", "Flex", "DEF"]
             )
-            reserve = getPlayerGroup(roster["reserve"] or [], ["IR"], allPlayers)
-            taxi = getPlayerGroup(roster["taxi"] or [], ["Taxi"] * 3, allPlayers)
+            reserve = getPlayerGroup(roster["reserve"] or [], ["IR"])
+            taxi = getPlayerGroup(roster["taxi"] or [], ["Taxi"] * 3)
 
             # bench players are the ones remaining
             others = set(roster["players"]) - set(
                 roster["starters"] + (roster["reserve"] or []) + (roster["taxi"] or [])
             )
-            bench = getPlayerGroup(list(others), ["Bench"] * 12, allPlayers)
+            bench = getPlayerGroup(list(others), ["Bench"] * 12)
             players = {
                 "starters": starters,
                 "bench": bench,
