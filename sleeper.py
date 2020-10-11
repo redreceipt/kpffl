@@ -1,7 +1,6 @@
 import asyncio
 import json
 import os
-import pprint
 
 import requests
 from gql import AIOHTTPTransport, Client, gql
