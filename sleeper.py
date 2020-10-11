@@ -77,7 +77,7 @@ def updatePlayers():
     db.players.insert_many(players.values())
 
 
-def getTeams(skipPlayers=False):
+def getTeams():
     """Gets the current teams in the league."""
     owners = _getOwners()
     rosters = _getRosters()
@@ -111,27 +111,25 @@ def getTeams(skipPlayers=False):
     teams = []
     for i, roster in enumerate(rosters):
 
-        if not skipPlayers:
+        # build player groups
+        starters = getPlayerGroup(
+            roster["starters"],
+            ["QB", "RB", "RB", "WR", "WR", "TE", "Flex", "DEF"],
+        )
+        reserve = getPlayerGroup(roster["reserve"] or [], ["IR"])
+        taxi = getPlayerGroup(roster["taxi"] or [], ["Taxi"] * 3)
 
-            # build player groups
-            starters = getPlayerGroup(
-                roster["starters"],
-                ["QB", "RB", "RB", "WR", "WR", "TE", "Flex", "DEF"],
-            )
-            reserve = getPlayerGroup(roster["reserve"] or [], ["IR"])
-            taxi = getPlayerGroup(roster["taxi"] or [], ["Taxi"] * 3)
-
-            # bench players are the ones remaining
-            others = set(roster["players"]) - set(
-                roster["starters"] + (roster["reserve"] or []) + (roster["taxi"] or [])
-            )
-            bench = getPlayerGroup(list(others), ["Bench"] * 12)
-            players = {
-                "starters": starters,
-                "bench": bench,
-                "reserve": reserve,
-                "taxi": taxi,
-            }
+        # bench players are the ones remaining
+        others = set(roster["players"]) - set(
+            roster["starters"] + (roster["reserve"] or []) + (roster["taxi"] or [])
+        )
+        bench = getPlayerGroup(list(others), ["Bench"] * 12)
+        players = {
+            "starters": starters,
+            "bench": bench,
+            "reserve": reserve,
+            "taxi": taxi,
+        }
 
         owner = owners[roster["owner_id"]]
         teamName = (
