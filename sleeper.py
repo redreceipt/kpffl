@@ -84,15 +84,12 @@ def getTeams(skipPlayers=False):
 
     # flat_list = [item for sublist in l for item in sublist]
     simpleRosters = [roster["players"] for roster in rosters]
-    players = [player for roster in simpleRosters for player in roster]
+    allIds = [player for roster in simpleRosters for player in roster]
 
     # get players from DB
     db = getDB()
-    data = db.players.find({"$or": [{"player_id": player_id} for player_id in players]})
-    leaguePlayers = {player["player_id"]: player for player in data}
-
-    def getPlayerName(player):
-        return f"{player['first_name']} {player['last_name']}"
+    data = db.players.find({"$or": [{"player_id": player_id} for player_id in allIds]})
+    pDict = {player["player_id"]: player for player in data}
 
     def getPlayerGroup(ids, positions):
 
@@ -101,11 +98,9 @@ def getTeams(skipPlayers=False):
 
         return list(
             map(
-                lambda playerId: {
-                    # TODO: ternary only necessary because there's a bug
-                    # in the sleeper API
-                    "name": getPlayerName(leaguePlayers[playerId])
-                    if playerId != "0"
+                lambda pId: {
+                    "name": f"{pDict[pId]['first_name']} {pDict[pId]['last_name']}"
+                    if pId != "0"
                     else "(Empty)",
                     "pos": positions.pop(0) if len(positions) else "",
                 },
