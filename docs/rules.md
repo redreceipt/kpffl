@@ -171,6 +171,10 @@ In order to make tanking a little more difficult, players must start active rost
 
 The penalty is losing the next available draft pick at draft time. So if the 1st round pick is traded away, the 2nd round pick will be lost. If there are no picks left, the 1st round pick the following year will be lost.
 
+### Section 7 - COVID Backups
+
+Due to games that may be cancelled because of COVID-19, owners will be able to specify and backup player for each starting position in the event the starter's game is cancelled. Submissions must be made to the commish prior to the alternate players game start time. Scores will be updated by the commish retroactively after the week's final scores have been calculated.
+
 ## Appendix A - Reference
 
 ### League Terms
