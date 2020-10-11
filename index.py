@@ -63,6 +63,7 @@ def proposal():
     return render_template("proposal.html")
 
 
+# TODO: remove in 2021 season
 @app.route("/covid", methods=["GET", "POST"])
 def covid():
     if request.method == "POST":
