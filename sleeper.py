@@ -180,3 +180,20 @@ def getMatchups():
         )
 
     return matchups.values()
+
+
+def getTrades():
+    """Gets recent transactions"""
+
+    return [
+        {
+            "team": {"name": "Team1"},
+            "players": [{"name": "Player1"}],
+            "picks": [],
+        },
+        {
+            "team": {"name": "Team2"},
+            "players": [],
+            "picks": [{"round": "1st", "season": "2021", "owner": "Owner5"}],
+        },
+    ]

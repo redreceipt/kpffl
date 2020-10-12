@@ -37,6 +37,76 @@
       </div>
     {% endfor %}
   </div>
+  <div class="col pl-lg-5 mt-5 mt-lg-0">
+    <h5>
+      Trades & Waivers
+    </h5>
+    {% if not logged_in %}
+    <p><a href="{{ url_for("login") }}">
+      Login to Vote
+    </a></p>
+    {% endif %}
+    <form class="form">
+      <div class="row align-items-center mt-4">
+        <div class="col">
+          <p>
+            Team1
+          </p>
+          <p>
+            ➕ Player1
+          </p>
+        </div>
+        <div class="col text-right">
+          <div class="form-check form-check-inline mb-4">
+            <label class="form-check-label" for="team1">
+              (4)&nbsp;
+            </label>
+            <input class="form-check-input" type="checkbox" name="team1" id="team1">
+          </div>
+        </div>
+        <div class="col">
+          <p>&nbsp;</p>
+        </div>
+      </div>
+      <div class="row align-items-center">
+        <div class="col">
+          <strong><p>Who won?</p></strong>
+        </div>
+        <div class="col text-right">
+          <div class="form-check form-check-inline mb-4">
+            <label class="form-check-label" for="even">
+              (5)&nbsp;
+            </label>
+            <input class="form-check-input" type="checkbox" name="even" id="even">
+          </div>
+        </div>
+        <div class="col">
+          <p>🏈</p>
+        </div>
+      </div>
+      <div class="row align-items-center">
+        <div class="col">
+          <p>
+            Team2
+          </p>
+          <p>
+            ➕ Player2
+          </p>
+        </div>
+        <div class="col text-right">
+          <div class="form-check form-check-inline mb-4">
+            <label class="form-check-label" for="team2">
+              (1)&nbsp;
+            </label>
+            <input class="form-check-input" type="checkbox" name="team2" id="team2">
+          </div>
+        </div>
+        <div class="col">
+          <p>&nbsp;</p>
+        </div>
+      </div>
+    </form>
+  </div>
 </div>
 
 {% endblock %}
