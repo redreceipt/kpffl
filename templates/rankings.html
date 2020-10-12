@@ -61,9 +61,10 @@
     {% for team in rankings["standings"]["teams"] %}
       <tr>
         <td>
-          {{ team["name"] }}<small> ({{ team["owner"] }})</small>
+          {{ team["name"] }}<br>
+          <small> ({{ team["owner"] }})</small>
         </td>
-        <td class="w-40">
+        <td>
           {{ team["stats"]["w"] }}-{{ team["stats"]["l"] }}&nbsp;
           ({{ team["stats"]["pf"] }})
         </td>
