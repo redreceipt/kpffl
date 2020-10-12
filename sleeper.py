@@ -5,6 +5,8 @@ import os
 import requests
 from gql import AIOHTTPTransport, Client, gql
 
+from database import getDB
+
 # from flask import session
 
 
@@ -36,9 +38,22 @@ def _getOwners():
 
 
 def _getRosters():
+    """Gets Sleeper Rosters."""
     leagueID = os.getenv("LEAGUE_ID")
     r = requests.get(f"https://api.sleeper.app/v1/league/{leagueID}/rosters")
     return json.loads(r.text)
+
+
+def _getPlayers(rosters):
+
+    # flatten player list
+    simpleRosters = [roster["players"] for roster in rosters]
+    allIds = [player for roster in simpleRosters for player in roster]
+
+    # get players from DB
+    db = getDB()
+    data = db.players.find({"$or": [{"player_id": player_id} for player_id in allIds]})
+    return {player["player_id"]: player for player in data}
 
 
 def getOwner(user, pw):
@@ -63,36 +78,34 @@ def getOwner(user, pw):
     return None
 
 
-def getPlayers():
-    """Gets players from Sleepers database."""
-    # NOTE: should be used sparingly
-    # TODO: players should be cached in a seperate call
+def updatePlayers():
+    """Gets players from Sleepers database and uploads to Mongo."""
     r = requests.get("https://api.sleeper.app/v1/players/nfl")
-    return json.loads(r.text)
+    players = json.loads(r.text)
+
+    # update players in database
+    db = getDB()
+    db.drop_collection("players")
+    db.create_collection("players")
+    db.players.insert_many(players.values())
 
 
 def getTeams(skipPlayers=False):
     """Gets the current teams in the league."""
     owners = _getOwners()
     rosters = _getRosters()
+    players = _getPlayers(rosters) if not skipPlayers else {}
 
-    # assemble teams
-    teams = []
+    def getPlayerGroup(ids, positions):
 
-    def getPlayerName(player):
-        return f"{player['first_name']} {player['last_name']}"
-
-    def getPlayerGroup(ids, positions, allPlayers):
         # pad positions with empty slots
         ids.extend(["0"] * (len(positions) - len(ids)))
 
         return list(
             map(
-                lambda playerId: {
-                    # TODO: ternary only necessary because there's a bug
-                    # in the sleeper API
-                    "name": getPlayerName(allPlayers[playerId])
-                    if playerId != "0"
+                lambda pId: {
+                    "name": f"{players[pId]['first_name']} {players[pId]['last_name']}"
+                    if pId != "0"
                     else "(Empty)",
                     "pos": positions.pop(0) if len(positions) else "",
                 },
@@ -100,33 +113,10 @@ def getTeams(skipPlayers=False):
             )
         )
 
+    teams = []
     for i, roster in enumerate(rosters):
 
-        players = []
-        if not skipPlayers:
-            allPlayers = getPlayers()
-
-            # build player groups
-            starters = getPlayerGroup(
-                roster["starters"],
-                ["QB", "RB", "RB", "WR", "WR", "TE", "Flex", "DEF"],
-                allPlayers,
-            )
-            reserve = getPlayerGroup(roster["reserve"] or [], ["IR"], allPlayers)
-            taxi = getPlayerGroup(roster["taxi"] or [], ["Taxi"] * 3, allPlayers)
-
-            # bench players are the ones remaining
-            others = set(roster["players"]) - set(
-                roster["starters"] + (roster["reserve"] or []) + (roster["taxi"] or [])
-            )
-            bench = getPlayerGroup(list(others), ["Bench"] * 12, allPlayers)
-            players = {
-                "starters": starters,
-                "bench": bench,
-                "reserve": reserve,
-                "taxi": taxi,
-            }
-
+        # bench players are the ones remaining
         owner = owners[roster["owner_id"]]
         teamName = (
             owner["metadata"]["team_name"]
@@ -138,7 +128,27 @@ def getTeams(skipPlayers=False):
             "id": "team|" + str(roster["roster_id"]),
             "name": teamName,
             "owner": owner["display_name"],
-            "players": players,
+            "players": {
+                "starters": getPlayerGroup(
+                    roster["starters"],
+                    ["QB", "RB", "RB", "WR", "WR", "TE", "Flex", "DEF"],
+                ),
+                "bench": getPlayerGroup(
+                    list(
+                        set(roster["players"])
+                        - set(
+                            roster["starters"]
+                            + (roster["reserve"] or [])
+                            + (roster["taxi"] or [])
+                        )
+                    ),
+                    ["Bench"] * 12,
+                ),
+                "reserve": getPlayerGroup(roster["reserve"] or [], ["IR"]),
+                "taxi": getPlayerGroup(roster["taxi"] or [], ["Taxi"] * 3),
+            }
+            if len(players.keys())
+            else {},
             "stats": {
                 "w": roster["settings"]["wins"],
                 "l": roster["settings"]["losses"],
