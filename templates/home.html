@@ -3,9 +3,44 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-<div class="text-center">
-  <h1>Check back soon!</h1>
-  <img src="{{ url_for("static", filename="img/logo.svg", _external=True) }}"
-  alt="logo" height="300" width="300" />
+<!--<div class="text-center">-->
+  <!--<h1>Check back soon!</h1>-->
+  <!--<img src="{{ url_for("static", filename="img/logo.svg", _external=True) }}"-->
+  <!--alt="logo" height="300" width="300" />-->
+<!--</div>-->
+<div class="row">
+  <div class="col">
+    <h5>
+      Matchups
+    </h5>
+    {% for matchup in matchups %}
+      <div class="row">
+        <div class="col text-left">
+          <h6>
+            {{ matchup[0]["team"]["name"] }}
+          </h6>
+        </div>
+        <div class="col text-center">
+          <div class="row">
+            <div class="col text-right">
+              <strong> {{ matchup[0]["score"] }} </strong>
+            </div>
+            <div class="col text-center">
+              -
+            </div>
+            <div class="col text-left">
+              <strong> {{ matchup[1]["score"] }} </strong>
+            </div>
+          </div>
+        </div>
+        <div class="col text-right">
+          <h6>
+            {{ matchup[1]["team"]["name"] }}
+          </h6>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
 </div>
+
 {% endblock %}

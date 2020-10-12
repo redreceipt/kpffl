@@ -6,6 +6,7 @@ import requests
 from gql import AIOHTTPTransport, Client, gql
 
 from database import getDB
+from sportsdata import getTimeframe
 
 # from flask import session
 
@@ -38,7 +39,6 @@ def _getOwners():
 
 
 def _getRosters():
-    """Gets Sleeper Rosters."""
     leagueID = os.getenv("LEAGUE_ID")
     r = requests.get(f"https://api.sleeper.app/v1/league/{leagueID}/rosters")
     return json.loads(r.text)
@@ -157,3 +157,26 @@ def getTeams(skipPlayers=False):
         }
         teams.append(team)
     return teams
+
+
+def getMatchups():
+    """Gets matchups for current week."""
+    leagueID = os.getenv("LEAGUE_ID")
+    week = getTimeframe()["week"]
+    r = requests.get(f"https://api.sleeper.app/v1/league/{leagueID}/matchups/{week}")
+    data = json.loads(r.text)
+
+    # get all matchup IDs
+    matchups = {
+        str(matchupid): []
+        for matchupid in set([matchup["matchup_id"] for matchup in data])
+    }
+
+    # add in team names and scores
+    teams = {team["id"].split("|")[1]: team for team in getTeams(True)}
+    for matchup in data:
+        matchups[str(matchup["matchup_id"])].append(
+            {"team": teams[str(matchup["roster_id"])], "score": matchup["points"]}
+        )
+
+    return matchups.values()

@@ -6,7 +6,7 @@ from flask import (Flask, abort, redirect, render_template, request, session,
 
 from kpffl import (addCoachesPollVote, addProposalVote, getProposal,
                    getRankings, sendEmail)
-from sleeper import getOwner, getTeams
+from sleeper import getMatchups, getOwner, getTeams
 
 app = Flask(__name__)
 
@@ -34,7 +34,9 @@ def logout():
 
 @app.route("/")
 def home():
-    return render_template("home.html")
+    matchups = getMatchups()
+    print(matchups)
+    return render_template("home.html", matchups=matchups)
 
 
 @app.route("/rules")
@@ -120,12 +122,6 @@ def rule_change_proposal(rc_id):
         proposal=proposal,
         logged_in=session.get("user_id"),
     )
-
-
-# TODO: remove after RC 12 is over
-@app.route("/rc12")
-def rc12():
-    return redirect(url_for("rule_change_proposal", rc_id=12))
 
 
 @app.route("/chat")
