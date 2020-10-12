@@ -15,10 +15,10 @@
     </h5>
     {% for matchup in matchups %}
       <div class="row align-items-center" style="height: 70px">
-        <div class="col text-left">
+        <div class="col-3 text-left">
           <small>{{ matchup[0]["team"]["name"] }}</small>
         </div>
-        <div class="col-6">
+        <div class="col">
           <div class="row">
             <div class="col text-right">
               <strong> {{ matchup[0]["score"] }} </strong>
@@ -31,7 +31,7 @@
             </div>
           </div>
         </div>
-        <div class="col text-right">
+        <div class="col-3 text-right">
           <small>{{ matchup[1]["team"]["name"] }}</small>
         </div>
       </div>
