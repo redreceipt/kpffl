@@ -8,11 +8,9 @@
       {% if not voting %}
       <small>
         {% if not user_id %}
-          (<a href="{{ url_for("login") }}">
-            Login to Vote
-          </a>)
+          (<a href="{{ url_for("login") }}">Login to Vote</a>)
         {% else %}
-        (<a href="{{ url_for("rankings", subpath="vote") }}">Vote</a>)
+          (<a href="{{ url_for("rankings", subpath="vote") }}">Vote</a>)
         {% endif %}
       </small>
       {% endif %}
@@ -22,7 +20,14 @@
       <div id="teams">
         {% for team in rankings["cp"]["teams"] %}
         <div class="form-group form-inline mt-2 mb-2">
-          <input class="form-control mr-4 col-2" name="{{ team["id"] }}" type="number" min="1" max="12" required />
+          <input
+            class="form-control mr-4 col-2"
+            name="{{ team["id"] }}"
+            type="number"
+            min="1"
+            max="12"
+            required
+          />
           {{ team["name"] }}<small> ({{ team["owner"] }})</small>
         </div>
         {% endfor %}
@@ -47,6 +52,24 @@
         </table>
       {% endif %}
     {% endif %}
+  </div>
+  <div class="col">
+    <h5>
+      Standings
+    </h5>
+    <table class="table">
+    {% for team in rankings["standings"]["teams"] %}
+      <tr>
+        <td>
+          {{ team["name"] }}<small> ({{ team["owner"] }})</small>
+        </td>
+        <td>
+          {{ team["stats"]["w"] }}-{{ team["stats"]["l"] }}&nbsp;
+          ({{ team["stats"]["pf"] }})
+        </td>
+      <tr>
+    {% endfor %}
+    </table>
   </div>
 </div>
 {% endblock %}

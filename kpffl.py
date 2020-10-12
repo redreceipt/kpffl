@@ -11,11 +11,7 @@ from sleeper import getTeams
 from sportsdata import getTimeframe
 
 
-def getCoachesPoll():
-    """Gets coaches poll rankings."""
-
-    # get team information, skipping players
-    teams = getTeams(True)
+def _getCoachesPoll(teams):
 
     # get current week from Sportsdata API
     time = getTimeframe()
@@ -29,7 +25,7 @@ def getCoachesPoll():
         for i, team in enumerate(vote["rankings"]):
             ranks[team].append(i + 1)
 
-    teamsByRank = [
+    teamsWithRank = [
         {
             "id": team["id"],
             "name": team["name"],
@@ -44,8 +40,25 @@ def getCoachesPoll():
         "week": time["week"],
         "season": time["season"],
         "numVotes": votes.count(),
-        "teams": sorted(teamsByRank, key=lambda team: team["rank"]),
+        "teams": sorted(teamsWithRank, key=lambda team: team["rank"]),
     }
+
+
+def _getStandings(teams):
+    # sorted(student_objects, key=attrgetter('age'))
+    teamsByPoints = sorted(teams, key=lambda team: team["stats"]["pf"], reverse=True)
+    teamsByWins = sorted(
+        teamsByPoints, key=lambda team: team["stats"]["w"], reverse=True
+    )
+    return {"teams": teamsByWins}
+
+
+def getRankings():
+    """Gets Rankings."""
+
+    # get team information, skipping players
+    teams = getTeams(True)
+    return {"cp": _getCoachesPoll(teams), "standings": _getStandings(teams)}
 
 
 def addCoachesPollVote(votes, userID):

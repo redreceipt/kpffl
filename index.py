@@ -4,8 +4,8 @@ import markdown
 from flask import (Flask, abort, redirect, render_template, request, session,
                    url_for)
 
-from kpffl import (addCoachesPollVote, addProposalVote, getCoachesPoll,
-                   getProposal, sendEmail)
+from kpffl import (addCoachesPollVote, addProposalVote, getProposal,
+                   getRankings, sendEmail)
 from sleeper import getOwner, getTeams
 
 app = Flask(__name__)
@@ -96,7 +96,7 @@ def rankings(subpath=None):
 
     return render_template(
         "rankings.html",
-        rankings={"cp": getCoachesPoll()},
+        rankings=getRankings(),
         user_id=session.get("user_id"),
         voting=voting,
     )
