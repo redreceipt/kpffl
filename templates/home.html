@@ -13,33 +13,35 @@
     <h5>
       Matchups
     </h5>
+    <table class="w-100">
     {% for matchup in matchups %}
-      <div class="row">
-        <div class="col text-left">
+      <tr>
+        <td class="text-left align-text-bottom">
           <h6>
             {{ matchup[0]["team"]["name"] }}
           </h6>
-        </div>
-        <div class="col text-center">
+        </td>
+        <td class="text-center align-text-bottom">
           <div class="row">
             <div class="col text-right">
               <strong> {{ matchup[0]["score"] }} </strong>
             </div>
-            <div class="col text-center">
+            <div class="col-1 text-center">
               -
             </div>
             <div class="col text-left">
               <strong> {{ matchup[1]["score"] }} </strong>
             </div>
           </div>
-        </div>
-        <div class="col text-right">
+        </td>
+        <td class="text-right align-text-bottom">
           <h6>
             {{ matchup[1]["team"]["name"] }}
           </h6>
-        </div>
-      </div>
+        </td>
+      </tr>
     {% endfor %}
+    </table>
   </div>
 </div>
 
