@@ -5,7 +5,7 @@ import os
 import requests
 from gql import AIOHTTPTransport, Client, gql
 
-from database import getDB
+from database import getDB, getPlayerData
 from sportsdata import getTimeframe
 
 # from flask import session
@@ -44,7 +44,7 @@ def _getRosters():
     return json.loads(r.text)
 
 
-def _getPlayers(rosters):
+def _getRosterPlayers(rosters):
 
     # flatten player list
     simpleRosters = [roster["players"] for roster in rosters]
@@ -52,8 +52,7 @@ def _getPlayers(rosters):
 
     # get players from DB
     db = getDB()
-    data = db.players.find({"$or": [{"player_id": player_id} for player_id in allIds]})
-    return {player["player_id"]: player for player in data}
+    return getPlayerData(db, allIds)
 
 
 def getOwner(user, pw):
@@ -70,7 +69,8 @@ def getOwner(user, pw):
     )
     data = client.request(query, {"user": user, "pw": pw})
     userID = data["login"]["user_id"]
-    r = requests.get(f"https://api.sleeper.app/v1/user/{userID}/leagues/nfl/2020")
+    season = getTimeframe()["season"]
+    r = requests.get(f"https://api.sleeper.app/v1/user/{userID}/leagues/nfl/{season}")
     leagues = json.loads(r.text)
     leagueIDs = [league["league_id"] for league in leagues]
     if os.getenv("LEAGUE_ID") in leagueIDs:
@@ -88,13 +88,14 @@ def updatePlayers():
     db.drop_collection("players")
     db.create_collection("players")
     db.players.insert_many(players.values())
+    db.players.create_index("player_id")
 
 
 def getTeams(skipPlayers=False):
     """Gets the current teams in the league."""
     owners = _getOwners()
     rosters = _getRosters()
-    players = _getPlayers(rosters) if not skipPlayers else {}
+    players = _getRosterPlayers(rosters) if not skipPlayers else {}
 
     def getPlayerGroup(ids, positions):
 
@@ -159,10 +160,12 @@ def getTeams(skipPlayers=False):
     return teams
 
 
-def getMatchups():
+def getMatchups(week=None, teams=None):
     """Gets matchups for current week."""
     leagueID = os.getenv("LEAGUE_ID")
-    week = getTimeframe()["week"]
+    week = week or getTimeframe()["week"]
+    teams = teams or getTeams(True)
+
     r = requests.get(f"https://api.sleeper.app/v1/league/{leagueID}/matchups/{week}")
     data = json.loads(r.text)
 
@@ -173,10 +176,86 @@ def getMatchups():
     }
 
     # add in team names and scores
-    teams = {team["id"].split("|")[1]: team for team in getTeams(True)}
+    teamHash = {team["id"].split("|")[1]: team for team in teams}
     for matchup in data:
         matchups[str(matchup["matchup_id"])].append(
-            {"team": teams[str(matchup["roster_id"])], "score": matchup["points"]}
+            {"team": teamHash[str(matchup["roster_id"])], "score": matchup["points"]}
         )
 
     return matchups.values()
+
+
+def getTrades(currentWeek=None, teams=None, n=5):
+    """Gets recent transactions"""
+    leagueID = os.getenv("LEAGUE_ID")
+    currentWeek = currentWeek or getTimeframe()["week"]
+    teams = teams or getTeams(True)
+    db = getDB()
+
+    # recursively search until I find 5 trades
+    tradesData = []
+
+    def findTrades(week):
+        r = requests.get(
+            f"https://api.sleeper.app/v1/league/{leagueID}/transactions/{week}"
+        )
+        data = json.loads(r.text)
+
+        # filter for only trades of two teams
+        tradesData.extend(
+            [
+                trade
+                for trade in data
+                if trade["type"] == "trade" and len(trade["roster_ids"]) == 2
+            ]
+        )
+        if len(tradesData) < n:
+            findTrades(week - 1)
+
+    findTrades(currentWeek)
+    tradesData = tradesData[:n]
+
+    # get player info
+    id_list_list = [trade["adds"].keys() for trade in tradesData]
+    id_list = set([item for sublist in id_list_list for item in sublist])
+    allPlayers = getPlayerData(db, id_list)
+
+    trades = []
+
+    def extractTradeData(roster_id):
+        players = [
+            key
+            for key in tradeData["adds"].keys()
+            if tradeData["adds"][key] == roster_id
+        ]
+        picks = [
+            pick for pick in tradeData["draft_picks"] if pick["owner_id"] == roster_id
+        ]
+        draftConvert = {1: "1st", 2: "2nd", 3: "3rd"}
+        return {
+            "team": [
+                team for team in teams if team["id"].split("|")[1] == str(roster_id)
+            ][0],
+            "players": [allPlayers[player_id] for player_id in players],
+            "picks": [
+                {
+                    "season": pick["season"],
+                    "round": draftConvert[pick["round"]],
+                    "owner": [
+                        team
+                        for team in teams
+                        if team["id"].split("|")[1] == str(pick["roster_id"])
+                    ][0]["owner"],
+                }
+                for pick in picks
+            ],
+        }
+
+    for tradeData in tradesData:
+        trade = {
+            "team1": extractTradeData(tradeData["roster_ids"][0]),
+            "team2": extractTradeData(tradeData["roster_ids"][1]),
+        }
+        trades.append(trade)
+
+    return trades
