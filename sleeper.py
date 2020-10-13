@@ -5,7 +5,7 @@ import os
 import requests
 from gql import AIOHTTPTransport, Client, gql
 
-from database import getDB
+from database import getDB, getPlayerData
 from sportsdata import getTimeframe
 
 # from flask import session
@@ -44,7 +44,7 @@ def _getRosters():
     return json.loads(r.text)
 
 
-def _getPlayers(rosters):
+def _getRosterPlayers(rosters):
 
     # flatten player list
     simpleRosters = [roster["players"] for roster in rosters]
@@ -52,8 +52,7 @@ def _getPlayers(rosters):
 
     # get players from DB
     db = getDB()
-    data = db.players.find({"$or": [{"player_id": player_id} for player_id in allIds]})
-    return {player["player_id"]: player for player in data}
+    return getPlayerData(db, allIds)
 
 
 def getOwner(user, pw):
@@ -88,13 +87,14 @@ def updatePlayers():
     db.drop_collection("players")
     db.create_collection("players")
     db.players.insert_many(players.values())
+    db.players.create_index("player_id")
 
 
 def getTeams(skipPlayers=False):
     """Gets the current teams in the league."""
     owners = _getOwners()
     rosters = _getRosters()
-    players = _getPlayers(rosters) if not skipPlayers else {}
+    players = _getRosterPlayers(rosters) if not skipPlayers else {}
 
     def getPlayerGroup(ids, positions):
 
@@ -182,18 +182,79 @@ def getMatchups():
     return matchups.values()
 
 
-def getTrades():
+def getTrades(n=5):
     """Gets recent transactions"""
+    leagueID = os.getenv("LEAGUE_ID")
+    currentWeek = getTimeframe()["week"]
 
-    return [
-        {
-            "team": {"name": "Team1"},
-            "players": [{"name": "Player1"}],
-            "picks": [],
-        },
-        {
-            "team": {"name": "Team2"},
-            "players": [],
-            "picks": [{"round": "1st", "season": "2021", "owner": "Owner5"}],
-        },
-    ]
+    # recursively search until I find 5 trades
+    tradesData = []
+
+    def findTrades(week):
+        r = requests.get(
+            f"https://api.sleeper.app/v1/league/{leagueID}/transactions/{week}"
+        )
+        data = json.loads(r.text)
+
+        # filter for only trades of two teams
+        tradesData.extend(
+            list(
+                filter(
+                    lambda trade: trade["type"] == "trade"
+                    and len(trade["roster_ids"]) == 2,
+                    data,
+                )
+            )
+        )
+        if len(tradesData) < n:
+            findTrades(week - 1)
+
+    findTrades(currentWeek)
+    tradesData = tradesData[:n]
+
+    # get player info
+    id_list_list = [trade["adds"].keys() for trade in tradesData]
+    id_list = set([item for sublist in id_list_list for item in sublist])
+    db = getDB()
+    allPlayers = getPlayerData(db, id_list)
+
+    trades = []
+    teams = getTeams(True)
+
+    def extractTradeData(roster_id):
+        players = [
+            key
+            for key in tradeData["adds"].keys()
+            if tradeData["adds"][key] == roster_id
+        ]
+        picks = [
+            pick for pick in tradeData["draft_picks"] if pick["owner_id"] == roster_id
+        ]
+        draftConvert = {1: "1st", 2: "2nd", 3: "3rd"}
+        return {
+            "team": [
+                team for team in teams if team["id"].split("|")[1] == str(roster_id)
+            ][0],
+            "players": [allPlayers[player_id] for player_id in players],
+            "picks": [
+                {
+                    "season": pick["season"],
+                    "round": draftConvert[pick["round"]],
+                    "owner": [
+                        team
+                        for team in teams
+                        if team["id"].split("|")[1] == str(pick["roster_id"])
+                    ][0]["owner"],
+                }
+                for pick in picks
+            ],
+        }
+
+    for tradeData in tradesData:
+        trade = {
+            "team1": extractTradeData(tradeData["roster_ids"][0]),
+            "team2": extractTradeData(tradeData["roster_ids"][1]),
+        }
+        trades.append(trade)
+
+    return trades
