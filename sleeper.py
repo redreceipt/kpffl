@@ -1,7 +1,6 @@
 import asyncio
 import json
 import os
-import time
 
 import requests
 from gql import AIOHTTPTransport, Client, gql
@@ -70,7 +69,8 @@ def getOwner(user, pw):
     )
     data = client.request(query, {"user": user, "pw": pw})
     userID = data["login"]["user_id"]
-    r = requests.get(f"https://api.sleeper.app/v1/user/{userID}/leagues/nfl/2020")
+    season = getTimeframe()["season"]
+    r = requests.get(f"https://api.sleeper.app/v1/user/{userID}/leagues/nfl/{season}")
     leagues = json.loads(r.text)
     leagueIDs = [league["league_id"] for league in leagues]
     if os.getenv("LEAGUE_ID") in leagueIDs:
@@ -93,7 +93,6 @@ def updatePlayers():
 
 def getTeams(skipPlayers=False):
     """Gets the current teams in the league."""
-    print("hello")
     owners = _getOwners()
     rosters = _getRosters()
     players = _getRosterPlayers(rosters) if not skipPlayers else {}
