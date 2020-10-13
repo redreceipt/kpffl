@@ -1,6 +1,7 @@
 import asyncio
 import json
 import os
+import time
 
 import requests
 from gql import AIOHTTPTransport, Client, gql
@@ -92,6 +93,7 @@ def updatePlayers():
 
 def getTeams(skipPlayers=False):
     """Gets the current teams in the league."""
+    print("hello")
     owners = _getOwners()
     rosters = _getRosters()
     players = _getRosterPlayers(rosters) if not skipPlayers else {}
@@ -159,10 +161,12 @@ def getTeams(skipPlayers=False):
     return teams
 
 
-def getMatchups():
+def getMatchups(week=None, teams=None):
     """Gets matchups for current week."""
     leagueID = os.getenv("LEAGUE_ID")
-    week = getTimeframe()["week"]
+    week = week or getTimeframe()["week"]
+    teams = teams or getTeams(True)
+
     r = requests.get(f"https://api.sleeper.app/v1/league/{leagueID}/matchups/{week}")
     data = json.loads(r.text)
 
@@ -173,19 +177,21 @@ def getMatchups():
     }
 
     # add in team names and scores
-    teams = {team["id"].split("|")[1]: team for team in getTeams(True)}
+    teamHash = {team["id"].split("|")[1]: team for team in teams}
     for matchup in data:
         matchups[str(matchup["matchup_id"])].append(
-            {"team": teams[str(matchup["roster_id"])], "score": matchup["points"]}
+            {"team": teamHash[str(matchup["roster_id"])], "score": matchup["points"]}
         )
 
     return matchups.values()
 
 
-def getTrades(n=5):
+def getTrades(currentWeek=None, teams=None, n=5):
     """Gets recent transactions"""
     leagueID = os.getenv("LEAGUE_ID")
-    currentWeek = getTimeframe()["week"]
+    currentWeek = currentWeek or getTimeframe()["week"]
+    teams = teams or getTeams(True)
+    db = getDB()
 
     # recursively search until I find 5 trades
     tradesData = []
@@ -198,13 +204,11 @@ def getTrades(n=5):
 
         # filter for only trades of two teams
         tradesData.extend(
-            list(
-                filter(
-                    lambda trade: trade["type"] == "trade"
-                    and len(trade["roster_ids"]) == 2,
-                    data,
-                )
-            )
+            [
+                trade
+                for trade in data
+                if trade["type"] == "trade" and len(trade["roster_ids"]) == 2
+            ]
         )
         if len(tradesData) < n:
             findTrades(week - 1)
@@ -215,11 +219,9 @@ def getTrades(n=5):
     # get player info
     id_list_list = [trade["adds"].keys() for trade in tradesData]
     id_list = set([item for sublist in id_list_list for item in sublist])
-    db = getDB()
     allPlayers = getPlayerData(db, id_list)
 
     trades = []
-    teams = getTeams(True)
 
     def extractTradeData(roster_id):
         players = [

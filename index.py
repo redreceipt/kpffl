@@ -7,6 +7,7 @@ from flask import (Flask, abort, redirect, render_template, request, session,
 from kpffl import (addCoachesPollVote, addProposalVote, getProposal,
                    getRankings, sendEmail)
 from sleeper import getMatchups, getOwner, getTeams, getTrades
+from sportsdata import getTimeframe
 
 app = Flask(__name__)
 
@@ -34,10 +35,12 @@ def logout():
 
 @app.route("/")
 def home():
+    week = getTimeframe()["week"]
+    teams = getTeams(True)
     return render_template(
         "home.html",
-        matchups=getMatchups(),
-        trades=getTrades(),
+        matchups=getMatchups(week, teams),
+        trades=getTrades(week, teams),
         logged_in=session.get("user_id"),
     )
 
