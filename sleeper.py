@@ -3,6 +3,7 @@ import os
 
 import requests
 from gql import AIOHTTPTransport, Client, gql
+from gql.transport.exceptions import TransportQueryError
 
 from database import getDB, getPlayerData
 from sportsdata import getTimeframe
@@ -63,7 +64,10 @@ def getOwner(user, pw):
         }
         """
     )
-    data = client.request(query, {"user": user, "pw": pw})
+    try:
+        data = client.request(query, {"user": user, "pw": pw})
+    except TransportQueryError:
+        return None
     userID = data["login"]["user_id"]
     season = getTimeframe()["season"]
     leagues = requests.get(
