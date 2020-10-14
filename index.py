@@ -6,7 +6,8 @@ from flask import (Flask, abort, redirect, render_template, request, session,
 
 from kpffl import (addCoachesPollVote, addProposalVote, getProposal,
                    getRankings, sendEmail)
-from sleeper import getMatchups, getOwner, getTeams, getTrades
+from sleeper import (addTradeVote, deleteTradeVotes, getMatchups, getOwner,
+                     getTeams, getTrades)
 from sportsdata import getTimeframe
 
 app = Flask(__name__)
@@ -33,14 +34,32 @@ def logout():
     return redirect(url_for("home"))
 
 
-@app.route("/")
+@app.route("/", methods=["POST", "GET"])
 def home():
+
+    if request.method == "POST":
+        # delete old votes
+        all_txns = set(
+            [
+                vote.split("-")[0]
+                for vote in request.form
+                if vote.split("-")[1] == "none"
+            ]
+        )
+        for txn in all_txns:
+            deleteTradeVotes(txn, session.get("user_id"))
+        # add votes
+        for txn in request.form:
+            transaction_id, roster_id = txn.split("-")
+            if roster_id != "none":
+                addTradeVote(transaction_id, session.get("user_id"), int(roster_id))
+
     week = getTimeframe()["week"]
     teams = getTeams(True)
     return render_template(
         "home.html",
         matchups=getMatchups(week, teams),
-        trades=getTrades(week, teams),
+        trades=getTrades(week + 1, teams),
         logged_in=session.get("user_id"),
     )
 

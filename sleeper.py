@@ -1,5 +1,4 @@
 import asyncio
-import json
 import os
 
 import requests
@@ -24,14 +23,12 @@ class SleeperGraphQLClient:
 
 def _getLeague():
     leagueID = os.getenv("LEAGUE_ID")
-    r = requests.get(f"https://api.sleeper.app/v1/league/{leagueID}")
-    return json.loads(r.text)
+    return requests.get(f"https://api.sleeper.app/v1/league/{leagueID}").json()
 
 
 def _getOwners():
     leagueID = os.getenv("LEAGUE_ID")
-    r = requests.get(f"https://api.sleeper.app/v1/league/{leagueID}/users")
-    owners = json.loads(r.text)
+    owners = requests.get(f"https://api.sleeper.app/v1/league/{leagueID}/users").json()
     ownerDict = {}
     for owner in owners:
         ownerDict[owner["user_id"]] = owner
@@ -40,8 +37,7 @@ def _getOwners():
 
 def _getRosters():
     leagueID = os.getenv("LEAGUE_ID")
-    r = requests.get(f"https://api.sleeper.app/v1/league/{leagueID}/rosters")
-    return json.loads(r.text)
+    return requests.get(f"https://api.sleeper.app/v1/league/{leagueID}/rosters").json()
 
 
 def _getRosterPlayers(rosters):
@@ -70,8 +66,9 @@ def getOwner(user, pw):
     data = client.request(query, {"user": user, "pw": pw})
     userID = data["login"]["user_id"]
     season = getTimeframe()["season"]
-    r = requests.get(f"https://api.sleeper.app/v1/user/{userID}/leagues/nfl/{season}")
-    leagues = json.loads(r.text)
+    leagues = requests.get(
+        f"https://api.sleeper.app/v1/user/{userID}/leagues/nfl/{season}"
+    ).json()
     leagueIDs = [league["league_id"] for league in leagues]
     if os.getenv("LEAGUE_ID") in leagueIDs:
         return userID
@@ -80,8 +77,7 @@ def getOwner(user, pw):
 
 def updatePlayers():
     """Gets players from Sleepers database and uploads to Mongo."""
-    r = requests.get("https://api.sleeper.app/v1/players/nfl")
-    players = json.loads(r.text)
+    players = requests.get("https://api.sleeper.app/v1/players/nfl").json()
 
     # update players in database
     db = getDB()
@@ -166,8 +162,9 @@ def getMatchups(week=None, teams=None):
     week = week or getTimeframe()["week"]
     teams = teams or getTeams(True)
 
-    r = requests.get(f"https://api.sleeper.app/v1/league/{leagueID}/matchups/{week}")
-    data = json.loads(r.text)
+    data = requests.get(
+        f"https://api.sleeper.app/v1/league/{leagueID}/matchups/{week}"
+    ).json()
 
     # get all matchup IDs
     matchups = {
@@ -196,16 +193,15 @@ def getTrades(currentWeek=None, teams=None, n=5):
     tradesData = []
 
     def findTrades(week):
-        r = requests.get(
+        txns = requests.get(
             f"https://api.sleeper.app/v1/league/{leagueID}/transactions/{week}"
-        )
-        data = json.loads(r.text)
+        ).json()
 
         # filter for only trades of two teams
         tradesData.extend(
             [
                 trade
-                for trade in data
+                for trade in txns
                 if trade["type"] == "trade" and len(trade["roster_ids"]) == 2
             ]
         )
@@ -222,7 +218,7 @@ def getTrades(currentWeek=None, teams=None, n=5):
 
     trades = []
 
-    def extractTradeData(roster_id):
+    def getTradeData(roster_id):
         players = [
             key
             for key in tradeData["adds"].keys()
@@ -232,6 +228,14 @@ def getTrades(currentWeek=None, teams=None, n=5):
             pick for pick in tradeData["draft_picks"] if pick["owner_id"] == roster_id
         ]
         draftConvert = {1: "1st", 2: "2nd", 3: "3rd"}
+        voteData = db.trade_votes.find(
+            {
+                "transaction_id": tradeData["transaction_id"],
+                "roster_id": roster_id,
+            }
+        )
+        voteUsers = [vote["user_id"] for vote in voteData]
+
         return {
             "team": [
                 team for team in teams if team["id"].split("|")[1] == str(roster_id)
@@ -249,13 +253,46 @@ def getTrades(currentWeek=None, teams=None, n=5):
                 }
                 for pick in picks
             ],
+            "votes": voteUsers,
         }
 
     for tradeData in tradesData:
         trade = {
-            "team1": extractTradeData(tradeData["roster_ids"][0]),
-            "team2": extractTradeData(tradeData["roster_ids"][1]),
+            "transaction_id": tradeData["transaction_id"],
+            "team1": getTradeData(tradeData["roster_ids"][0]),
+            "team2": getTradeData(tradeData["roster_ids"][1]),
         }
         trades.append(trade)
 
     return trades
+
+
+def addTradeVote(transaction_id, user_id, roster_id):
+    """Adds Trade Vote to DB."""
+
+    db = getDB()
+    db.trade_votes.update(
+        {
+            "transaction_id": transaction_id,
+            "user_id": user_id,
+            "roster_id": roster_id,
+        },
+        {
+            "transaction_id": transaction_id,
+            "user_id": user_id,
+            "roster_id": roster_id,
+        },
+        upsert=True,
+    )
+
+
+def deleteTradeVotes(transaction_id, user_id):
+    """Delete Trade Votes per user."""
+
+    db = getDB()
+    db.trade_votes.delete_many(
+        {
+            "transaction_id": transaction_id,
+            "user_id": user_id,
+        },
+    )

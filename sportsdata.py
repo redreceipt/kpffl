@@ -8,10 +8,10 @@ def getTimeframe():
     """Gets current NFL season and week."""
 
     headers = {"Ocp-Apim-Subscription-Key": os.getenv("SPORTSDATA_KEY")}
-    r = requests.get(
+    timeframe = requests.get(
         "https://api.sportsdata.io/v3/nfl/scores/json/Timeframes/current",
-        headers=headers)
-    timeframe = json.loads(r.text)[0]
+        headers=headers,
+    ).json()[0]
     week = timeframe["Week"]
     season = timeframe["Season"]
 
