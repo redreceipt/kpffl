@@ -53,6 +53,7 @@ def home():
             transaction_id, roster_id = txn.split("-")
             if roster_id != "none":
                 addTradeVote(transaction_id, session.get("user_id"), int(roster_id))
+            return redirect(url_for("home", _external=True))
 
     week = getTimeframe()["week"]
     teams = getTeams(True)
