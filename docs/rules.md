@@ -277,6 +277,8 @@ These are proposals by league members put up to a vote (see Article 1 Section 2)
 - Daniel Crowe (2015)
 - Ryan Leatham (2016)
 - Ryan Chavis (2017)
+- Ryan Chavis (2018)
+- Parker Toms (2019)
 
 ### Losers and Penalties
 
@@ -285,6 +287,7 @@ These are proposals by league members put up to a vote (see Article 1 Section 2)
 - Travis Lynes. Carolina Reaper. (2015)
 - Scott Freedman. WNBA. (2016)
 - Scott Freedman. Take the SAT. (2017)
+- Kevin Nunley. (2018)
 - Chris Shaw (2019)
 
 ### Records
