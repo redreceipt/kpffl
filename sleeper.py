@@ -180,7 +180,7 @@ def getMatchups(week=None, teams=None):
     teamHash = {team["id"].split("|")[1]: team for team in teams}
     for matchup in data:
         matchups[str(matchup["matchup_id"])].append(
-            {"team": teamHash[str(matchup["roster_id"])], "score": matchup["points"]}
+            {"team": teamHash[str(matchup["roster_id"])], "score": round(matchup["points"], 2)}
         )
 
     return matchups.values()
