@@ -3,7 +3,7 @@
 {% block title %}R.C.{{ proposal["rc_id"] }}{% endblock %}
 
 {% block content %}
-<h1>R.C.{{ proposal["rc_id"] }}: {{ proposal["title"] }}</h1>
+	<h1>R.C.{{ proposal["rc_id"] }}: {{ proposal["title"] }} <small>({{ proposal["author"] }})</small></h1>
 <h4>Why is it important?</h4>
 <p>{{ proposal["why"] }}</p>
 <h4>What's different?</h4>

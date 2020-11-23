@@ -239,7 +239,8 @@ These are proposals by league members put up to a vote (see Article 1 Section 2)
 - R.C. 009 - Determining Draft Order with March Madness (Ryan Chavis, 2017)(Rejected)
 - R.C. 010 - Punishments Are Lame (Travis Lynes, 2018)(Passed)
 - R.C. 011 - Anti-tanking (Hunter Reid, 2019)(Passed)
-- R.C. 012 - [COVID Lineup Contingencies](https://kpffl.com/rc/12) (Ryan Leatham, 2020)
+- R.C. 012 - [COVID Lineup Contingencies](https://kpffl.com/rc/12) (Ryan Leatham, 2020)(Passed)
+- R.C. 013 - [Sort Draft Alphabetically](https://kpffl.com/rc/13) (Michael Neeley, 2020)(Rejected)
 
 ### Commissioners
 
