@@ -81,10 +81,10 @@ def addCoachesPollVote(votes, userID):
 
 def sendEmail(body, subject, email=""):
     """Sends email to commisioners."""
-    print(body)
     dest = ["micneeley14@gmail.com", "hunterreid49@gmail.com"]
     if re.match(r"\w+@\w+\.\w+", email):
-        dest.append(email)
+        if email not in dest:
+            dest.append(email)
 
     # TODO create a new proposal in the DB with rc_id = 0
     # fill in author, title, why, what, how
@@ -92,6 +92,7 @@ def sendEmail(body, subject, email=""):
     # https://kpffl.com/rc/approve/<ID>
     # that link will set the rc_id to the next largest item and make the page live
 
+    print(dest, subject, body)
     message = Mail(
         from_email="michael@neeley.dev",
         to_emails=dest,
@@ -100,12 +101,9 @@ def sendEmail(body, subject, email=""):
     )
     try:
         sg = SendGridAPIClient(os.environ.get("SENDGRID_KEY"))
-        response = sg.send(message)
-        print(response.status_code)
-        print(response.body)
-        print(response.headers)
+        res = sg.send(message)
     except Exception as e:
-        print(e.message)
+        print(e, res)
 
 
 def getProposal(rc_id):
