@@ -4,6 +4,7 @@ import markdown
 from flask import (Flask, abort, redirect, render_template, request, session,
                    url_for)
 
+from database import getDB
 from kpffl import (addCoachesPollVote, addProposalVote, getProposal,
                    getRankings, sendEmail)
 from sleeper import (addTradeVote, deleteTradeVotes, getMatchups, getOwner,
@@ -67,11 +68,14 @@ def home():
 
 @app.route("/rules")
 def rules():
+    db = getDB()
+    proposal = db.proposals.find_one({"open": True})
     with open("docs/rules.md") as f:
         text = f.read()
         html = markdown.markdown(text)
         return render_template(
             "rules.html",
+            proposal=proposal,
             html=html,
         )
 

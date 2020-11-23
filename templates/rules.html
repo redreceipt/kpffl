@@ -2,4 +2,16 @@
 
 {% block title %}Rules{% endblock %}
 
-{% block content %}{{ html|safe }}{% endblock %}
+{% block content %}
+
+    {% if proposal %}
+    <div class="text-center border border-danger py-4 mb-4">
+        <h3>PROPOSAL: R.C.{{ proposal["rc_id"] }} - {{ proposal["title"] }}</h3>
+        <a href="{{ url_for("rule_change_proposal", rc_id=proposal["rc_id"], _external=True) }}">
+            <h6>Voting is live!</h6>
+        </a>
+    </div>
+    {% endif %}
+
+{{ html|safe }}
+{% endblock %}
