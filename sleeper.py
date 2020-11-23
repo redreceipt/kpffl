@@ -59,6 +59,11 @@ def getOwner(user, pw):
         """
         query getUserID ($user: String! $pw: String!) {
             login(email_or_phone_or_username: $user password: $pw) {
+                avatar
+                display_name
+                real_name
+                email
+                phone
                 user_id
             }
         }
@@ -75,6 +80,10 @@ def getOwner(user, pw):
     ).json()
     leagueIDs = [league["league_id"] for league in leagues]
     if os.getenv("LEAGUE_ID") in leagueIDs:
+        db = getDB()
+        db.users.update(
+            {"user_id": data["login"]["user_id"]}, data["login"], upsert=True
+        )
         return userID
     return None
 
@@ -180,7 +189,10 @@ def getMatchups(week=None, teams=None):
     teamHash = {team["id"].split("|")[1]: team for team in teams}
     for matchup in data:
         matchups[str(matchup["matchup_id"])].append(
-            {"team": teamHash[str(matchup["roster_id"])], "score": round(matchup["points"], 2)}
+            {
+                "team": teamHash[str(matchup["roster_id"])],
+                "score": round(matchup["points"], 2),
+            }
         )
 
     return matchups.values()
