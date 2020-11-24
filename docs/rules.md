@@ -228,19 +228,20 @@ These are proposals by league members put up to a vote (see Article 1 Section 2)
 
 ### Rule Change Proposals
 
-- R.C. 001 - IDP (Michael Neeley)(Rejected)
-- R.C. 002 - No More Kickers! (Daniel Crowe)(Passed) - 6.30.16
-- R.C. 003 - 24 Trade Period (Daniel Crowe)(Passed) - 10.4.16
-- R.C. 004 - Death to Keepers (Hunter Reid)(Passed) - 10.23.16
-- R.C. 005 - FAAB (Daniel Crowe)(Rejected)
-- R.C. 006 - Fantasy Football and Future First Rounders (Michael Neeley)(Passed) - 11.22.16
-- R.C. 007 - Dynasty (Michael Neeley)(Passed) - 11.28.16
-- R.C. 008 - Extend the Deadline (Chris Shaw)(Vetoed) (Upheld)
-- R.C. 009 - Determining Draft Order with March Madness (Ryan Chavis, 2017)(Rejected)
-- R.C. 010 - Punishments Are Lame (Travis Lynes, 2018)(Passed)
-- R.C. 011 - Anti-tanking (Hunter Reid, 2019)(Passed)
-- R.C. 012 - [COVID Lineup Contingencies](https://kpffl.com/rc/12) (Ryan Leatham, 2020)(Passed)
-- R.C. 013 - [Sort Draft Alphabetically](https://kpffl.com/rc/13) (Michael Neeley, 2020)(Rejected)
+- R.C.1: IDP (Michael Neeley, Rejected)
+- R.C.2: No More Kickers! (Daniel Crowe, 2016, Passed)
+- R.C.3: 24-Hour Trade Period (Daniel Crowe, 2016, Passed)
+- R.C.4: Death to Keepers (Hunter Reid, 2016, Passed)
+- R.C.5: FAAB (Daniel Crowe, Rejected)
+- R.C.6: Fantasy Football and Future First Rounders (Michael Neeley, 2016, Passed)
+- R.C.7: Dynasty (Michael Neeley, 2016, Passed)
+- R.C.8: Extend the Deadline (Chris Shaw, Vetoed, Upheld)
+- R.C.9: Determining Draft Order with March Madness (Ryan Chavis, 2017, Rejected)
+- R.C.10: Punishments Are Lame (Travis Lynes, 2018, Passed)
+- R.C.11: Anti-tanking (Hunter Reid, 2019, Passed)
+- R.C.12: [COVID Lineup Contingencies](https://kpffl.com/rc/12) (Ryan Leatham, 2020, Passed)
+- R.C.13: [Sort Draft Alphabetically](https://kpffl.com/rc/13) (Michael Neeley, 2020, Rejected)
+- R.C.14: [No Tanking Policy](https://kpffl.com/rc/14) (Davis Fortier, 2020, Passed)
 
 ### Commissioners
 
