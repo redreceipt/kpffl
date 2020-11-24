@@ -11,6 +11,12 @@
             <h6>Voting is live!</h6>
         </a>
     </div>
+{% else %}
+    <div class="text-center border py-4 mb-4">
+        <a href="{{ url_for("proposal") }}">
+            <h4>Submit Rule Change Proposal</h4>
+        </a>
+    </div>
     {% endif %}
 
 {{ html|safe }}

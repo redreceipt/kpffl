@@ -21,6 +21,9 @@
       placeholder="Password"
     />
   </div>
+  {% if src %}
+    <input type="hidden" name="src" value="{{ src }}" />
+  {% endif %}
   <button type="submit" class="btn btn-secondary mb-2">Submit</button>
 </form>
 {% if error %}

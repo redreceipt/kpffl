@@ -30,7 +30,7 @@
 	<p>Yes ({{ proposal["yes"] }})</p>
 	<p>No ({{ proposal["no"] }})</p>
 	{% if proposal["open"] %}
-		<p><a href="{{ url_for("login") }}">
+		<p><a href="{{ url_for("login", src=request.url) }}">
 			Login to Vote
 		</a></p>
 	{% endif %}

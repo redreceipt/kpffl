@@ -18,14 +18,15 @@ app.secret_key = os.getenv("SECRET_KEY")
 
 @app.route("/login", methods=["POST", "GET"])
 def login():
+    src = request.args.get("src") or request.form.get("src")
 
     # if logging in
     if request.method == "POST":
         session["user_id"] = getOwner(request.form["email"], request.form["password"])
         if not session["user_id"]:
-            return render_template("login.html", error=True)
+            return render_template("login.html", error=True, src=src)
         session["email"] = request.form["email"]
-        return redirect(url_for("home"))
+        return redirect(src or url_for("home"))
     return render_template("login.html")
 
 
