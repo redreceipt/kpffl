@@ -31,7 +31,7 @@ In the case of a tie, the commissioner’s vote will not count.
 
 ### Section 3 - Buy In
 
-Buy in will be \$25 per team. 90% of the pot will go to 1st place and 10% will go to 2nd place. All money will be paid prior to the draft.
+Buy in will be $25 per team. 90% of the pot will go to 1st place and 10% will go to 2nd place. All money will be paid prior to the draft.
 
 ### Section 4 - Loser’s Penalty
 
@@ -57,15 +57,15 @@ Regular season standings priority (in the following order):
 
 ### Section 2 - Rosters
 
-Roster totals 23 players adding one bench slot per season until 30 total players is reached.
+Roster totals 24 players adding one bench slot per season until 30 total players is reached.
 
 - QB - 1
 - RB - 2
 - WR - 2
 - TE - 1
-- Flex (RB/WR/TE) - 1
-- Defense - 1
-- Bench - 11
+- Flex (RB/WR/TE) - 1 
+- D/ST - 1
+- Bench - 12 (Starting in 2022)
 - IR - 1
 - Taxi - 3
 
@@ -242,6 +242,9 @@ These are proposals by league members put up to a vote (see Article 1 Section 2)
 - R.C.12: [COVID Lineup Contingencies](https://kpffl.com/rc/12) (Ryan Leatham, 2020, Passed)
 - R.C.13: [Sort Draft Alphabetically](https://kpffl.com/rc/13) (Michael Neeley, 2020, Rejected)
 - R.C.14: [No Tanking Policy](https://kpffl.com/rc/14) (Davis Fortier, 2020, Passed)
+- R.C.15: Drop DSTs, Add a Flex (Hunter Reid, 2021, Passed)
+- R.C.16: Undo R.C.15 (Ryan Leatham, 2021, Passed)
+    
 
 ### Commissioners
 
