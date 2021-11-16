@@ -156,7 +156,7 @@ Owners may keep as many players as they wish. Rosters must be cut down prior to 
 
 ### Section 4 - Trades
 
-There is no limit to the amount of players traded. The deadline will be the last Wednesday in the regular season at noon, after which no trades will be allowed. There is no trade review period. Trades may be vetoed by the commissioner, which may then be overruled by a majority vote. Off-season draft pick trading is allowed.
+There is no limit to the amount of players traded. The deadline will be the Monday of Week 11 at midnight, after which no trades will be allowed. There is no trade review period. Trades may be vetoed by the commissioner, which may then be overruled by a majority vote. Off-season draft pick trading is allowed.
 
 ### Section 5 - COVID Rule
 
