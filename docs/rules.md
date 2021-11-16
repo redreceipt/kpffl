@@ -177,17 +177,11 @@ Due to games that may be cancelled because of COVID-19, owners will be able to s
 
 ## Appendix A - Reference
 
-### League Terms
-
-#### Constitution
+### Constitution
 
 - Article I (Laws) are laws not meant to be easily changed.
 - Article II (Seasonals) are rules that will take effect at the start of the next season.
 - Article III (Immediates) are rules that can be changed and will take effect immediately.
-
-#### Meetings
-
-Town Hall Meetings are gatherings where the league can get together, debate, and vote on an unlimited number of proposals. At least 7 should be present for votes to pass definitively. Town Hall Meetings can also be used to brainstorm future league details.
 
 ### Submitting Rule Changes
 
@@ -221,10 +215,10 @@ These are proposals by league members put up to a vote (see Article 1 Section 2)
 
 ### Executive Orders
 
-- E.O.001 - New Buy In (Michael Neeley) - 7.18.17
-- E.O.002 - Extended Playoffs (Michael Neeley) - 7.18.17
-- E.O.003 - Trading Punishments (Michael Neeley)(Overruled)
-- E.O.004 - Dynasty Draft (Michael Neeley) - 11.26.17
+- E.O.001 - New Buy In (Michael Neeley, 2017, Upheld)
+- E.O.002 - Extended Playoffs (Michael Neeley, 2017, Upheld)
+- E.O.003 - Trading Punishments (Michael Neeley, 2017, Overruled)
+- E.O.004 - Dynasty Draft (Michael Neeley, 2017, Upheld)
 
 ### Rule Change Proposals
 
@@ -245,14 +239,13 @@ These are proposals by league members put up to a vote (see Article 1 Section 2)
 - R.C.15: Drop DSTs, Add a Flex (Hunter Reid, 2021, Passed)
 - R.C.16: Undo R.C.15 (Ryan Leatham, 2021, Passed)
 - R.C.17: Extend the Trade Deadline (Kevin Nunley, 2021, Passed)
-    
 
 ### Commissioners
 
 - Hunter Reid (2013)
 - Michael Neeley (2014-present)
 
-### Owners
+### Members
 
 #### Previous
 
@@ -285,6 +278,7 @@ These are proposals by league members put up to a vote (see Article 1 Section 2)
 - Ryan Chavis (2017)
 - Ryan Chavis (2018)
 - Parker Toms (2019)
+- Kevin Nunley (2020)
 
 ### Losers and Penalties
 
@@ -295,35 +289,7 @@ These are proposals by league members put up to a vote (see Article 1 Section 2)
 - Scott Freedman. Take the SAT. (2017)
 - Kevin Nunley. (2018)
 - Chris Shaw (2019)
-
-### Records
-
-#### Highest Full Roster Score
-
-Scott Freedman - 187.5 - Week 12, 2015
-
-- Doug Martin 9.5
-- Dan Bailey 7
-- Antonio Gates 19
-- Bengals D/ST 16
-- Doug Baldwin 35
-- Adrian Peterson 30
-- Cam Newton 17
-- Brandon Marshall 29.5
-- Odell Beckham Jr. 24.5
-
-#### Lowest Full Roster Score
-
-Michael Neeley - 42.5 - Week 3, 2020
-
-- Gardner Minshew 10.20
-- Devin Singletary 14.10
-- Jamaal Williams 2.20
-- DeVantte Parker 9.40
-- Larry Fitzgerald 0.50
-- Jared Cook 3.10
-- Marquez Valdes-Scantling 1.00
-- Vikings D/ST 2.00
+- Parker Toms (2020)
 
 ### League Manager Notes
 
