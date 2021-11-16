@@ -244,6 +244,7 @@ These are proposals by league members put up to a vote (see Article 1 Section 2)
 - R.C.14: [No Tanking Policy](https://kpffl.com/rc/14) (Davis Fortier, 2020, Passed)
 - R.C.15: Drop DSTs, Add a Flex (Hunter Reid, 2021, Passed)
 - R.C.16: Undo R.C.15 (Ryan Leatham, 2021, Passed)
+- R.C.17: Extend the Trade Deadline (Kevin Nunley, 2021, Passed)
     
 
 ### Commissioners
