@@ -57,7 +57,7 @@ Regular season standings priority (in the following order):
 
 ### Section 2 - Rosters
 
-Roster totals 24 players adding one bench slot per season until 30 total players is reached.
+Roster totals 27 players adding one bench slot per season until 30 total players is reached.
 
 - QB - 1
 - RB - 2
@@ -65,7 +65,7 @@ Roster totals 24 players adding one bench slot per season until 30 total players
 - TE - 1
 - Flex (RB/WR/TE) - 1 
 - D/ST - 1
-- Bench - 12 (Starting in 2022)
+- Bench - 15 (Starting in 2023)
 - IR - 1
 - Taxi - 3
 
