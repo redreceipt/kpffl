@@ -1,5 +1,11 @@
 {
   "alias": ["kpffl.com"],
   "routes": [{ "src": "/.*", "dest": "/index.py" }],
+  "redirects": [
+    {
+      "src": "draft.kpffl.com",
+      "dest": "https://docs.google.com/spreadsheets/d/19Wgws8FOaY1l8_CRYLZtQai_uvbyDe8vikaDuvzZyZw/edit?usp=sharing"
+    }
+  ],
   "builds": [{ "src": "*.py", "use": "@now/python" }]
 }
